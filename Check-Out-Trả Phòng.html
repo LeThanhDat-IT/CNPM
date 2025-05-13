@@ -1,161 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Check-Out-TrảPhòNg</title>
-	<style>
-		body {
-			font-family: system-ui;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yêu cầu trả phòng</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #223B79;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #223B79;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #223B79;
+        }
+        .address {
+            text-align: center;
+            font-style: italic;
+            color: #555;
+            margin-top: 20px;
+        }
+        @media screen and (max-width: 600px) {
+            table {
+                font-size: 14px;
+            }
+            th, td {
+                padding: 8px;
+            }
+        }
+    </style>
 </head>
 <body>
-		<div style="display: flex; flex-direction: column; background: #FFFFFF;">
-		<div style="height: 765px; align-self: stretch; background: #FFFFFF;">
-			<div style="align-self: stretch; display: flex; flex-direction: column; align-items: center; margin-top: 50px; margin-bottom: 61px;">
-				<span style="color: #000000; font-size: 48px; font-weight: bold; margin-bottom: 1px; margin-right: 10px;" >
-					Yêu cầu trả phòng
-				</span>
-			</div>
-			<div style="align-self: stretch; display: flex; align-items: flex-start; margin-bottom: 80px; margin-left: 160px; margin-right: 160px;">
-				<div style="flex: 1; display: flex; flex-direction: column; align-items: flex-start; margin-right: 12px;">
-					<span style="color: #000000; font-size: 25px; font-weight: bold; margin-bottom: 13px; margin-left: 4px;" >
-						Danh sách khách hàng
-					</span>
-					<div style="align-self: stretch; display: flex; align-items: flex-start; margin-left: 4px; margin-right: 4px;">
-						<div style="flex-shrink: 0; display: flex; flex-direction: column; align-items: center;">
-							<div style="display: flex; flex-direction: column; align-items: flex-start; background: #223B79; border: 1px solid #000000; padding: 16px 34px;">
-								<span style="color: #FFFFFF; font-size: 25px;" >
-									Mã KH
-								</span>
-							</div>
-							<div style="display: flex; flex-direction: column; align-items: flex-start; background: #FFFFFF; border: 1px solid #000000; padding: 16px 44px;">
-								<span style="color: #000000; font-size: 23px;" >
-									A001
-								</span>
-							</div>
-						</div>
-						<div style="flex-shrink: 0; display: flex; flex-direction: column; align-items: center;">
-							<div style="display: flex; flex-direction: column; align-items: flex-start; background: #223B79; border: 1px solid #000000; padding: 9px 3px;">
-								<span style="color: #FFFFFF; font-size: 25px;" >
-									Tên
-								</span>
-							</div>
-							<div style="display: flex; flex-direction: column; align-items: flex-start; background: #FFFFFF; border: 1px solid #000000; padding: 12px 72px;">
-								<span style="color: #000000; font-size: 23px;" >
-									Lê Thành Đạt
-								</span>
-							</div>
-						</div>
-						<div style="flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-start; margin-right: 1px;">
-							<div style="display: flex; flex-direction: column; align-items: flex-start; background: #223B79; border: 1px solid #000000; padding: 14px 33px 14px 23px;">
-								<span style="color: #FFFFFF; font-size: 25px;" >
-									Số phòng
-								</span>
-							</div>
-							<div style="display: flex; flex-direction: column; align-items: flex-start; background: #FFFFFF; border: 1px solid #000000; padding: 11px 70px 11px 56px;">
-								<span style="color: #000000; font-size: 25px;" >
-									A01
-								</span>
-							</div>
-						</div>
-						<div style="flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-start;">
-							<div style="display: flex; flex-direction: column; align-items: flex-start; background: #223B79; border: 1px solid #000000; padding: 15px 114px 15px 80px;">
-								<span style="color: #FFFFFF; font-size: 25px;" >
-									Ngày nhận
-								</span>
-							</div>
-							<div style="display: flex; flex-direction: column; align-items: flex-start; background: #FFFFFF; border: 1px solid #000000; padding: 17px 117px 17px 70px;">
-								<span style="color: #000000; font-size: 23px;" >
-									26-04-2025
-								</span>
-							</div>
-						</div>
-						<div style="flex: 1;">
-							<div style="align-self: stretch; display: flex; flex-direction: column; align-items: flex-start; background: #223B79; border: 1px solid #000000; padding-top: 11px; padding-bottom: 11px; padding-left: 56px;">
-								<span style="color: #FFFFFF; font-size: 25px;" >
-									Email
-								</span>
-								<span style="color: #FFFFFF; font-size: 25px; margin-left: 54px;" >
-									Ngày trả
-								</span>
-							</div>
-							<div style="align-self: stretch; display: flex; flex-direction: column; align-items: flex-start; background: #FFFFFF; border: 1px solid #000000; padding-top: 15px; padding-bottom: 15px;">
-								<span style="color: #000000; font-size: 23px; margin-left: 77px;" >
-									27-04-2025
-								</span>
-							</div>
-						</div>
-					</div>
-					<div style="align-self: stretch; display: flex; align-items: flex-start; margin-left: 4px; margin-right: 4px;">
-						<div style="flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-start; background: #A0B6EB; border: 1px solid #000000; padding: 16px 42px;">
-							<span style="color: #000000; font-size: 23px;" >
-								A002
-							</span>
-						</div>
-						<div style="flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-start; background: #A0B6EB; border: 1px solid #000000; padding: 14px 56px;">
-							<span style="color: #000000; font-size: 23px;" >
-								Phạm Ngọc Sơn
-							</span>
-						</div>
-						<div style="flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-start; background: #A0B6EB; border: 1px solid #000000; padding: 12px 67px 12px 54px; margin-right: 1px;">
-							<span style="color: #000000; font-size: 25px;" >
-								A02
-							</span>
-						</div>
-						<div style="flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-start; background: #A0B6EB; border: 1px solid #000000; padding: 19px 115px 19px 71px;">
-							<span style="color: #000000; font-size: 23px;" >
-								25-04-2025
-							</span>
-						</div>
-						<div style="flex: 1; display: flex; flex-direction: column; align-items: flex-start; background: #A0B6EB; border: 1px solid #000000; padding-top: 14px; padding-bottom: 14px;">
-							<span style="color: #000000; font-size: 23px; margin-left: 75px;" >
-								26-04-2025
-							</span>
-						</div>
-					</div>
-					<div style="align-self: stretch; display: flex; align-items: flex-start; margin-left: 4px; margin-right: 4px;">
-						<div style="flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-start; background: #FFFFFF; border: 1px solid #000000; padding: 16px 42px;">
-							<span style="color: #000000; font-size: 23px;" >
-								A003
-							</span>
-						</div>
-						<div style="flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-start; background: #FFFFFF; border: 1px solid #000000; padding: 11px 40px;">
-							<span style="color: #000000; font-size: 23px;" >
-								Nguyễn Trung Hiếu
-							</span>
-						</div>
-						<div style="flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-start; background: #FFFFFF; border: 1px solid #000000; padding: 9px 66px 9px 54px; margin-right: 1px;">
-							<span style="color: #000000; font-size: 25px;" >
-								A03
-							</span>
-						</div>
-						<div style="flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-start; padding: 16px 118px 16px 69px; background-image: url('https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/1acee3e8-f9c9-47a6-a52d-5d91a37aa2b4'); background-size: cover; background-position: center;">
-							<span style="color: #000000; font-size: 23px;" >
-								24-04-2025
-							</span>
-						</div>
-						<div style="flex: 1; display: flex; flex-direction: column; align-items: flex-start; background: #FFFFFF; border: 1px solid #000000; padding-top: 13px; padding-bottom: 13px;">
-							<span style="color: #000000; font-size: 23px; margin-left: 76px;" >
-								25-04-2025
-							</span>
-						</div>
-					</div>
-				</div>
-				<span style="color: #FFFFFF; font-size: 25px; margin-top: 57px;" >
-					Địa chỉ
-				</span>
-			</div>
-			<div style="align-self: stretch; display: flex; flex-direction: column; align-items: center; margin-bottom: 162px;">
-				<button style="display: flex; flex-direction: column; align-items: flex-start; background: #223B79; border-radius: 10px; border: none; padding: 15px 118px; text-align: left;"
-					onclick="alert('Pressed!')"}>
-					<span style="color: #FFFFFF; font-size: 25px;" >
-						Trả phòng
-					</span>
-				</button>
-			</div>
-		</div>
-	</div>
+    <h1>Yêu cầu trả phòng</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Mã KH</th>
+                <th>Tên</th>
+                <th>Số phòng</th>
+                <th>Ngày nhận</th>
+                <th>Ngày trả</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>A001</td>
+                <td>Lê Thành Đạt</td>
+                <td>A01</td>
+                <td>26-04-2025</td>
+                <td>27-04-2025</td>
+                <td><button>Trả phòng</button></td>
+            </tr>
+            <tr>
+                <td>A002</td>
+                <td>Phạm Ngọc Sơn</td>
+                <td>A02</td>
+                <td>25-04-2025</td>
+                <td>26-04-2025</td>
+                <td><button>Trả phòng</button></td>
+            </tr>
+            <tr>
+                <td>A003</td>
+                <td>Nguyễn Trung Hiếu</td>
+                <td>A03</td>
+                <td>24-04-2025</td>
+                <td>25-04-2025</td>
+                <td><button>Trả phòng</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="address">Địa chỉ: [Thêm địa chỉ khách sạn tại đây]</div>
 </body>
 </html>
