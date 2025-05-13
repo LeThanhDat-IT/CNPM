@@ -57,22 +57,51 @@
             border: 1px solid #A2A2A6;
             border-radius: 4px;
             font-size: 13px;
-            background: #F0FDFC; /* Invalid value */
+            background: #F0FDFC; 
             box-sizing: border-box;
         }
         .gender {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 20px;
             margin-bottom: 12px;
         }
+
+        .gender-label {
+            min-width: 80px;
+            font-weight: bold;
+            color: #312E49;
+            font-size: 15px;
+        }
+
+        .gender label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .gender input[type="radio"] {
+            width: 18px;
+            height: 18px;
+        }
+
         .checkbox {
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 20px;
-            font-size: 13px;
+            gap: 10px;
+            font-size: 14px;
+            margin-bottom: 25px;
+            line-height: 1.4;
         }
+
+        .checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin: 0;
+        }
+
         button {
             width: 100%;
             padding: 12px;
@@ -120,11 +149,11 @@
             <label for="email">Email</label>
             <input type="email" id="email" placeholder="Nhập email">
 
-            <div class="gender">
-                <label>Giới tính:</label>
-                <label><input type="radio" name="gender" value="Nam"> Nam</label>
-                <label><input type="radio" name="gender" value="Nữ"> Nữ</label>
-            </div>
+        <div class="gender">
+            <span class="gender-label">Giới tính:</span>
+            <label><input type="radio" name="gender" value="Nam"> Nam</label>
+            <label><input type="radio" name="gender" value="Nữ"> Nữ</label>
+        </div>
 
             <label for="dob">Ngày sinh</label>
             <input type="date" id="dob">
@@ -170,6 +199,7 @@
     <script>
         // Load accounts from localStorage
         const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+
 
         // Populate account dropdown
         function populateAccountSelect() {
@@ -220,22 +250,40 @@
         function updateProfile() {
             const username = document.getElementById('account-select').value;
             const account = accounts.find(acc => acc.username === username);
+
             if (account) {
-                account.name = document.getElementById('name').value;
-                account.phone = document.getElementById('phone').value;
-                account.email = document.getElementById('email').value;
-                account.dob = document.getElementById('dob').value;
-                account.address = document.getElementById('address').value;
+                const nameValue    = document.getElementById('name').value;
+                const phoneValue   = document.getElementById('phone').value;
+                const emailValue   = document.getElementById('email').value;
+                const dobValue     = document.getElementById('dob').value;
+                const addressValue = document.getElementById('address').value;
                 const genderInputs = document.getElementsByName('gender');
-                account.gender = Array.from(genderInputs).find(input => input.checked)?.value || account.gender;
+                const selectedGender = Array.from(genderInputs).find(input => input.checked)?.value || account.gender;
+                // Kiểm tra định dạng email
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailValue)) {
+                    alert("Email không đúng định dạng!");
+                    return;
+                }
+                // Kiểm tra số điện thoại: đủ 10 số và bắt đầu bằng số 0
+                const phoneRegex = /^0\d{9}$/;
+                if (!phoneRegex.test(phoneValue)) {
+                    alert("Số điện thoại phải bắt đầu bằng số 0 và đủ 10 chữ số!");
+                    return;
+                }
+                account.name    = nameValue;
+                account.phone   = phoneValue;               
+                account.email   = emailValue;
+                account.dob     = dobValue;
+                account.address = addressValue;
+                account.gender  = selectedGender;
 
                 localStorage.setItem('accounts', JSON.stringify(accounts));
                 alert("Thông tin cá nhân đã được cập nhật!");
-                populateAccountSelect(); // Refresh dropdown to reflect updated name
-                document.getElementById('account-select').value = username; // Re-select the current account
+                populateAccountSelect();
+                document.getElementById('account-select').value = username;
             }
         }
-
         // Change password
         function changePassword() {
             const username = document.getElementById('account-select').value;

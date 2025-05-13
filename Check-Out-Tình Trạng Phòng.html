@@ -1,149 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Check-Out-TìNhTrạNgPhòNg</title>
-	<style>
-		body {
-			font-family: system-ui;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tình trạng phòng</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 900px;
+            margin-top: 30px;
+        }
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            font-size: 1.8rem;
+            padding: 15px;
+        }
+        .card-title {
+            font-size: 1.5rem;
+        }
+        .list-group-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.2rem;
+            padding: 15px;
+        }
+        .form-check {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .form-check-input {
+            width: 1.5em;
+            height: 1.5em;
+            margin-top: 0;
+        }
+        .form-check-label {
+            font-size: 1.2rem;
+            line-height: 1.5;
+        }
+        .form-control {
+            font-size: 1.2rem;
+        }
+        .btn-confirm {
+            background-color: #007bff;
+            border: none;
+            font-size: 1.3rem;
+            padding: 10px 20px;
+			color:#f8f9fa
+        }
+        .btn-confirm:hover {
+            background-color: #007bff;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px; 
+        }
+    </style>
 </head>
 <body>
-		<div style="display: flex; flex-direction: column; background: #FFFFFF;">
-		<div style="height: 1237px; align-self: stretch; display: flex; flex-direction: column; align-items: flex-start; background: #D5D5D5;">
-			<span style="color: #000000; font-size: 48px; font-weight: bold; margin: 8px 30px 12px 15px;" >
-				Tình trạng phòng
-			</span>
-			<div style="align-self: stretch; display: flex; flex-direction: column; align-items: flex-start; background: #FFFDFD; padding-bottom: 16px; margin-bottom: 11px; margin-left: 60px; margin-right: 60px;">
-				<span style="color: #000000; font-size: 36px; margin-bottom: 6px;" >
-					Thông tin phòng
-				</span>
-				<img
-					src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/00a6411d-0af5-43f1-83f8-3c9950632c72" 
-					style="height: 1px; margin-bottom: 10px; margin-left: 4px; margin-right: 4px; align-self: stretch; object-fit: fill;"
-				/>
-				<div style="display: flex; align-items: flex-start; margin-left: 18px;">
-					<span style="color: #000000; font-size: 24px; margin-right: 139px;" >
-						Phòng: A01
-					</span>
-					<span style="color: #000000; font-size: 24px; margin-right: 136px;" >
-						Trạng thái: Đang sử dụng
-					</span>
-					<span style="color: #000000; font-size: 24px;" >
-						KH: Lê Thành Đạt
-					</span>
-				</div>
-			</div>
-			<div style="align-self: stretch; display: flex; flex-direction: column; align-items: center; background: #FFFFFF; padding: 30px 51px; margin-bottom: 26px; margin-left: 64px; margin-right: 64px;">
-				<div style="align-self: stretch; display: flex; flex-direction: column; align-items: flex-start; background: #DEDEDE; padding-top: 9px; padding-bottom: 51px; margin-bottom: 65px;">
-					<span style="color: #000000; font-size: 32px; font-weight: bold; margin-bottom: 11px; margin-left: 9px;" >
-						Đồ đạc trong phòng
-					</span>
-					<div style="align-self: stretch; display: flex; align-items: flex-start; margin-left: 30px; margin-right: 30px;">
-						<div style="width: 16px; box-sizing: border-box; height: 16px; box-sizing: border-box; background: #FFFFFF; border-radius: 4px; border: 2px solid #667085; margin-top: 7px; margin-right: 16px;">
-						</div>
-						<span style="color: #000000; font-size: 24px; margin-right: 195px;" >
-							Điều hoà hoạt động tốt
-						</span>
-						<div style="width: 16px; box-sizing: border-box; height: 16px; box-sizing: border-box; background: #FFFFFF; border-radius: 4px; border: 2px solid #667085; margin-top: 6px; margin-right: 19px;">
-						</div>
-						<span style="color: #000000; font-size: 24px; flex: 1;" >
-							Giường nguyên vẹn
-						</span>
-						<div style="width: 16px; box-sizing: border-box; height: 16px; box-sizing: border-box; background: #FFFFFF; border-radius: 4px; border: 2px solid #667085; margin-top: 30px; margin-right: 8px;">
-						</div>
-						<span style="color: #000000; font-size: 24px; margin-top: 23px;" >
-							Đèn chiếu sáng đầy đủ
-						</span>
-					</div>
-					<div style="display: flex; align-items: center; margin-left: 30px;">
-						<div style="width: 16px; box-sizing: border-box; height: 16px; box-sizing: border-box; background: #FFFFFF; border-radius: 4px; border: 2px solid #667085; margin-right: 16px;">
-						</div>
-						<span style="color: #000000; font-size: 24px; margin-right: 158px;" >
-							TV hoạt động bình thường
-						</span>
-						<div style="width: 16px; box-sizing: border-box; height: 16px; box-sizing: border-box; background: #FFFFFF; border-radius: 4px; border: 2px solid #667085; margin-right: 19px;">
-						</div>
-						<span style="color: #000000; font-size: 24px;" >
-							Tủ lạnh hoạt động bình thường
-						</span>
-					</div>
-				</div>
-				<div style="align-self: stretch; display: flex; flex-direction: column; align-items: flex-start; background: #DEDEDE; padding-top: 6px; padding-bottom: 26px; margin-bottom: 41px;">
-					<span style="color: #000000; font-size: 32px; font-weight: bold; margin-bottom: 33px; margin-left: 9px;" >
-						Sửa chữa hư hỏng
-					</span>
-					<div style="display: flex; align-items: center; margin-bottom: 17px; margin-left: 30px;">
-						<div style="width: 16px; box-sizing: border-box; height: 16px; box-sizing: border-box; background: #FFFFFF; border-radius: 4px; border: 2px solid #667085; margin-right: 16px;">
-						</div>
-						<span style="color: #000000; font-size: 28px;" >
-							Có hư hỏng cần báo cáo
-						</span>
-					</div>
-					<div style="display: flex; align-items: center; margin-left: 22px;">
-						<span style="color: #000000; font-size: 28px; margin-right: 15px;" >
-							Mô tả
-						</span>
-						<div style="width: 586px; height: 36px; background: #FFFFFF; border-radius: 10px;">
-						</div>
-					</div>
-				</div>
-				<div style="align-self: stretch; display: flex; flex-direction: column; align-items: flex-start; background: #DEDEDE; padding-top: 10px; padding-bottom: 45px; margin-bottom: 81px;">
-					<span style="color: #000000; font-size: 32px; font-weight: bold; margin-bottom: 21px; margin-left: 9px;" >
-						Yêu cầu đặc biệt
-					</span>
-					<div style="display: flex; align-items: center; margin-left: 22px;">
-						<div style="width: 16px; box-sizing: border-box; height: 16px; box-sizing: border-box; background: #FFFFFF; border-radius: 4px; border: 2px solid #667085; margin-right: 8px;">
-						</div>
-						<span style="color: #000000; font-size: 24px; margin-right: 192px;" >
-							Giường đôi
-						</span>
-						<div style="width: 16px; box-sizing: border-box; height: 16px; box-sizing: border-box; background: #FFFFFF; border-radius: 4px; border: 2px solid #667085; margin-right: 9px;">
-						</div>
-						<span style="color: #000000; font-size: 24px; margin-right: 168px;" >
-							Gối thêm
-						</span>
-						<div style="width: 16px; box-sizing: border-box; height: 16px; box-sizing: border-box; background: #FFFFFF; border-radius: 4px; border: 2px solid #667085; margin-right: 9px;">
-						</div>
-						<span style="color: #000000; font-size: 24px; margin-right: 133px;" >
-							Khăn thêm
-						</span>
-						<div style="width: 16px; box-sizing: border-box; height: 16px; box-sizing: border-box; background: #FFFFFF; border-radius: 4px; border: 2px solid #667085; margin-right: 11px;">
-						</div>
-						<span style="color: #000000; font-size: 24px; margin-right: 12px;" >
-							Khác
-						</span>
-						<div style="width: 274px; height: 36px; background: #FFFFFF; border-radius: 10px;">
-						</div>
-					</div>
-				</div>
-				<div style="align-self: stretch; display: flex; flex-direction: column; align-items: flex-start; background: #DEDEDE; padding-bottom: 39px; margin-bottom: 36px;">
-					<span style="color: #000000; font-size: 32px; font-weight: bold; margin-bottom: 33px;" >
-						Kiểm tra cửa và ổ khoá
-					</span>
-					<div style="display: flex; align-items: center; margin-left: 24px;">
-						<div style="width: 16px; box-sizing: border-box; height: 16px; box-sizing: border-box; background: #FFFFFF; border-radius: 4px; border: 2px solid #667085; margin-right: 8px;">
-						</div>
-						<span style="color: #000000; font-size: 24px; margin-right: 234px;" >
-							Cửa đóng mở bình thường
-						</span>
-						<div style="width: 16px; box-sizing: border-box; height: 16px; box-sizing: border-box; background: #FFFFFF; border-radius: 4px; border: 2px solid #667085; margin-right: 8px;">
-						</div>
-						<span style="color: #000000; font-size: 24px;" >
-							Ổ khoá hoạt động tốt
-						</span>
-					</div>
-				</div>
-				<button style="display: flex; flex-direction: column; align-items: flex-start; background: #223B79; border-radius: 10px; border: none; padding: 15px 123px; text-align: left;"
-					onclick="alert('Pressed!')"}>
-					<span style="color: #FFFFFF; font-size: 25px;" >
-						Xác nhận
-					</span>
-				</button>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                Tình trạng phòng
+            </div>
+            <div class="card-body">
+                <!-- Thông tin phòng -->
+                <h5 class="card-title">Thông tin phòng</h5>
+                <ul class="list-group mb-4">
+                    <li class="list-group-item"><strong>Phòng:</strong> A01</li>
+                    <li class="list-group-item"><strong>Trạng thái:</strong> Đang sử dụng</li>
+                    <li class="list-group-item"><strong>KH:</strong> Lê Thành Đạt</li>
+                </ul>
+
+                <!-- Đồ đạc trong phòng -->
+                <h5 class="card-title">Đồ đạc trong phòng</h5>
+                <ul class="list-group mb-4">
+                    <li class="list-group-item">
+                        <input type="checkbox" class="form-check-input" checked> Điều hoà hoạt động tốt
+                    </li>
+                    <li class="list-group-item">
+                        <input type="checkbox" class="form-check-input" checked> Giường nguyên vẹn
+                    </li>
+                    <li class="list-group-item">
+                        <input type="checkbox" class="form-check-input" checked> Đèn chiếu sáng đầy đủ
+                    </li>
+                    <li class="list-group-item">
+                        <input type="checkbox" class="form-check-input" checked> TV hoạt động bình thường
+                    </li>
+                    <li class="list-group-item">
+                        <input type="checkbox" class="form-check-input" checked> Tủ lạnh hoạt động bình thường
+                    </li>
+                </ul>
+
+                <!-- Sửa chữa hư hỏng -->
+                <h5 class="card-title">Sửa chữa hư hỏng</h5>
+                <div class="mb-4">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="damage">
+                        <label class="form-check-label" for="damage">Có hư hỏng cần báo cáo</label>
+                    </div>
+                    <div class="mt-3">
+                        <label for="damageDesc" class="form-label">Mô tả</label>
+                        <textarea class="form-control" id="damageDesc" rows="5" placeholder="Mô tả chi tiết hư hỏng..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Yêu cầu đặc biệt -->
+                <h5 class="card-title">Yêu cầu đặc biệt</h5>
+                <ul class="list-group mb-4">
+                    <li class="list-group-item">
+                        <input type="checkbox" class="form-check-input" checked> Giường đôi
+                    </li>
+                    <li class="list-group-item">
+                        <input type="checkbox" class="form-check-input" checked> Gối thêm
+                    </li>
+                    <li class="list-group-item">
+                        <input type="checkbox" class="form-check-input" checked> Khăn thêm
+                    </li>
+                    <li class="list-group-item">
+                        <input type="text" class="form-control" placeholder="Yêu cầu khác...">
+                    </li>
+                </ul>
+
+                <!-- Kiểm tra cửa và ổ khóa -->
+                <h5 class="card-title">Kiểm tra cửa và ổ khóa</h5>
+                <ul class="list-group mb-4">
+                    <li class="list-group-item">
+                        <input type="checkbox" class="form-check-input" checked> Cửa đóng mở bình thường
+                    </li>
+                    <li class="list-group-item">
+                        <input type="checkbox" class="form-check-input" checked> Ổ khóa hoạt động tốt
+                    </li>
+                </ul>
+
+                <!-- Nút xác nhận -->
+                <div class="button-container">
+                    <button class="btn btn-confirm">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
