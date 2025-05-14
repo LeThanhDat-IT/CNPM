@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tìm Phòng</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #223B79;
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    header h1 {
+      font-size: 32px;
+      margin: 0;
+    }
+
+    header button {
+      background-color: #FCFEFF;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    header button:hover {
+      background-color: #e0e0e0;
+    }
+
+    .room-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .room-card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .room-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .room-details {
+      padding: 15px;
+    }
+
+    .room-details h2 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .room-details p {
+      font-size: 16px;
+      margin: 5px 0;
+    }
+
+    .price {
+      font-size: 20px;
+      color: #CD202B;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .book-now {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .book-now button {
+      background-color: #223B79;
+      color: white;
+      font-size: 16px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .book-now button:hover {
+      background-color: #1a2f5c;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>THE COW</h1>
+      <button onclick="alert('Lịch sử thuê phòng')">Lịch sử thuê phòng</button>
+    </header>
+
+    <div class="room-list">
+      <!-- Phòng Gia Đình -->
+      <div class="room-card">
+        <img src="images/family-suite-la-gi.webp" alt="Phòng Gia Đình">
+        <div class="room-details">
+          <h2>Phòng Gia Đình</h2>
+          <p>Sức chứa: 4 người</p>
+          <p>Loại giường: 2 giường đôi</p>
+          <div class="price">360,000 đ</div>
+        </div>
+        <div class="book-now">
+          <button onclick="alert('Đặt phòng Gia Đình thành công!')">Đặt phòng</button>
+          <button onclick="window.location.href='chi_tiet_phong.html?room=family'">Chi Tiết Phòng</button>
+        </div>
+      </div>
+
+      <!-- Phòng Đơn -->
+      <div class="room-card">
+        <img src="images/phong_don.webp" alt="Phòng Đơn">
+        <div class="room-details">
+          <h2>Phòng Đơn</h2>
+          <p>Sức chứa: 1 người</p>
+          <p>Loại giường: 1 giường đơn</p>
+          <div class="price">200,000 đ</div>
+        </div>
+        <div class="book-now">
+          <button onclick="alert('Đặt phòng Đơn thành công!')">Đặt phòng</button>
+          <button onclick="window.location.href='chi_tiet_phong.html?room=single'">Chi Tiết Phòng</button>
+        </div>
+      </div>
+
+      <!-- Phòng Đôi -->
+      <div class="room-card">
+        <img src="images/phong_doi.webp" alt="Phòng Đôi">
+        <div class="room-details">
+          <h2>Phòng Đôi</h2>
+          <p>Sức chứa: 2 người</p>
+          <p>Loại giường: 1 giường đôi</p>
+          <div class="price">280,000 đ</div>
+        </div>
+        <div class="book-now">
+          <button onclick="alert('Đặt phòng Đôi thành công!')">Đặt phòng</button>
+          <button onclick="window.location.href='chi_tiet_phong.html?room=double'">Chi Tiết Phòng</button>
+        </div>
+      </div>
+
+      <!-- Phòng Cao Cấp -->
+      <div class="room-card">
+        <img src="images/phong_caocap.webp" alt="Phòng Cao Cấp">
+        <div class="room-details">
+          <h2>Phòng Cao Cấp</h2>
+          <p>Sức chứa: 2 người</p>
+          <p>Loại giường: 1 giường King</p>
+          <div class="price">500,000 đ</div>
+        </div>
+        <div class="book-now">
+          <button onclick="alert('Đặt phòng Cao Cấp thành công!')">Đặt phòng</button>
+          <button onclick="window.location.href='chi_tiet_phong.html?room=premium'">Chi Tiết Phòng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
