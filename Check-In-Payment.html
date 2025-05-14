@@ -1,46 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Check-In-Payment</title>
-	<style>
-		body {
-			font-family: system-ui;
-		}
-	</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanh Toán</title>
+  <style>
+    body {
+      font-family: system-ui;
+      background-color: #FFFFFF;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 40px;
+      color: #223B79;
+      margin-bottom: 30px;
+    }
+
+    .payment-option {
+      border: 1px solid #000;
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: left;
+      border-radius: 8px;
+    }
+
+    label {
+      font-size: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+    }
+
+    .method {
+      margin-left: 30px;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    button {
+      background-color: #223B79;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 30px;
+      cursor: pointer;
+      margin-top: 30px;
+    }
+
+    button:hover {
+      background-color: #1a2f5c;
+    }
+  </style>
 </head>
 <body>
-		<div style="display: flex; flex-direction: column; background: #FFFFFF;">
-		<div style="height: 742px; box-sizing: border-box; align-self: stretch; display: flex; flex-direction: column; align-items: center; background: #FFFFFF; padding-left: 479px; padding-right: 479px;">
-			<span style="color: #000000; font-size: 48px; font-weight: bold; margin-top: 77px; margin-bottom: 21px;" >
-				Thanh Toán
-			</span>
-			<div style="display: flex; flex-direction: column; align-items: flex-start; background: #FFFFFF; border: 1px solid #000000; padding-top: 13px; padding-bottom: 13px; margin-bottom: 21px;">
-				<div style="display: flex; align-items: flex-start; margin-bottom: 11px; margin-left: 19px; margin-right: 19px;">
-					<div style="width: 16px; box-sizing: border-box; height: 16px; box-sizing: border-box; background: #FFFFFF; border-radius: 4px; border: 2px solid #667085; margin-top: 6px; margin-right: 26px;">
-					</div>
-					<span style="color: #000000; font-size: 24px; width: 305px;" >
-						Thanh toán trước 500.000 VND \nđể hoàn tất check-in
-					</span>
-				</div>
-				<span style="color: #000000; font-size: 24px; margin-left: 61px; width: 153px;" >
-					Thanh toán qua:\nThẻ ngân hàng\nChuyển khoản\nTiền mặt
-				</span>
-			</div>
-			<div style="display: flex; align-items: flex-start; background: #FFFFFF; border: 1px solid #000000; padding: 27px 24px 27px 17px; margin-bottom: 39px;">
-				<div style="width: 16px; box-sizing: border-box; height: 16px; box-sizing: border-box; background: #FFFFFF; border-radius: 4px; border: 2px solid #667085; margin-top: 4px; margin-right: 18px;">
-				</div>
-				<span style="color: #000000; font-size: 24px; width: 343px;" >
-					Không cần thanh toán trước, bạn đã \nsẵn sàng để nhận phòng
-				</span>
-			</div>
-			<div style="align-self: stretch; display: flex; flex-direction: column; align-items: center; background: #223B79; border-radius: 10px; padding-top: 13px; margin-bottom: 147px;">
-				<span style="color: #FFFFFF; font-size: 24px; font-weight: bold;" >
-					Hoàn tất Check-In
-				</span>
-			</div>
-		</div>
-	</div>
+  <div class="container">
+    <h1>Thanh Toán</h1>
+
+    <div class="payment-option">
+      <label>
+        <input type="radio" name="payment" value="deposit">
+        Thanh toán trước 500.000 VND để hoàn tất check-in
+      </label>
+      <div class="method">
+        Thanh toán qua:<br>
+        - Thẻ ngân hàng<br>
+        - Chuyển khoản<br>
+        - Tiền mặt
+      </div>
+    </div>
+
+    <div class="payment-option">
+      <label>
+        <input type="radio" name="payment" value="no-deposit">
+        Không cần thanh toán trước, bạn đã sẵn sàng để nhận phòng
+      </label>
+    </div>
+
+    <button onclick="handleSubmit()">Hoàn tất Check-In</button>
+  </div>
+
+  <script>
+    function handleSubmit() {
+      const selected = document.querySelector('input[name="payment"]:checked');
+      if (!selected) {
+        alert('Vui lòng chọn một phương thức thanh toán để tiếp tục.');
+        return;
+      }
+
+      const value = selected.value;
+      if (value === "deposit") {
+        alert("Bạn đã chọn thanh toán trước 500.000 VND.\nCảm ơn bạn đã hoàn tất check-in!");
+      } else {
+        alert("Bạn đã chọn không cần thanh toán trước.\nHoàn tất Check-In. \nChúc bạn kỳ nghỉ vui vẻ!");
+      }
+    }
+  </script>
 </body>
 </html>
