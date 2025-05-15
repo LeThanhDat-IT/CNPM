@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanh toán Thành Công</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: green;
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .info {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .info p {
+      font-size: 18px;
+      margin: 5px 0;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+
+    .buttons button {
+      background-color: red;
+      color: white;
+      font-size: 18px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .buttons button:hover {
+      background-color: darkred;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>THANH TOÁN THÀNH CÔNG</h1>
+
+    <div class="info">
+      <p><strong>Thông tin khách hàng:</strong></p>
+      <p>SỐ PHÒNG: <span id="room-number">...</span></p>
+      <p>MÃ HĐ: <span id="contract-id">...</span></p>
+      <p>TÊN KH: <span id="customer-name">...</span></p>
+      <p><strong>TỔNG CỘNG:</strong> <span id="total-amount">0 VND</span></p>
+    </div>
+
+    <div class="buttons">
+      <button onclick="printInvoice()">In hóa đơn</button>
+      <button onclick="reportIssue()">Báo lỗi hoàn tiền</button>
+    </div>
+  </div>
+
+  <script>
+    function printInvoice() {
+      const roomNumber = localStorage.getItem('roomNumber') || '...';
+      const contractId = localStorage.getItem('contractId') || '...';
+      const customerName = localStorage.getItem('customerName') || '...';
+      const totalAmount = localStorage.getItem('totalAmount') || '0 VND';
+      const checkInTime = localStorage.getItem('checkInTime') || '...';
+      const checkOutTime = localStorage.getItem('checkOutTime') || '...';
+      const guestCount = localStorage.getItem('guestCount') || '...';
+      const paymentMethod = localStorage.getItem('paymentMethod') || '...';
+
+      const printContent = `
+        <h1>Hóa Đơn Thanh Toán</h1>
+        <p><strong>Thông tin khách hàng:</strong></p>
+        <p>SỐ PHÒNG: ${roomNumber}</p>
+        <p>MÃ HĐ: ${contractId}</p>
+        <p>TÊN KH: ${customerName}</p>
+        <p>GIỜ NHẬN PHÒNG: ${checkInTime}</p>
+        <p>GIỜ TRẢ PHÒNG: ${checkOutTime}</p>
+        <p>SỐ KHÁCH THUÊ: ${guestCount}</p>
+        <p>PHƯƠNG THỨC THANH TOÁN: ${paymentMethod}</p>
+        <p><strong>TỔNG CỘNG:</strong> ${totalAmount}</p>
+      `;
+
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(printContent);
+      printWindow.document.close();
+      printWindow.print();
+    }
+
+    // Load data from localStorage to display on the page
+    document.getElementById('room-number').textContent = localStorage.getItem('roomNumber') || '...';
+    document.getElementById('contract-id').textContent = localStorage.getItem('contractId') || '...';
+    document.getElementById('customer-name').textContent = localStorage.getItem('customerName') || '...';
+    document.getElementById('total-amount').textContent = localStorage.getItem('totalAmount') || '0 VND';
+
+    function reportIssue() {
+      alert('Báo lỗi hoàn tiền đã được gửi!');
+    }
+  </script>
+</body>
+</html>

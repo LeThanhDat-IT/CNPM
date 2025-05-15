@@ -12,7 +12,7 @@
             background-color: #E3F7F6;
         }
         .container {
-            max-width: 500px;
+            max-width: 1000px;
             margin: 50px auto;
             background: #FFFFFF;
             padding: 40px;
@@ -123,93 +123,146 @@
         .delete-button:hover {
             background: #CC0000;
         }
+        .layout {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .navigation {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-right: 20px;
+        }
+
+        .navigation button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .navigation button:hover {
+            background-color: #0056b3;
+        }
+
+        .form-container {
+            flex: 1;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="title">Quản Lý Tài Khoản</div>
-        <div class="subtitle">Chọn tài khoản để xem và cập nhật thông tin.</div>
-
-        <div class="section">
-            <h2>Chọn Tài Khoản</h2>
-            <label for="account-select">Tài Khoản</label>
-            <select id="account-select" onchange="loadAccountDetails()">
-                <option value="">-- Chọn tài khoản --</option>
-            </select>
+    <div class="container layout">
+        <div class="navigation">
+            <button onclick="window.location.href='QuanLyPhong.html'">Quản Lý Phòng</button>
+            <button onclick="window.location.href='QuanLyKhachHang.html'">Quản Lý Khách Hàng</button>
+            <button onclick="window.location.href='quanly_tk.html'">Quản Lý Tài Khoản</button>
+            <button onclick="window.location.href='LichSuDatPhong.html'">Lịch Sử Đặt Phòng</button>
+            <button onclick="window.location.href='ThongKeThuNhap.html'">Thống Kê Thu Nhập</button>
         </div>
 
-        <div class="section" id="profile-section" style="display: none;">
-            <h2>Thông Tin Cá Nhân</h2>
-            <label for="name">Họ và Tên</label>
-            <input type="text" id="name" placeholder="Nhập họ và tên">
+        <div class="form-container">
+            <div class="title">Quản Lý Tài Khoản</div>
+            <div class="subtitle">Chọn tài khoản để xem và cập nhật thông tin.</div>
 
-            <label for="phone">Số Điện Thoại</label>
-            <input type="tel" id="phone" placeholder="Nhập số điện thoại">
-
-            <label for="email">Email</label>
-            <input type="email" id="email" placeholder="Nhập email">
-
-        <div class="gender">
-            <span class="gender-label">Giới tính:</span>
-            <label><input type="radio" name="gender" value="Nam"> Nam</label>
-            <label><input type="radio" name="gender" value="Nữ"> Nữ</label>
-        </div>
-
-            <label for="dob">Ngày sinh</label>
-            <input type="date" id="dob">
-
-            <label for="address">Địa chỉ</label>
-            <input type="text" id="address" placeholder="Nhập địa chỉ">
-
-            <button onclick="updateProfile()">Cập Nhật Thông Tin</button>
-        </div>
-
-        <div class="section" id="password-section" style="display: none;">
-            <h2>Đổi Mật Khẩu</h2>
-            <label for="current-password">Mật Khẩu Hiện Tại</label>
-            <input type="password" id="current-password" placeholder="Nhập mật khẩu hiện tại">
-
-            <label for="new-password">Mật Khẩu Mới</label>
-            <input type="password" id="new-password" placeholder="Nhập mật khẩu mới">
-
-            <label for="confirm-password">Nhập Lại Mật Khẩu Mới</label>
-            <input type="password" id="confirm-password" placeholder="Nhập lại mật khẩu mới">
-
-            <button onclick="changePassword()">Đổi Mật Khẩu</button>
-        </div>
-
-        <div class="section" id="settings-section" style="display: none;">
-            <h2>Cài Đặt Tài Khoản</h2>
-            <label for="language">Ngôn Ngữ</label>
-            <select id="language">
-                <option value="vi">Tiếng Việt</option>
-                <option value="en">Tiếng Anh</option>
-            </select>
-
-            <div class="checkbox">
-                <input type="checkbox" id="notifications">
-                <label for="notifications">Nhận thông báo qua email</label>
+            <div class="section">
+                <h2>Chọn Tài Khoản</h2>
+                <label for="account-select">Tài Khoản</label>
+                <select id="account-select" onchange="loadAccountDetails()">
+                    <option value="">-- Chọn tài khoản --</option>
+                </select>
             </div>
 
-            <button onclick="saveSettings()">Lưu Cài Đặt</button>
-            <button class="delete-button" onclick="deleteAccount()">Xóa Tài Khoản</button>
+            <div class="section" id="profile-section" style="display: none;">
+                <h2>Thông Tin Cá Nhân</h2>
+                <label for="name">Họ và Tên</label>
+                <input type="text" id="name" placeholder="Nhập họ và tên">
+
+                <label for="phone">Số Điện Thoại</label>
+                <input type="tel" id="phone" placeholder="Nhập số điện thoại">
+
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Nhập email">
+
+                <div class="gender">
+                    <span class="gender-label">Giới tính:</span>
+                    <label><input type="radio" name="gender" value="Nam"> Nam</label>
+                    <label><input type="radio" name="gender" value="Nữ"> Nữ</label>
+                </div>
+
+                <label for="dob">Ngày sinh</label>
+                <input type="date" id="dob">
+
+                <label for="address">Địa chỉ</label>
+                <input type="text" id="address" placeholder="Nhập địa chỉ">
+
+                <button onclick="updateProfile()">Cập Nhật Thông Tin</button>
+            </div>
+
+            <div class="section" id="password-section" style="display: none;">
+                <h2>Đổi Mật Khẩu</h2>
+                <label for="current-password">Mật Khẩu Hiện Tại</label>
+                <input type="password" id="current-password" placeholder="Nhập mật khẩu hiện tại">
+
+                <label for="new-password">Mật Khẩu Mới</label>
+                <input type="password" id="new-password" placeholder="Nhập mật khẩu mới">
+
+                <label for="confirm-password">Nhập Lại Mật Khẩu Mới</label>
+                <input type="password" id="confirm-password" placeholder="Nhập lại mật khẩu mới">
+
+                <button onclick="changePassword()">Đổi Mật Khẩu</button>
+            </div>
+
+            <div class="section" id="settings-section" style="display: none;">
+                <h2>Cài Đặt Tài Khoản</h2>
+                <label for="language">Ngôn Ngữ</label>
+                <select id="language">
+                    <option value="vi">Tiếng Việt</option>
+                    <option value="en">Tiếng Anh</option>
+                </select>
+
+                <div class="checkbox">
+                    <input type="checkbox" id="notifications">
+                    <label for="notifications">Nhận thông báo qua email</label>
+                </div>
+
+                <button onclick="saveSettings()">Lưu Cài Đặt</button>
+                <button class="delete-button" onclick="deleteAccount()">Xóa Tài Khoản</button>
+            </div>
         </div>
     </div>
 
     <script>
         // Load accounts from localStorage
         const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
-
+        const adminAccounts = JSON.parse(localStorage.getItem('adminAccounts')) || [];
 
         // Populate account dropdown
         function populateAccountSelect() {
             const select = document.getElementById('account-select');
             // Clear existing options except the default
             select.innerHTML = '<option value="">-- Chọn tài khoản --</option>';
+
+            // Add user accounts
             accounts.forEach(account => {
                 const option = document.createElement('option');
                 option.value = account.username;
-                option.textContent = `${account.name} (${account.username})`;
+                option.textContent = `User: ${account.name} (${account.username})`;
+                select.appendChild(option);
+            });
+
+            // Add admin accounts
+            adminAccounts.forEach(account => {
+                const option = document.createElement('option');
+                option.value = account.username;
+                option.textContent = `Admin: ${account.username}`;
                 select.appendChild(option);
             });
         }
@@ -217,7 +270,7 @@
         // Load selected account details
         function loadAccountDetails() {
             const username = document.getElementById('account-select').value;
-            const account = accounts.find(acc => acc.username === username);
+            const account = accounts.find(acc => acc.username === username) || adminAccounts.find(acc => acc.username === username);
             const profileSection = document.getElementById('profile-section');
             const passwordSection = document.getElementById('password-section');
             const settingsSection = document.getElementById('settings-section');
@@ -249,7 +302,7 @@
         // Update profile
         function updateProfile() {
             const username = document.getElementById('account-select').value;
-            const account = accounts.find(acc => acc.username === username);
+            const account = accounts.find(acc => acc.username === username) || adminAccounts.find(acc => acc.username === username);
 
             if (account) {
                 const nameValue    = document.getElementById('name').value;
@@ -278,16 +331,22 @@
                 account.address = addressValue;
                 account.gender  = selectedGender;
 
-                localStorage.setItem('accounts', JSON.stringify(accounts));
+                if (accounts.includes(account)) {
+                    localStorage.setItem('accounts', JSON.stringify(accounts));
+                } else if (adminAccounts.includes(account)) {
+                    localStorage.setItem('adminAccounts', JSON.stringify(adminAccounts));
+                }
+
                 alert("Thông tin cá nhân đã được cập nhật!");
                 populateAccountSelect();
                 document.getElementById('account-select').value = username;
             }
         }
+
         // Change password
         function changePassword() {
             const username = document.getElementById('account-select').value;
-            const account = accounts.find(acc => acc.username === username);
+            const account = accounts.find(acc => acc.username === username) || adminAccounts.find(acc => acc.username === username);
             const currentPassword = document.getElementById('current-password').value;
             const newPassword = document.getElementById('new-password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
@@ -302,7 +361,11 @@
                     return;
                 }
                 account.password = newPassword;
-                localStorage.setItem('accounts', JSON.stringify(accounts));
+                if (accounts.includes(account)) {
+                    localStorage.setItem('accounts', JSON.stringify(accounts));
+                } else {
+                    localStorage.setItem('adminAccounts', JSON.stringify(adminAccounts));
+                }
                 alert("Mật khẩu đã được thay đổi!");
                 document.getElementById('current-password').value = '';
                 document.getElementById('new-password').value = '';
@@ -313,11 +376,15 @@
         // Save settings
         function saveSettings() {
             const username = document.getElementById('account-select').value;
-            const account = accounts.find(acc => acc.username === username);
+            const account = accounts.find(acc => acc.username === username) || adminAccounts.find(acc => acc.username === username);
             if (account) {
                 account.language = document.getElementById('language').value;
                 account.notifications = document.getElementById('notifications').checked;
-                localStorage.setItem('accounts', JSON.stringify(accounts));
+                if (accounts.includes(account)) {
+                    localStorage.setItem('accounts', JSON.stringify(accounts));
+                } else {
+                    localStorage.setItem('adminAccounts', JSON.stringify(adminAccounts));
+                }
                 alert("Cài đặt đã được lưu!");
             }
         }
@@ -325,7 +392,7 @@
         // Delete account
         function deleteAccount() {
             const username = document.getElementById('account-select').value;
-            const account = accounts.find(acc => acc.username === username);
+            const account = accounts.find(acc => acc.username === username) || adminAccounts.find(acc => acc.username === username);
             if (account)            if (confirm("Bạn có chắc chắn muốn xóa tài khoản này? Hành động này không thể hoàn tác.")) {
                 const index = accounts.findIndex(acc => acc.username === username);
                 if (index !== -1) {
@@ -334,12 +401,25 @@
                     alert("Tài khoản đã được xóa!");
                     populateAccountSelect();
                     loadAccountDetails(); // Reset form
+                } else {
+                    const adminIndex = adminAccounts.findIndex(acc => acc.username === username);
+                    if (adminIndex !== -1) {
+                        adminAccounts.splice(adminIndex, 1);
+                        localStorage.setItem('adminAccounts', JSON.stringify(adminAccounts));
+                        alert("Tài khoản đã được xóa!");
+                        populateAccountSelect();
+                        loadAccountDetails(); // Reset form
+                    }
                 }
             }
         }
 
         // Initialize
         populateAccountSelect();
+
+        function navigateTo(page) {
+            window.location.href = page;
+        }
     </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93e466bfbf354514',t:'MTc0Njk5NTA4Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

@@ -113,6 +113,8 @@
   <div class="container">
     <header>
       <h1>THE COW</h1>
+      <input type="text" id="search-bar" placeholder="Tìm kiếm phòng..." style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-size: 16px;">
+      <button onclick="searchRooms()" style="background-color: #FCFEFF; border: none; padding: 10px 20px; border-radius: 8px; font-size: 16px; cursor: pointer;">Tìm kiếm</button>
       <button onclick="alert('Lịch sử thuê phòng')">Lịch sử thuê phòng</button>
     </header>
 
@@ -127,7 +129,7 @@
           <div class="price">360,000 đ</div>
         </div>
         <div class="book-now">
-          <button onclick="alert('Đặt phòng Gia Đình thành công!')">Đặt phòng</button>
+          <button onclick="bookRoom('Gia Đình')">Đặt phòng</button>
           <button onclick="window.location.href='chi_tiet_phong.html?room=family'">Chi Tiết Phòng</button>
         </div>
       </div>
@@ -142,7 +144,7 @@
           <div class="price">200,000 đ</div>
         </div>
         <div class="book-now">
-          <button onclick="alert('Đặt phòng Đơn thành công!')">Đặt phòng</button>
+          <button onclick="bookRoom('Đơn')">Đặt phòng</button>
           <button onclick="window.location.href='chi_tiet_phong.html?room=single'">Chi Tiết Phòng</button>
         </div>
       </div>
@@ -157,7 +159,7 @@
           <div class="price">280,000 đ</div>
         </div>
         <div class="book-now">
-          <button onclick="alert('Đặt phòng Đôi thành công!')">Đặt phòng</button>
+          <button onclick="bookRoom('Đôi')">Đặt phòng</button>
           <button onclick="window.location.href='chi_tiet_phong.html?room=double'">Chi Tiết Phòng</button>
         </div>
       </div>
@@ -172,11 +174,32 @@
           <div class="price">500,000 đ</div>
         </div>
         <div class="book-now">
-          <button onclick="alert('Đặt phòng Cao Cấp thành công!')">Đặt phòng</button>
+          <button onclick="bookRoom('Cao Cấp')">Đặt phòng</button>
           <button onclick="window.location.href='chi_tiet_phong.html?room=premium'">Chi Tiết Phòng</button>
         </div>
       </div>
     </div>
   </div>
+
+  <script>
+    function searchRooms() {
+      const query = document.getElementById('search-bar').value.toLowerCase();
+      const roomCards = document.querySelectorAll('.room-card');
+
+      roomCards.forEach(card => {
+        const roomName = card.querySelector('h2').textContent.toLowerCase();
+        if (roomName.includes(query)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function bookRoom(roomType) {
+      alert(`Đặt phòng ${roomType} thành công!`);
+      window.location.href = 'Check-Out-Thanh Toán Phòng.html';
+    }
+  </script>
 </body>
 </html>

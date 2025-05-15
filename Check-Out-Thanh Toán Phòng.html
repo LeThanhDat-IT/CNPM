@@ -31,7 +31,7 @@
 						<img
 							src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/65bc99d8-b398-41c5-9bd5-402409273b80" 
 							style="width: 40px; height: 40px; object-fit: fill;"
-						/>
+						/>z
 					</div>
 				</div>
 				<div style="align-self: stretch; align-items: flex-start; position: relative;">
@@ -45,23 +45,14 @@
 							</span>
 							<div style="align-self: stretch; display: flex; flex-direction: column; align-items: flex-start; background: #FFFFFF; border: 1px solid #000000; padding-top: 41px; padding-bottom: 41px; margin-bottom: 34px; margin-left: 192px; margin-right: 165px;">
 								<div style="display: flex; align-items: flex-start; margin-bottom: 42px; margin-left: 84px;">
-									<span style="color: #000000; font-size: 25px; margin-top: 4px; margin-right: 24px;" >
-										SỐ PHÒNG:
-									</span>
-									<div style="width: 246px; box-sizing: border-box; height: 39px; box-sizing: border-box; background: #FFFFFF; border: 1px solid #000000; margin-right: 43px;">
-									</div>
-									<span style="color: #000000; font-size: 25px; margin-top: 3px; margin-bottom: 3px; margin-right: 32px; width: 87px;" >
-										Mã HĐ:
-									</span>
-									<div style="width: 239px; box-sizing: border-box; height: 39px; box-sizing: border-box; background: #FFFFFF; border: 1px solid #000000;">
-									</div>
+									<label for="room-number" style="color: #000000; font-size: 25px; margin-top: 4px; margin-right: 24px;">SỐ PHÒNG:</label>
+									<input id="room-number" type="text" style="width: 246px; height: 39px; border: 1px solid #000000; margin-right: 43px;" placeholder="Nhập số phòng">
+									<label for="contract-id" style="color: #000000; font-size: 25px; margin-top: 3px; margin-right: 32px;">Mã HĐ:</label>
+									<input id="contract-id" type="text" style="width: 239px; height: 39px; border: 1px solid #000000;" placeholder="Nhập mã hợp đồng">
 								</div>
 								<div style="display: flex; align-items: flex-start; margin-left: 83px;">
-									<span style="color: #000000; font-size: 25px; margin-top: 16px; margin-right: 77px; width: 93px;" >
-										Tên KH:
-									</span>
-									<div style="width: 647px; box-sizing: border-box; height: 39px; box-sizing: border-box; background: #FFFFFF; border: 1px solid #000000;">
-									</div>
+									<label for="customer-name" style="color: #000000; font-size: 25px; margin-top: 16px; margin-right: 77px;">Tên KH:</label>
+									<input id="customer-name" type="text" style="width: 647px; height: 39px; border: 1px solid #000000;" placeholder="Nhập tên khách hàng">
 								</div>
 							</div>
 							<span style="color: #000000; font-size: 30px; margin-bottom: 22px; margin-left: 192px;" >
@@ -105,20 +96,10 @@
 								Chọn Phương Thức Thanh Toán :
 							</span>
 							<div style="display: flex; align-items: flex-start; margin-bottom: 94px; margin-left: 209px;">
-								<img
-									src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/8c63d372-c43a-4782-af9b-5a64992e35f9" 
-									style="width: 25px; height: 25px; margin-top: 3px; margin-right: 10px; object-fit: fill;"
-								/>
-								<span style="color: #000000; font-size: 25px; margin-right: 244px;" >
-									Tiền mặt
-								</span>
-								<img
-									src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/d04778e7-f564-470b-a01c-e6ae232bf416" 
-									style="width: 25px; height: 25px; margin-top: 7px; margin-bottom: 7px; margin-right: 11px; object-fit: fill;"
-								/>
-								<span style="color: #000000; font-size: 25px; margin-top: 3px;" >
-									Chuyển Khoản
-								</span>
+								<input type="radio" id="cash" name="payment-method" value="cash" style="margin-right: 10px;">
+								<label for="cash" style="color: #000000; font-size: 25px; margin-right: 244px;">Tiền mặt</label>
+								<input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer" style="margin-right: 10px;">
+								<label for="bank-transfer" style="color: #000000; font-size: 25px;">Chuyển Khoản</label>
 							</div>
 							<div style="display: flex; align-items: flex-start; margin-bottom: 38px; margin-left: 209px;">
 								<img
@@ -137,37 +118,23 @@
 								Thanh toán:
 							</span>
 							<div style="display: flex; align-items: flex-start; margin-bottom: 23px; margin-left: 226px;">
-								<span style="color: #000000; font-size: 25px; margin-top: 15px; margin-right: 106px;" >
-									NHẬN :
-								</span>
-								<div style="width: 246px; box-sizing: border-box; height: 39px; box-sizing: border-box; background: #FFFFFF; border: 1px solid #000000; margin-right: 40px;">
-								</div>
-								<span style="color: #000000; font-size: 25px; font-weight: bold; margin-top: 5px;" >
-									VND
-								</span>
+								<label for="payment-received" style="color: #000000; font-size: 25px; margin-top: 15px; margin-right: 106px;">NHẬN:</label>
+								<input id="payment-received" type="number" style="width: 246px; height: 39px; border: 1px solid #000000; margin-right: 40px;" placeholder="Nhập số tiền nhận">
+								<span style="color: #000000; font-size: 25px; font-weight: bold; margin-top: 5px;">VND</span>
 							</div>
 							<div style="display: flex; align-items: flex-start; margin-bottom: 57px; margin-left: 226px;">
-								<span style="color: #000000; font-size: 25px; margin-top: 8px; margin-right: 106px;" >
-									TỔNG :
-								</span>
-								<div style="width: 246px; box-sizing: border-box; height: 39px; box-sizing: border-box; background: #FFFFFF; border: 1px solid #000000; margin-right: 40px;">
-								</div>
-								<span style="color: #000000; font-size: 25px; font-weight: bold; margin-top: 8px; margin-bottom: 8px; width: 53px;" >
-									VND
-								</span>
+								<label for="total-payment" style="color: #000000; font-size: 25px; margin-top: 8px; margin-right: 106px;">TỔNG:</label>
+								<input id="total-payment" type="number" style="width: 246px; height: 39px; border: 1px solid #000000; margin-right: 40px;" placeholder="Nhập tổng số tiền">
+								<span style="color: #000000; font-size: 25px; font-weight: bold; margin-top: 8px;">VND</span>
 							</div>
 							<div style="display: flex; align-items: flex-start; margin-bottom: 28px; margin-left: 226px;">
 								<span style="color: #000000; font-size: 25px; font-weight: bold; margin-top: 8px; margin-right: 96px;" >
 									SỐ DƯ :
 								</span>
-								<div style="width: 246px; box-sizing: border-box; height: 39px; box-sizing: border-box; background: #FFFFFF; border: 1px solid #000000; margin-right: 40px;">
-								</div>
-								<span style="color: #000000; font-size: 25px; font-weight: bold; margin-top: 8px; margin-bottom: 8px; width: 53px;" >
-									VND
-								</span>
+								<span id="balance" style="width: 246px; box-sizing: border-box; height: 39px; background: #FFFFFF; border: 1px solid #000000; margin-right: 40px; display: flex; align-items: center; padding-left: 10px;">0 VND</span>
 							</div>
 							<button style="display: flex; flex-direction: column; align-items: flex-start; background: #223B79; border-radius: 15px; border: none; padding: 15px 24px; margin-left: 219px; margin-right: 29px; text-align: left;"
-								onclick="alert('Pressed!')"}>
+								onclick="calculateBalance(); saveToLocalStorage(); if (confirm('Đã thanh toán thành công!')) { window.location.href='ThanhToanThanhCong.html'; }">
 								<span style="color: #FFFFFF; font-size: 32px; font-weight: bold;" >
 									Thanh Toán
 								</span>
@@ -179,9 +146,7 @@
 						/>
 					</div>
 					<div style="position: absolute; top: -58px; right: 489px; width: 184px; box-sizing: border-box; display: flex; align-items: center; background: #FCFEFF; border-radius: 10px; padding: 13px 15px 7px 15px;">
-						<span style="color: #060606; font-size: 20px; text-align: center; margin-right: 3px; flex: 1;" >
-							Thuê phòng khách sạn
-						</span>
+						
 						<img
 							src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/433d77e7-f7e4-4a75-87da-b91042c8e0bc" 
 							style="width: 40px; height: 40px; object-fit: fill;"
@@ -191,5 +156,33 @@
 			</div>
 		</div>
 	</div>
+	<script>
+		function calculateBalance() {
+			const totalPayment = parseFloat(document.getElementById('total-payment').value) || 0;
+			const paymentReceived = parseFloat(document.getElementById('payment-received').value) || 0;
+			const balance = paymentReceived - totalPayment;
+
+			const balanceElement = document.getElementById('balance');
+			balanceElement.textContent = balance.toLocaleString('vi-VN') + ' VND';
+
+			if (balance < 0) {
+				alert('Số tiền nhận không đủ để thanh toán. Vui lòng kiểm tra lại.');
+			}
+		}
+
+		function saveToLocalStorage() {
+			const roomNumber = document.getElementById('room-number').value;
+			const contractId = document.getElementById('contract-id').value;
+			const customerName = document.getElementById('customer-name').value;
+			const totalPayment = document.getElementById('total-payment').value;
+			const paymentMethod = document.querySelector('input[name="payment-method"]:checked')?.value || '';
+
+			localStorage.setItem('roomNumber', roomNumber);
+			localStorage.setItem('contractId', contractId);
+			localStorage.setItem('customerName', customerName);
+			localStorage.setItem('totalAmount', totalPayment + ' VND');
+			localStorage.setItem('paymentMethod', paymentMethod);
+		}
+	</script>
 </body>
 </html>

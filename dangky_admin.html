@@ -7,135 +7,165 @@
 	<style>
 		body {
 			font-family: system-ui;
+			margin: 0;
+			padding: 0;
+			background-color: #D8F7F2;
+			display: flex;
+			justify-content: center;
+			align-items: flex-start;
+			height: 100vh;
+		}
+
+		.container {
+			background-color: #FFFFFF;
+			padding: 40px;
+			border-radius: 10px;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			width: 800px;
+			max-width: 80%;
+			margin: 50px auto;
+		}
+
+		h2 {
+			text-align: center;
+			color: #223B79;
+			margin-bottom: 30px;
+		}
+
+		label {
+			display: block;
+			margin-top: 20px;
+			font-weight: bold;
+			color: #312E49;
+		}
+
+		input, select {
+			width: 100%;
+			padding: 12px;
+			margin-top: 8px;
+			border: 1px solid #A2A2A6;
+			border-radius: 5px;
+			background-color: #FFFFFF;
+		}
+
+		button {
+			width: 100%;
+			padding: 15px;
+			margin-top: 30px;
+			background-color: #223B79;
+			color: #FFFFFF;
+			font-size: 18px;
+			font-weight: bold;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		button:hover {
+			background-color: #1A2F5D;
+		}
+
+		.note {
+			text-align: center;
+			margin-top: 20px;
+			font-size: 16px;
+			color: #666666;
+		}
+
+		.checkbox-container {
+			display: flex;
+			align-items: center;
+			margin-top: 20px;
+			justify-content: flex-start;
+		}
+
+		.checkbox-container label {
+			text-align: left;
+			font-size: 16px;
+			color: #312E49;
+		}
+
+		.checkbox-container input {
+			margin-right: 10px;
 		}
 	</style>
 </head>
 <body>
-		<div style="display: flex; flex-direction: column; background: #FFFFFF;">
-		<div style="height: 1029px; align-self: stretch; display: flex; flex-direction: column; align-items: flex-start; background: #D8F7F2;">
-			<div style="align-self: stretch; display: flex; flex-direction: column; align-items: flex-end; margin-top: 74px; margin-bottom: 6px;">
-				<span style="color: #000000; font-size: 32px; font-weight: bold; margin-right: 179px;" >
-					Đăng ký cho người dùng 
-				</span>
-			</div>
-			<div style="align-self: stretch; display: flex; flex-direction: column; align-items: flex-end; margin-bottom: 22px;">
-				<span style="color: #8692A6; font-size: 16px; font-weight: bold; margin-right: 175px;" >
-					Điền vào các thông tin dưới đây để đăng ký tài khoản.
-				</span>
-			</div>
-			<span style="color: #312E49; font-size: 16px; font-weight: bold; margin-left: 823px;" >
-				Họ và Tên
-			</span>
-			<div style="align-self: stretch; display: flex; flex-direction: column; align-items: flex-end; margin-bottom: 23px;">
-				<div style="width: 411px; box-sizing: border-box; height: 43px; box-sizing: border-box; background: #FFFFFF; border-radius: 4px; border: 1px solid #A2A2A6; margin-right: 206px;">
-				</div>
-			</div>
-			<span style="color: #312E49; font-size: 16px; font-weight: bold; margin-left: 823px;" >
-				Số Điện Thoại 
-			</span>
-			<div style="align-self: stretch; display: flex; flex-direction: column; align-items: flex-end; margin-bottom: 23px;">
-                <div style="width: 411px; box-sizing: border-box; height: 43px; box-sizing: border-box; background: #FFFFFF; border-radius: 4px; border: 1px solid #A2A2A6; margin-right: 206px;"></div>
-			</div>
-			<span style="color: #312E49; font-size: 16px; font-weight: bold; margin-left: 825px;" >
-				Email
-			</span>
-			<div style="display: flex; align-items: flex-start; margin-bottom: 18px; margin-left: 45px;">
-				<span style="color: #02034E; font-size: 128px; margin-top: 36px; margin-right: 170px; width: 610px;" >
-					THE COW
-				</span>
-				<div style="flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-start;">
-					<div style="width: 482px; box-sizing: border-box; height: 43px; box-sizing: border-box; background: #FFFFFF; border-radius: 4px; border: 1px solid #A2A2A6; margin-bottom: 23px;">
-					</div>
-					<div style="display: flex; align-items: center; margin-bottom: 11px;">
-						<span style="color: #312E49; font-size: 18px; font-weight: bold; margin-right: 30px;" >
-							Giới tính
-						</span>
-						<div style="width: 16px; box-sizing: border-box; height: 16px; box-sizing: border-box; border-radius: 8px; border: 2px solid #223B79; margin: 4px 6px 4px 4px;">
-						</div>
-						<span style="color: #000000; font-size: 18px; margin-right: 4px;" >
-							Nam
-						</span>
-						<div style="width: 16px; box-sizing: border-box; height: 16px; box-sizing: border-box; border-radius: 8px; border: 2px solid #223B79; margin: 4px;">
-						</div>
-						<span style="color: #000000; font-size: 18px;" >
-							Nữ
-						</span>
-					</div>
-					<div style="display: flex; align-items: center; margin-bottom: 11px;">
-						<span style="color: #000000; font-size: 18px; margin-right: 36px;" >
-							Ngày sinh
-						</span>
-						<div style="width: 163px; box-sizing: border-box; height: 39px; box-sizing: border-box; background: #FFFFFF; border: 1px solid #DBDBDB;">
-						</div>
-					</div>
-					<span style="color: #312E49; font-size: 16px; font-weight: bold;" >
-						Địa chỉ
-					</span>
-					<div style="width: 482px; box-sizing: border-box; height: 43px; box-sizing: border-box; background: #FFFFFF; border-radius: 4px; border: 1px solid #A2A2A6; margin-bottom: 14px;">
-					</div>
-					<span style="color: #312E49; font-size: 16px; font-weight: bold;" >
-						Tên đăng nhập
-					</span>
-					<div style="width: 482px; box-sizing: border-box; height: 43px; box-sizing: border-box; background: #FFFFFF; border-radius: 4px; border: 1px solid #A2A2A6;">
-					</div>
-				</div>
-			</div>
-			<span style="color: #312E49; font-size: 16px; font-weight: bold; margin-left: 825px;" >
-				Mật khẩu
-			</span>
-			<div style="align-self: stretch; display: flex; flex-direction: column; align-items: flex-end; margin-bottom: 21px;">
-				<button style="display: flex; align-items: center; background: #FFFFFF; border-radius: 4px; border: 1px solid #A2A2A6; padding: 13px 12px; margin-right: 133px; text-align: left;"
-					onclick="alert('Pressed!')"}>
-					<img
-						src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/a053b10c-ef2a-4a1a-84a6-02d234cbb695" 
-						style="border-radius: 4px; width: 16px; height: 16px; margin-right: 11px; object-fit: fill;"
-					/>
-					<span style="color: #BDBDBD; font-size: 12px; font-weight: bold; margin-right: 356px;" >
-						Mật khẩu
-					</span>
-					<img
-						src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/5100426d-5253-41ee-bea9-ba0167da97cf" 
-						style="border-radius: 4px; width: 16px; height: 16px; object-fit: fill;"
-					/>
-				</button>
-			</div>
-			<span style="color: #312E49; font-size: 16px; font-weight: bold; margin-left: 825px;" >
-				Nhập lại mật khẩu
-			</span>
-			<div style="align-self: stretch; display: flex; flex-direction: column; align-items: flex-end; margin-bottom: 21px;">
-				<button style="display: flex; align-items: center; background: #FFFFFF; border-radius: 4px; border: 1px solid #A2A2A6; padding: 13px 12px; margin-right: 133px; text-align: left;"
-					onclick="alert('Pressed!')"}>
-					<img
-						src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/8907d42e-87a5-440a-9c80-46da1cfe4425" 
-						style="border-radius: 4px; width: 16px; height: 16px; margin-right: 11px; object-fit: fill;"
-					/>
-					<span style="color: #BDBDBD; font-size: 12px; font-weight: bold; margin-right: 301px;" >
-						Nhập lại mật khẩu
-					</span>
-					<img
-						src="https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/52c28d41-ca6e-434b-b663-5daf88a4c2a5" 
-						style="border-radius: 4px; width: 16px; height: 16px; object-fit: fill;"
-					/>
-				</button>
-			</div>
-			<div style="align-self: stretch; display: flex; flex-direction: column; align-items: flex-end; margin-bottom: 35px;">
-				<div style="display: flex; align-items: center; margin-right: 174px;">
-					<div style="width: 16px; box-sizing: border-box; height: 16px; box-sizing: border-box; background: #FFFFFF; border-radius: 4px; border: 2px solid #667085; margin-right: 7px;">
-					</div>
-					<span style="color: #747980; font-size: 14px; font-weight: bold;" >
-						Tôi đồng ý với Điều khoản sử dụng và Chính sách bảo mật.
-					</span>
-				</div>
-			</div>
-			<div style="align-self: stretch; display: flex; flex-direction: column; align-items: flex-end; margin-bottom: 87px;">
-				<button style="width: 482px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; background: #223B79; border-radius: 10px; border: none; padding-top: 13px; padding-bottom: 13px; margin-right: 135px; text-align: left;"
-					onclick="alert('Pressed!')"}>
-					<span style="color: #FFFFFF; font-size: 24px; font-weight: bold;" >
-						Tạo tài khoản
-					</span>
-				</button>
-			</div>
+	<div class="container">
+		<div style="text-align: center; margin-bottom: 20px;">
+			<span style="color: #02034E; font-size: 48px; font-weight: bold;">THE COW</span>
 		</div>
+		<h2>Đăng Ký Admin</h2>
+		<form>
+			<label for="fullname">Họ và Tên</label>
+			<input type="text" id="fullname" placeholder="Nhập họ và tên" required>
+
+			<label for="phone">Số Điện Thoại</label>
+			<input type="text" id="phone" placeholder="Nhập số điện thoại" required>
+
+			<label for="email">Email</label>
+			<input type="email" id="email" placeholder="Nhập email" required>
+
+			<label for="gender">Giới tính</label>
+			<select id="gender" required>
+				<option value="male">Nam</option>
+				<option value="female">Nữ</option>
+				<option value="other">Khác</option>
+			</select>
+
+			<label for="dob">Ngày sinh</label>
+			<input type="date" id="dob" required>
+
+			<label for="address">Địa chỉ</label>
+			<input type="text" id="address" placeholder="Nhập địa chỉ" required>
+
+			<label for="username">Tên Đăng Nhập</label>
+			<input type="text" id="username" placeholder="Nhập tên đăng nhập" required>
+
+			<label for="password">Mật Khẩu</label>
+			<input type="password" id="password" placeholder="Nhập mật khẩu" required>
+
+			<label for="confirmPassword">Nhập Lại Mật Khẩu</label>
+			<input type="password" id="confirmPassword" placeholder="Nhập lại mật khẩu" required>
+
+			<div class="checkbox-container">
+				<input type="checkbox" id="terms" checked>
+				<label for="terms">Tôi đồng ý với Điều khoản sử dụng và Chính sách bảo mật.</label>
+			</div>
+
+			<button type="button" onclick="registerAdmin()">Tạo Tài Khoản</button>
+		</form>
+		<p class="note">Bằng cách đăng ký, bạn đồng ý với Điều khoản sử dụng và Chính sách bảo mật.</p>
 	</div>
+	<script>
+		function registerAdmin() {
+			const username = document.getElementById('username').value;
+			const password = document.getElementById('password').value;
+			const confirmPassword = document.getElementById('confirmPassword').value;
+
+			if (password !== confirmPassword) {
+				alert('Mật khẩu và xác nhận mật khẩu không khớp!');
+				return;
+			}
+
+			// Lấy danh sách tài khoản admin từ localStorage
+			const adminAccounts = JSON.parse(localStorage.getItem('adminAccounts')) || [];
+
+			// Kiểm tra xem tên đăng nhập đã tồn tại chưa
+			if (adminAccounts.some(account => account.username === username)) {
+				alert('Tên đăng nhập đã tồn tại!');
+				return;
+			}
+
+			// Thêm tài khoản mới vào danh sách
+			adminAccounts.push({ username, password });
+
+			// Lưu danh sách tài khoản admin vào localStorage
+			localStorage.setItem('adminAccounts', JSON.stringify(adminAccounts));
+
+			alert('Đã tạo tài khoản admin thành công!');
+			window.location.href = 'dangnhap.html';
+		}
+	</script>
 </body>
 </html>

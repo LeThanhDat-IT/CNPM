@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Đăng Nhập</title>
+	<style>
+		body {
+			font-family: system-ui;
+			margin: 0;
+			padding: 0;
+			background-color: #E3F7F6;
+		}
+		.container {
+			max-width: 500px;
+			margin: 100px auto;
+			background: #FFFFFF;
+			padding: 40px;
+			border-radius: 10px;
+			box-shadow: 0 0 10px rgba(0,0,0,0.1);
+		}
+		h2 {
+			text-align: center;
+			color: #223B79;
+		}
+		label {
+			display: block;
+			margin-top: 20px;
+			font-weight: bold;
+			color: #312E49;
+		}
+		input {
+			width: 100%;
+			padding: 12px;
+			margin-top: 8px;
+			border: 1px solid #A2A2A6;
+			border-radius: 4px;
+			background: #F0FDFC;
+		}
+		button {
+			width: 100%;
+			margin-top: 30px;
+			background: #1BE877;
+			color: black;
+			font-size: 18px;
+			font-weight: bold;
+			padding: 12px;
+			border: none;
+			border-radius: 6px;
+			cursor: pointer;
+		}
+		a {
+			display: block;
+			text-align: center;
+			margin-top: 20px;
+			color: #223B79;
+			font-weight: bold;
+			text-decoration: none;
+		}
+	</style>
+</head>
+<body>
+	<div style="display: flex; justify-content: center; gap: 20px; margin-top: 50px;">
+		<div class="container" style="width: 45%;">
+			<h2>ĐĂNG NHẬP</h2>
+
+			<label for="username">Tên đăng nhập</label>
+			<input type="text" id="username" placeholder="Tên đăng nhập">
+
+			<label for="password">Mật khẩu</label>
+			<input type="password" id="password" placeholder="Mật khẩu">
+
+			<button onclick="login()">LOGIN</button>
+
+			<a href="dangky_visitor.html" style="margin-top: 10px;">Chưa có tài khoản? Đăng ký tại đây</a>
+			<a href="quanly_tk.html">Quên mật khẩu?</a>
+		</div>
+
+		<div class="container" style="width: 45%;">
+			<h2>ĐĂNG NHẬP ADMIN</h2>
+
+			<label for="admin-username">Tên đăng nhập</label>
+			<input type="text" id="admin-username" placeholder="Tên đăng nhập admin">
+
+			<label for="admin-password">Mật khẩu</label>
+			<input type="password" id="admin-password" placeholder="Mật khẩu admin">
+			<button onclick="adminLogin()">LOGIN ADMIN</button>
+			<a href="dangky_admin.html" style="margin-top: 10px;">Đăng ký tài khoản admin</a>
+			<a href="quanly_tk.html">Quên mật khẩu?</a>
+		</div>
+	</div>
+
+	<script>
+		// Gán sẵn giá trị nếu được lưu từ trang đăng ký trước đó
+		const savedUser = localStorage.getItem('username');
+		const savedPass = localStorage.getItem('password');
+		if (savedUser) document.getElementById('username').value = savedUser;
+		if (savedPass) document.getElementById('password').value = savedPass;
+
+		function login() {
+            const enteredUser = document.getElementById('username').value;
+            const enteredPass = document.getElementById('password').value;
+
+            // Lấy danh sách tài khoản từ localStorage
+            const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+
+            // Tìm tài khoản khớp với tên đăng nhập và mật khẩu
+            const matchedAccount = accounts.find(account => account.username === enteredUser && account.password === enteredPass);
+
+            if (matchedAccount) {
+                alert("Đăng nhập thành công!");
+                // Chuyển hướng đến trang chính hoặc thực hiện hành động khác
+                window.location.href = "TrangChu.html"; // Thay đổi đường dẫn nếu cần
+            } else {
+                alert("Sai tên đăng nhập hoặc mật khẩu, vui lòng thử lại");
+            }
+        }
+
+        function adminLogin() {
+            const enteredAdminUser = document.getElementById('admin-username').value;
+            const enteredAdminPass = document.getElementById('admin-password').value;
+
+            // Lấy danh sách tài khoản admin từ localStorage
+            const adminAccounts = JSON.parse(localStorage.getItem('adminAccounts')) || [];
+
+            // Tìm tài khoản admin khớp với tên đăng nhập và mật khẩu
+            const matchedAdminAccount = adminAccounts.find(account => account.username === enteredAdminUser && account.password === enteredAdminPass);
+
+            if (matchedAdminAccount) {
+                alert("Đăng nhập admin thành công!");
+                window.location.href = "QuanLyKhachHang.html"; // Chuyển hướng đến trang quản lý khách hàng
+            } else {
+                alert("Sai tên đăng nhập hoặc mật khẩu admin, vui lòng thử lại");
+            }
+        }
+	</script>
+</body>
+</html>
