@@ -146,6 +146,14 @@
           <label for="reservation-date">Thời gian đặt phòng:</label>
           <input type="date" id="reservation-date" value="2023-04-19" />
         </div>
+        <div class="form-group">
+          <label for="room-code">Mã phòng:</label>
+          <input type="text" id="room-code" readonly />
+        </div>
+        <div class="form-group">
+          <label for="customer-code">Mã KH:</label>
+          <input type="text" id="customer-code" readonly />
+        </div>
         <div class="form-actions">
           <button type="button" onclick="addReservation()">Thêm</button>
           <button type="button" onclick="updateReservation()">Cập nhật</button>
@@ -200,14 +208,19 @@
     }
 
     function deleteReservation() {
-      if (selectedIndex >= 0) {
-        reservationHistory.splice(selectedIndex, 1);
-        selectedIndex = -1;
-        renderReservationHistory();
-      } else {
-        alert('Vui lòng chọn một dòng để xóa');
-      }
-    }
+  // Lấy dữ liệu từ localStorage
+  let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+  if (selectedIndex >= 0 && selectedIndex < bookings.length) {
+    // Xóa phần tử tại vị trí selectedIndex
+    bookings.splice(selectedIndex, 1);
+    // Lưu lại vào localStorage
+    localStorage.setItem('bookings', JSON.stringify(bookings));
+    selectedIndex = -1;
+    renderReservationHistory();
+  } else {
+    alert('Vui lòng chọn một dòng để xóa');
+  }
+}
 
     function searchReservation() {
       const searchValue = document.getElementById('customer-name').value.toLowerCase();
@@ -245,20 +258,33 @@
     function renderReservationHistory() {
       const tbody = document.querySelector('#reservation-history tbody');
       tbody.innerHTML = '';
-      reservationHistory.forEach((reservation, index) => {
+      // Lấy lịch sử đặt phòng từ localStorage
+      const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+      if (bookings.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6">Chưa có lịch sử đặt phòng.</td></tr>';
+        return;
+      }
+      bookings.forEach((booking, index) => {
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td>${reservation.roomCode}</td>
-          <td>${reservation.roomName}</td>
-          <td>${reservation.customerCode}</td>
-          <td>${reservation.customerName}</td>
-          <td>${reservation.reservationDate}</td>
-          <td>${reservation.totalAmount}</td>
+          <td>${booking.roomCode || ''}</td>
+          <td>${booking.room || booking.roomName || ''}</td>
+          <td>${booking.customerCode || ''}</td>
+          <td>${booking.fullname || booking.customerName || ''}</td>
+          <td>${booking.time || booking.reservationDate || ''}</td>
+          <td>${booking.totalAmount || ''}</td>
         `;
         row.onclick = () => {
           clearSelection();
           row.classList.add('selected');
           selectedIndex = index;
+          // Hiển thị mã phòng và mã KH lên input (hoặc tạo input nếu chưa có)
+          document.getElementById('room-name').value = booking.roomName || booking.room || '';
+          document.getElementById('customer-name').value = booking.customerName || booking.fullname || '';
+          document.getElementById('reservation-date').value = booking.reservationDate || booking.time || '';
+          document.getElementById('room-code').value = booking.roomCode || '';
+          document.getElementById('customer-code').value = booking.customerCode || '';
+          // Hiển thị mã phòng và mã KH (tạo input ẩn hoặc alert, ví dụ alert)
         };
         tbody.appendChild(row);
       });
@@ -269,6 +295,10 @@
         tr.classList.remove('selected');
       });
     }
+
+    window.onload = function() {
+      renderReservationHistory();
+    };
   </script>
 </body>
 </html>

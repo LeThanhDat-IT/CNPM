@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>THE COW HOTEL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { margin:0; font-family: 'Segoe UI', Arial, sans-serif; background:#f5f5f5; }
+        .topbar { background:#fff; border-bottom:1px solid #eee; }
+        .container { max-width:1200px; margin:0 auto; }
+        header { background:#fff; }
+        .logo { float:left; padding:24px 0 18px 0; font-size:2em; font-weight:bold; color:#223B79; letter-spacing:2px;}
+        nav { float:right; margin-top:32px; }
+        nav ul { list-style:none; margin:0; padding:0; }
+        nav ul li { display:inline-block; margin:0 18px; }
+        nav ul li a { text-decoration:none; color:#223B79; font-weight:500; font-size:17px; transition:color 0.2s;}
+        nav ul li a:hover { color:#CD202B; }
+        .clearfix::after { content:""; display:table; clear:both; }
+        .slider { background:#fff; margin-top:18px; border-radius:8px; box-shadow:0 2px 12px #223b7911; padding:18px; position:relative; }
+        .slider-img { width:100%; max-height:340px; object-fit:cover; border-radius:6px; }
+        .slider-caption { text-align:center; margin-top:18px; }
+        .slider-caption h2 { color:#CD202B; font-size:1.7em; margin-bottom:8px;}
+        .slider-caption p { color:#444; font-size:1.1em; }
+        .slider-btn { position:absolute; top:50%; transform:translateY(-50%); background:none; color:#fff; border:none; font-size:2em; padding:0 16px; border-radius:50%; cursor:pointer; z-index:2; transition:background 0.2s; }
+        .slider-btn.left { left:10px; }
+        .slider-btn.right { right:10px; }
+        .slider-btn:hover { background:#CD202B; }
+        .rooms-section { background:#fff; margin:32px 0 0 0; border-radius:8px; box-shadow:0 2px 12px #223b7911; padding:28px 18px;}
+        .rooms-list { display:flex; gap:24px; justify-content:center; flex-wrap:wrap;}
+        .room-card { background:#fff; border-radius:8px; box-shadow:0 2px 8px #223b7911; width:320px; overflow:hidden; }
+        .room-card img { width:100%; height:180px; object-fit:cover; }
+        .room-info { padding:16px 14px 12px 14px; }
+        .room-info h3 { margin:0 0 8px 0; color:#223B79;}
+        .room-info ul { padding-left:18px; margin:0 0 10px 0; color:#444; font-size:15px;}
+        .room-info .price { color:#CD202B; font-weight:bold; font-size:1.1em; margin-bottom:10px;}
+        .room-info button { background:#223B79; color:#fff; border:none; border-radius:4px; padding:8px 18px; font-weight:bold; cursor:pointer; transition:background 0.2s;}
+        .room-info button:hover { background:#CD202B; }
+        .main-content { display:flex; gap:24px; margin:32px 0;}
+        .welcome, .special-offer { background:#fff; border-radius:8px; box-shadow:0 2px 8px #223b7911; padding:22px 18px; }
+        .welcome { flex:2; }
+        .special-offer { flex:1; }
+        .welcome img { width:100%; border-radius:6px; margin-bottom:14px;}
+        .welcome h2 { color:#223B79; margin-bottom:10px;}
+        .special-offer h3 { color:#CD202B; margin-bottom:10px;}
+        .special-offer .offer-box { background:#f9f9f9; border-radius:6px; padding:10px 12px; margin-bottom:12px; font-size:15px;}
+        footer { background:#223B79; color:#fff; text-align:center; padding:18px 0 10px 0; font-size:16px; margin-top:30px;}
+        @media (max-width:1000px) {
+            .container { max-width:98vw; }
+            .rooms-list, .main-content { flex-direction:column; }
+            .room-card { width:100%; }
+        }
+        .slider-img, .slider-caption {
+            transition: opacity 0.7s;
+        }
+        .slider.fade-out .slider-img,
+        .slider.fade-out .slider-caption {
+            opacity: 0;
+        }
+        .slider.fade-in .slider-img,
+        .slider.fade-in .slider-caption {
+            opacity: 1;
+        }
+    </style>
+    <script>
+        function bookRoom(roomName) {
+            localStorage.setItem('selectedRoomName', roomName);
+            window.location.href = 'DatPhong.html';
+        }
+    </script>
+    <script>
+        const banners = [
+            {
+                img: "images/phong_caocap.webp",
+                title: "Thiên Đường Thật Sự Trong Tầm Mắt",
+                desc: "Trải nghiệm nghỉ dưỡng đẳng cấp, dịch vụ tận tâm, giá cả hợp lý.<br>THE COW HOTEL - Nơi bạn luôn được chào đón như người thân trong gia đình!"
+            },
+            {
+                img: "images/phong_doi.webp",
+                title: "Không Gian Sang Trọng & Hiện Đại",
+                desc: "Phòng nghỉ tiện nghi, view đẹp, dịch vụ chuyên nghiệp.<br>Đặt phòng ngay để nhận ưu đãi hấp dẫn!"
+            },
+            {
+                img: "images/phong_don.webp",
+                title: "Ưu Đãi Đặc Biệt Mùa Hè",
+                desc: "Giảm giá lên đến 20% cho khách đặt phòng sớm.<br>Liên hệ ngay để biết thêm chi tiết!"
+            }
+        ];
+
+        let current = 0;
+        let sliderInterval;
+
+        function showBanner(idx) {
+            const slider = document.getElementById('slider');
+            const img = document.getElementById('sliderImg');
+            const caption = document.getElementById('sliderCaption');
+            slider.classList.remove('fade-in');
+            slider.classList.add('fade-out');
+            setTimeout(() => {
+                img.src = banners[idx].img;
+                caption.innerHTML = `<h2>${banners[idx].title}</h2><p>${banners[idx].desc}</p>`;
+                slider.classList.remove('fade-out');
+                slider.classList.add('fade-in');
+            }, 400);
+        }
+
+        function nextBanner() {
+            current = (current + 1) % banners.length;
+            showBanner(current);
+            resetSliderInterval();
+        }
+
+        function prevBanner() {
+            current = (current - 1 + banners.length) % banners.length;
+            showBanner(current);
+            resetSliderInterval();
+        }
+
+        function resetSliderInterval() {
+            clearInterval(sliderInterval);
+            sliderInterval = setInterval(() => {
+                nextBanner();
+            }, 4000);
+        }
+
+        window.onload = () => {
+            showBanner(0);
+            sliderInterval = setInterval(() => {
+                nextBanner();
+            }, 4000);
+        };
+    </script>
+</head>
+<body>
+    <div class="topbar">
+        <div class="container clearfix">
+            <div class="logo">THE COW HOTEL</div>
+            <nav>
+                <ul>
+                    <li><a href="HomePage.html">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#rooms">Rooms & Rates</a></li>              
+                    <li><a href="#contact">Liên Hệ</a></li>
+                    <li><a href="TIm_kiemphong.html">Đặt Phòng</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="slider" id="slider">
+            <button class="slider-btn left" onclick="prevBanner()">&#10094;</button>
+            <img class="slider-img" id="sliderImg" src="images/banner1.jpg" alt="Hotel Banner">
+            <div class="slider-caption" id="sliderCaption">
+                <h2>Thiên Đường Thật Sự Trong Tầm Mắt</h2>
+                <p>Trải nghiệm nghỉ dưỡng đẳng cấp, dịch vụ tận tâm, giá cả hợp lý.<br>
+                THE COW HOTEL - Nơi bạn luôn được chào đón như người thân trong gia đình!</p>
+            </div>
+            <button class="slider-btn right" onclick="nextBanner()">&#10095;</button>
+        </div>
+
+        <div class="rooms-section" id="rooms">
+            <div class="rooms-list">
+                <div class="room-card">
+                    <img src="images/family-suite-la-gi.webp" alt="Phòng Gia Đình">
+                    <div class="room-info">
+                        <h3>Phòng Gia Đình</h3>
+                        <ul>
+                            <li>Giường Queen size</li>
+                            <li>Cửa cách âm</li>
+                            <li>Điều hoà hai chiều</li>
+                        </ul>
+                        <div class="price">360,000 đ/đêm</div>
+                        <button onclick="bookRoom('Phòng Gia Đình')">Read More</button>
+                    </div>
+                </div>
+                <div class="room-card">
+                    <img src="images/phong_doi.webp" alt="Phòng Đôi">
+                    <div class="room-info">
+                        <h3>Phòng Đôi</h3>
+                        <ul>
+                            <li>1 Giường Queen size</li>
+                            <li>Cửa cách âm</li>
+                            <li>Điều hoà hai chiều</li>
+                        </ul>
+                        <div class="price">280,000 đ/đêm</div>
+                        <button onclick="bookRoom('Phòng Đôi')">Read More</button>
+                    </div>
+                </div>
+                <div class="room-card">
+                    <img src="images/phong_caocap.webp" alt="Phòng Cao Cấp">
+                    <div class="room-info">
+                        <h3>Phòng Cao Cấp</h3>
+                        <ul>
+                            <li>1 giường King</li>
+                            <li>Cửa cách âm</li>
+                            <li>Điều hoà hai chiều</li>
+                        </ul>
+                        <div class="price">500,000 đ/đêm</div>
+                        <button onclick="bookRoom('Phòng Cao Cấp')">Read More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="welcome" id="about">
+                <img src="images/hotel_overview.jpg" alt="Hotel Overview">
+                <h2>WELCOME TO THE COW HOTEL</h2>
+                <p>
+                    THE COW HOTEL là khách sạn đạt chuẩn quốc tế, tọa lạc ngay trung tâm thành phố với hơn 10 năm kinh nghiệm phục vụ khách hàng trong và ngoài nước. Chúng tôi tự hào mang đến không gian nghỉ dưỡng hiện đại, tiện nghi cùng đội ngũ nhân viên chuyên nghiệp, tận tâm.<br><br>
+                    Sứ mệnh của chúng tôi là mang lại cho quý khách trải nghiệm lưu trú tuyệt vời nhất với dịch vụ chất lượng, giá cả hợp lý và sự hài lòng tối đa. Hãy đến và cảm nhận sự khác biệt tại THE COW HOTEL – nơi bạn luôn được chào đón như người thân trong gia đình!
+                </p>
+                <button>Read More</button>
+            </div>
+            <div class="special-offer" id="offers">
+                <h3>Ưu đãi đặc biệt</h3>
+                <div class="offer-box">
+                    <b>Early Bird Booking</b><br>
+                    Đặt phòng sớm - nhận ưu đãi lên đến 20% cho kỳ nghỉ từ 1/6 đến 30/9!
+                </div>
+                <div class="offer-box">
+                    <b>Free Airport Pickup</b><br>
+                    Miễn phí đưa đón sân bay cho khách đặt phòng từ 3 đêm trở lên.
+                </div>
+                <div class="offer-box">
+                    <b>Buffet sáng miễn phí</b><br>
+                    Tận hưởng bữa sáng buffet đa dạng, hấp dẫn mỗi ngày.
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer id="contact">
+        &copy; 2025 THE COW HOTEL | Địa chỉ: 123 Đường ABC, Quận 1, TP.HCM | Hotline: 0123 456 789<br>
+        Email: info@thecowhotel.vn
+    </footer>
+</body>
+</html>
