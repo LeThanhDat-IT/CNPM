@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quên Mật Khẩu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #E3F7F6 0%, #B2FEFA 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 420px;
+            width: 100%;
+            background: rgba(255,255,255,0.97);
+            padding: 40px 36px 32px 36px;
+            border-radius: 18px;
+            box-shadow: 0 12px 40px 0 rgba(34,59,121,0.18);
+            backdrop-filter: blur(2px);
+            margin: 0;
+        }
+        h2 {
+            text-align: center;
+            color: #223B79;
+            margin-bottom: 24px;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        .input-group {
+            position: relative;
+            margin-bottom: 28px;
+        }
+        .input-group label {
+            font-weight: 600;
+            color: #312E49;
+            margin-bottom: 8px;
+            display: block;
+            font-size: 15px;
+        }
+        .input-group i {
+            position: absolute;
+            left: 14px;
+            top: 44px;
+            color: #A2A2A6;
+            font-size: 18px;
+        }
+        .input-group input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px 12px 12px 40px;
+            margin-top: 4px;
+            border: 1.5px solid #A2A2A6;
+            border-radius: 6px;
+            background: #F0FDFC;
+            font-size: 16px;
+            transition: border 0.2s;
+        }
+        .input-group input:focus {
+            border: 1.5px solid #1BE877;
+            outline: none;
+            background: #eafff7;
+        }
+        button {
+            width: 100%;
+            margin-top: 10px;
+            background: linear-gradient(90deg, #1BE877 0%, #23C6E7 100%);
+            color: #223B79;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 14px 0;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 16px #1be87730;
+            transition: background 0.2s, transform 0.1s;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #23C6E7 0%, #1BE877 100%);
+            transform: translateY(-2px) scale(1.03);
+            color: #0d2b4b;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: #223B79;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s;
+            font-size: 15px;
+        }
+        a:hover {
+            color: #1BE877;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Quên Mật Khẩu</h2>
+        <form id="forgotForm" autocomplete="off">
+            <div class="input-group">
+                <label for="username">Tên đăng nhập hoặc Email</label>
+                <i class="fa fa-envelope"></i>
+                <input type="text" id="username" name="username" placeholder="Nhập tên đăng nhập hoặc email" required>
+            </div>
+            <button type="submit">Gửi yêu cầu</button>
+        </form>
+        <a href="dangnhap.html">Quay lại đăng nhập</a>
+    </div>
+    <script>
+        document.getElementById('forgotForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            // Gửi yêu cầu quên mật khẩu (cần xử lý phía server)
+            fetch('PHP/forgot_password.php', {
+                method: 'POST',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                body: new URLSearchParams({ username: username })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message || "Nếu tài khoản tồn tại, hướng dẫn đổi mật khẩu đã được gửi!");
+            })
+            .catch(error => {
+                alert("Có lỗi xảy ra!");
+                console.error(error);
+            });
+        });
+    </script>
+</body>
+</html>

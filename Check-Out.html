@@ -2,283 +2,205 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Check-out Khách Sạn Bằng Mã Đặt Phòng</title>
+  <title>Trả Phòng - THE COW HOTEL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f0f2f5;
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: linear-gradient(120deg, #e0f7fa 0%, #f8f9fa 100%);
+      min-height: 100vh;
       margin: 0;
-      padding: 0;
     }
     .container {
-      max-width: 480px;
-      margin: 40px auto;
+      max-width: 430px;
+      margin: 48px auto 0 auto;
       background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 16px rgba(34,59,121,0.10);
-      padding: 32px 28px 24px 28px;
+      border-radius: 18px;
+      box-shadow: 0 6px 32px #0002;
+      padding: 36px 30px 28px 30px;
+      position: relative;
+      animation: fadeIn 0.7s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: none;}
     }
     h2 {
+      color: #2e7d32;
       text-align: center;
-      color: #223B79;
-      margin-bottom: 28px;
-    }
-    .form-group {
+      font-size: 2em;
       margin-bottom: 18px;
-    }
-    label {
-      display: block;
-      font-weight: 500;
-      margin-bottom: 6px;
-      color: #223B79;
-    }
-    input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 1em;
-      margin-bottom: 2px;
-    }
-    button {
-      width: 100%;
-      padding: 13px;
-      background: #1a2d6c;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 1.1em;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: background 0.2s;
       letter-spacing: 1px;
     }
-    button:hover {
-      background: #d10000;
+    .form-group {
+      margin-bottom: 22px;
     }
-    .success {
-      color: #1a8f2b;
-      text-align: center;
-      margin-top: 18px;
-      font-weight: bold;
+    label {
+      font-weight: 600;
+      color: #2d4379;
+      font-size: 1.05em;
+      letter-spacing: 0.5px;
     }
-    .error {
-      color: #d10000;
-      margin-bottom: 10px;
-      text-align: center;
+    input[type="text"] {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 7px;
+      border: 1.5px solid #b2dfdb;
+      margin-top: 7px;
+      font-size: 1.08em;
+      transition: border-color 0.2s;
+      outline: none;
     }
-    .info {
-      margin-bottom: 12px;
+    input[type="text"]:focus {
+      border-color: #2e7d32;
+      background: #f1f8e9;
     }
-    .info label {
-      color: #223B79;
-      font-weight: bold;
-    }
-    .paid {
-      color: #1a8f2b;
-      font-weight: bold;
-    }
-    .unpaid {
-      color: #d10000;
-      font-weight: bold;
-    }
-    .checkedout {
-      color: #888;
-      font-weight: bold;
-    }
-    /* Đưa radio và label về cùng dòng, căn trái */
-    .room-status-group {
-      display: flex;
-      gap: 28px;
-      align-items: center;
-      margin: 8px 0 0 0;
-    }
-    .room-status-group label {
-      display: flex;
-      align-items: center;
-      font-weight: 500;
-      color: #223B79;
-      margin: 0;
-      gap: 6px;
-    }
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 24px;
-    }
-    header img {
-      height: 40px;
+    button[type="submit"], #checkoutBtn {
+      background: linear-gradient(90deg, #2e7d32 60%, #43a047 100%);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      padding: 12px 0;
+      font-size: 1.08em;
+      font-weight: 700;
+      width: 100%;
       cursor: pointer;
-      vertical-align: middle;
-      margin-right: 18px;
+      margin-top: 10px;
+      box-shadow: 0 2px 8px #2e7d3222;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 1px;
     }
-    header h1 {
-      display: inline;
-      vertical-align: middle;
-      font-size: 1.5em;
-      color: #223B79;
-      margin: 0;
+    button[type="submit"]:hover, #checkoutBtn:hover {
+      background: linear-gradient(90deg, #388e3c 60%, #66bb6a 100%);
+      transform: translateY(-2px) scale(1.03);
+    }
+    #message {
+      margin: 18px 0 0 0;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.08em;
+      min-height: 24px;
+    }
+    #bookingInfo {
+      margin-top: 28px;
+      background: #f2f7fa;
+      border-radius: 12px;
+      padding: 22px 18px 16px 18px;
+      font-size: 1.09em;
+      color: #222;
+      box-shadow: 0 1px 8px #0001;
+      animation: fadeIn 0.7s;
+    }
+    #bookingInfo strong {
+      color: #2d4379;
+    }
+    .info-row {
+      margin-bottom: 7px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .info-row i {
+      color: #2e7d32;
+      min-width: 20px;
+    }
+    .paid { color: #2e7d32; font-weight: bold;}
+    .unpaid { color: #d32f2f; font-weight: bold;}
+    @media (max-width: 600px) {
+      .container { max-width: 98vw; padding: 18px 4vw; }
+      #bookingInfo { padding: 12px 4vw; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <img src="images/a3.jpg" alt="Logo" onclick="window.location.href='HomePage.html'">
-    <h1>THE COW</h1>
+  <header style="text-align:center; margin-bottom: 18px;">
+    <img src="images/a3.jpg" alt="Logo" style="height:48px;vertical-align:middle;cursor:pointer;margin-right:14px;border-radius:8px;box-shadow:0 2px 8px #0002;" onclick="window.location.href='HomePage.html'">
+    <span style="font-size:1.7em;font-weight:800;color:#2e7d32;vertical-align:middle;letter-spacing:1px;">THE COW HOTEL</span>
   </header>
   <div class="container">
-    <h2>Check-out Bằng Mã Đặt Phòng</h2>
+    <h2><i class="fa-solid fa-door-open"></i> Check-Out</h2>
     <form id="checkoutForm" autocomplete="off">
       <div class="form-group">
-        <label for="bookingCode">Nhập mã đặt phòng</label>
-        <input type="text" id="bookingCode" required placeholder="Nhập mã đặt phòng...">
+        <label for="bookingCode"><i class="fa-solid fa-key"></i> Nhập mã đặt phòng</label>
+        <input type="text" id="bookingCode" required placeholder="VD: BK20250519015">
       </div>
-      <button type="submit">Kiểm tra & Trả phòng</button>
+      <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> Kiểm tra & Trả phòng</button>
       <div id="message"></div>
     </form>
     <div id="bookingInfo"></div>
-    <div id="extraCostSection" style="display:none; margin-top:18px;">
-      <label><b>Nhập số tiền phát sinh (nếu có):</b></label>
-      <input type="number" id="extraCost" min="0" value="0" style="width:100%;padding:8px;margin:8px 0 0 0;">
-      <button id="payExtraBtn" style="margin-top:10px;">Thanh toán chi phí phát sinh</button>
-      <div id="extraCostMsg" style="margin-top:8px;"></div>
-    </div>
   </div>
   <script>
-    // Lấy danh sách đặt phòng từ localStorage
-    const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
-    let currentBooking = null;
-
-    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+    document.getElementById('checkoutForm').onsubmit = function(e) {
       e.preventDefault();
-      const code = document.getElementById('bookingCode').value.trim().toUpperCase();
-      const messageDiv = document.getElementById('message');
+      const code = document.getElementById('bookingCode').value.trim();
+      const msgDiv = document.getElementById('message');
       const infoDiv = document.getElementById('bookingInfo');
-      messageDiv.textContent = '';
+      msgDiv.textContent = '';
+      msgDiv.style.color = '';
       infoDiv.innerHTML = '';
 
-      if (!code) {
-        messageDiv.textContent = 'Vui lòng nhập mã đặt phòng!';
-        messageDiv.className = 'error';
-        return;
-      }
-
-      // Tìm booking theo mã
-      const booking = bookings.find(b => (b.bookingCode || '').toUpperCase() === code);
-
-      if (!booking) {
-        messageDiv.textContent = 'Không tìm thấy mã đặt phòng này!';
-        messageDiv.className = 'error';
-        return;
-      }
-
-      // Nếu đã trả phòng
-      if (booking.checkoutStatus === 'checkedout') {
-        let html = `
-          <div class="info"><label>Phòng:</label> ${booking.room}</div>
-          <div class="info"><label>Khách:</label> ${booking.fullname}</div>
-          <div class="info"><label>Mã đặt phòng:</label> <span style="font-weight:bold;">${booking.bookingCode}</span></div>
-          <div class="info"><label>Trạng thái:</label> <span class="checkedout">Đã trả phòng</span></div>
-        `;
-        infoDiv.innerHTML = html;
-        messageDiv.textContent = 'Phòng này đã được trả!';
-        messageDiv.className = 'success';
-        return;
-      }
-
-      // Hiện thông tin đặt phòng
-      let html = `
-        <div class="info"><label>Phòng:</label> ${booking.room}</div>
-        <div class="info"><label>Khách:</label> ${booking.fullname}</div>
-        <div class="info"><label>Điện thoại:</label> ${booking.phone}</div>
-        <div class="info"><label>Email:</label> ${booking.email}</div>
-        <div class="info"><label>Nhận phòng:</label> ${booking.checkin}</div>
-        <div class="info"><label>Trả phòng:</label> ${booking.checkout}</div>
-        <div class="info"><label>Mã đặt phòng:</label> <span style="font-weight:bold;">${booking.bookingCode}</span></div>
-      `;
-
-      if (booking.paymentStatus === 'paid') {
-        html += `<div class="info"><label>Trạng thái thanh toán:</label> <span class="paid">Đã thanh toán</span></div>`;
-      } else {
-        html += `<div class="info"><label>Trạng thái thanh toán:</label> <span class="unpaid">Chưa thanh toán</span></div>`;
-      }
-
-      currentBooking = booking; // Lưu booking hiện tại
-
-      // Thêm lựa chọn tình trạng phòng
-      html += `
-        <div class="info">
-          <label style="margin-bottom:6px;">Tình trạng phòng khi trả:</label>
-          <div class="room-status-group">
-            <label><input type="radio" name="roomStatus" value="ok" checked> Bình thường</label>
-            <label><input type="radio" name="roomStatus" value="extra"> Có phát sinh chi phí</label>
-          </div>
-        </div>
-        <div id="extraCostTrigger"></div>
-        <button id="checkoutBtn" style="margin-top:14px;">Xác nhận trả phòng</button>
-      `;
-      infoDiv.innerHTML = html;
-      messageDiv.textContent = '';
-
-      // Sự kiện chọn tình trạng phòng
-      document.querySelectorAll('input[name="roomStatus"]').forEach(radio => {
-        radio.onchange = function() {
-          if (this.value === 'extra') {
-            document.getElementById('extraCostSection').style.display = 'block';
-          } else {
-            document.getElementById('extraCostSection').style.display = 'none';
-          }
-        };
-      });
-
-      // Sự kiện xác nhận trả phòng
-      document.getElementById('checkoutBtn').onclick = function(e) {
-        e.preventDefault();
-        const status = document.querySelector('input[name="roomStatus"]:checked').value;
-        if (status === 'extra') {
-          document.getElementById('extraCostSection').style.display = 'block';
-          document.getElementById('extraCostMsg').textContent = 'Vui lòng thanh toán chi phí phát sinh trước khi trả phòng.';
+      fetch('PHP/checkin_api.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ bookingCode: code })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (!data.success) {
+          msgDiv.textContent = data.message || 'Có lỗi xảy ra!';
+          msgDiv.style.color = '#d32f2f';
+          infoDiv.innerHTML = '';
           return;
         }
-        checkoutRoom(booking.bookingCode, 0);
-      };
-    });
+        const b = data.booking;
+        msgDiv.textContent = '';
+        infoDiv.innerHTML = `
+          <div class="info-row"><i class="fa-solid fa-bed"></i> <strong>Phòng:</strong> ${b.room}</div>
+          <div class="info-row"><i class="fa-solid fa-user"></i> <strong>Tên khách:</strong> ${b.fullname}</div>
+          <div class="info-row"><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> ${b.email}</div>
+          <div class="info-row"><i class="fa-solid fa-phone"></i> <strong>Điện thoại:</strong> ${b.phone}</div>
+          <div class="info-row"><i class="fa-solid fa-calendar-check"></i> <strong>Nhận phòng:</strong> ${b.checkin}</div>
+          <div class="info-row"><i class="fa-solid fa-calendar-xmark"></i> <strong>Trả phòng:</strong> ${b.checkout}</div>
+          <div class="info-row"><i class="fa-solid fa-money-bill-wave"></i> <strong>Trạng thái thanh toán:</strong> 
+            <span class="${b.TrangThaiThanhToan == 1 ? 'paid' : 'unpaid'}">
+              ${b.TrangThaiThanhToan == 1 ? 'Đã thanh toán' : 'Chưa thanh toán'}
+            </span>
+          </div>
+          <button id="checkoutBtn" style="margin-top:18px;"><i class="fa-solid fa-door-open"></i> Xác nhận trả phòng</button>
+        `;
 
-    // Sự kiện thanh toán chi phí phát sinh
-    document.getElementById('payExtraBtn').onclick = function() {
-      const extra = parseInt(document.getElementById('extraCost').value) || 0;
-      if (extra <= 0) {
-        document.getElementById('extraCostMsg').textContent = 'Vui lòng nhập số tiền phát sinh hợp lệ!';
-        return;
-      }
-      checkoutRoom(currentBooking.bookingCode, extra);
+        document.getElementById('checkoutBtn').onclick = function() {
+          fetch('PHP/checkout_api.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ bookingCode: b.bookingCode })
+          })
+          .then(res => res.json())
+          .then(result => {
+            if (result.success) {
+              msgDiv.textContent = 'Trả phòng thành công! Cảm ơn quý khách đã sử dụng dịch vụ.';
+              msgDiv.style.color = '#2e7d32';
+              infoDiv.innerHTML += `<div style="color:#2e7d32;font-weight:bold;margin-top:14px;text-align:center;"><i class="fa-solid fa-face-smile-beam"></i> Hẹn gặp lại quý khách!</div>`;
+            } else {
+              msgDiv.textContent = result.message || 'Trả phòng thất bại!';
+              msgDiv.style.color = '#d32f2f';
+            }
+          })
+          .catch(() => {
+            msgDiv.textContent = 'Có lỗi khi trả phòng!';
+            msgDiv.style.color = '#d32f2f';
+          });
+        };
+      })
+      .catch(() => {
+        msgDiv.textContent = 'Có lỗi xảy ra, vui lòng thử lại!';
+        msgDiv.style.color = '#d32f2f';
+        infoDiv.innerHTML = '';
+      });
     };
-
-    // Hàm xác nhận trả phòng (có thể có chi phí phát sinh)
-    function checkoutRoom(bookingCode, extraCost) {
-      const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
-      const idx = bookings.findIndex(b => (b.bookingCode || '').toUpperCase() === bookingCode.toUpperCase());
-      if (idx !== -1) {
-        bookings[idx].checkoutStatus = 'checkedout';
-        if (extraCost && extraCost > 0) {
-          bookings[idx].extraCost = extraCost;
-        }
-        localStorage.setItem('bookings', JSON.stringify(bookings));
-        document.getElementById('message').textContent = extraCost > 0 ? 
-          `Trả phòng thành công! Đã thanh toán thêm ${extraCost.toLocaleString()} đ.` : 
-          'Trả phòng thành công!';
-        document.getElementById('message').className = 'success';
-        setTimeout(() => {
-          document.getElementById('bookingInfo').innerHTML += `<div class="info"><label>Trạng thái:</label> <span class="checkedout">Đã trả phòng</span></div>`;
-          if (extraCost > 0) {
-            document.getElementById('bookingInfo').innerHTML += `<div class="info"><label>Chi phí phát sinh:</label> <span style="color:#d10000;font-weight:bold;">${extraCost.toLocaleString()} đ</span></div>`;
-          }
-          document.getElementById('extraCostSection').style.display = 'none';
-        }, 300);
-      }
-    }
   </script>
 </body>
 </html>

@@ -17,17 +17,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($password !== $confirm_password) {
             echo "Mật khẩu và xác nhận mật khẩu không khớp!";
         } else {
-            $password_hash = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $conn->prepare("INSERT INTO users (name, phone, email, gender, dob, address, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param('ssssssss', $name, $phone, $email, $gender, $dob, $address, $username, $password_hash);
-            if ($stmt->execute()) {
-                // Đăng ký thành công, chuyển hướng về trang đăng nhập
-                header("Location: ../dangnhap.html");
-                exit();
+            // Kiểm tra trùng email, số điện thoại, tên đăng nhập
+            $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? OR phone = ? OR username = ?");
+            $stmt->bind_param('sss', $email, $phone, $username);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result && $result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                if ($row['email'] === $email) {
+                    echo "Email đã được sử dụng!";
+                } elseif ($row['phone'] === $phone) {
+                    echo "Số điện thoại đã được sử dụng!";
+                } elseif ($row['username'] === $username) {
+                    echo "Tên đăng nhập đã được sử dụng!";
+                } else {
+                    echo "Thông tin đã được sử dụng!";
+                }
+                $stmt->close();
             } else {
-                echo "Lỗi: " . $stmt->error;
+                $stmt->close();
+                $password_hash = password_hash($password, PASSWORD_DEFAULT);
+                $stmt2 = $conn->prepare("INSERT INTO users (name, phone, email, gender, dob, address, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt2->bind_param('ssssssss', $name, $phone, $email, $gender, $dob, $address, $username, $password_hash);
+                if ($stmt2->execute()) {
+                    header("Location: ../dangnhap.html");
+                    exit();
+                } else {
+                    echo "Lỗi: " . $stmt2->error;
+                }
+                $stmt2->close();
             }
-            $stmt->close();
         }
     } else {
         echo "Vui lòng nhập đầy đủ thông tin!";

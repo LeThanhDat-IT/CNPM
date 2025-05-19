@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý Phòng - THE COW HOTEL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #f6f8fb;
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: linear-gradient(120deg, #e0f7fa 0%, #f8f9fa 100%);
             margin: 0;
         }
         .layout {
@@ -19,7 +20,7 @@
         .nav {
             width: 100%;
             height: 70px;
-            background: #1a2d6c;
+            background: linear-gradient(90deg, #1a2d6c 60%, #223b79 100%);
             color: #fff;
             display: flex;
             align-items: center;
@@ -28,6 +29,7 @@
             gap: 8px;
             font-size: 1.1em;
             margin-bottom: 28px;
+            box-shadow: 0 4px 16px #223b7922;
         }
         .nav a {
             color: #fff;
@@ -41,8 +43,8 @@
             transition: background 0.2s, color 0.2s;
         }
         .nav a.active, .nav a:hover {
-            background: #223b79;
-            color: #ffd700;
+            background: #ffd700;
+            color: #223b79;
         }
         .main {
             flex: 1;
@@ -61,6 +63,7 @@
             font-size: 2.2em;
             margin: 0;
             letter-spacing: 1px;
+            font-weight: 800;
         }
         .user-info {
             display: flex;
@@ -83,10 +86,15 @@
         }
         .card {
             background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 4px 24px rgba(34,59,121,0.10);
-            padding: 32px 24px 24px 24px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(34,59,121,0.13);
+            padding: 38px 28px 28px 28px;
             margin-top: 12px;
+            animation: fadeIn 0.7s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px);}
+            to { opacity: 1; transform: none;}
         }
         .form-row {
             display: flex;
@@ -99,9 +107,10 @@
             flex-direction: column;
         }
         label {
-            font-weight: 500;
+            font-weight: 600;
             margin-bottom: 6px;
             color: #223b79;
+            letter-spacing: 0.5px;
         }
         input[type="text"], select {
             padding: 12px 14px;
@@ -114,6 +123,7 @@
         input[type="text"]:focus, select:focus {
             border: 2px solid #1a2d6c;
             outline: none;
+            background: #e3f2fd;
         }
         .form-actions {
             display: flex;
@@ -124,41 +134,55 @@
             padding: 12px 26px;
             border: none;
             border-radius: 8px;
-            background: #1a2d6c;
+            background: linear-gradient(90deg, #1a2d6c 60%, #223b79 100%);
             color: #fff;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 1em;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.15s;
             box-shadow: 0 2px 8px rgba(34,59,121,0.06);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .form-actions button:hover {
-            background: #d10000;
+            background: linear-gradient(90deg, #d10000 60%, #223b79 100%);
+            transform: translateY(-2px) scale(1.03);
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 18px;
             background: #fff;
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 2px 12px rgba(34,59,121,0.08);
         }
         th, td {
             padding: 16px 10px;
             text-align: center;
-            font-size: 1.05em;
+            font-size: 1.08em;
         }
         th {
             background: #f1f5f9;
             color: #223b79;
-            font-weight: 600;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
         tr:nth-child(even) {
             background: #f8fafc;
         }
         tr:hover {
             background: #e9f0fa;
+            cursor: pointer;
+        }
+        .highlight-row {
+            background: #fffde7 !important;
+            animation: highlight 1.2s;
+        }
+        @keyframes highlight {
+            from { background: #fff9c4; }
+            to { background: #fffde7; }
         }
         @media (max-width: 900px) {
             .layout { flex-direction: column; }
@@ -172,11 +196,11 @@
 <body>
 <div class="layout">
     <div class="nav">
-      <a href="QuanLyPhong.html"><i class="fa-solid fa-bed"></i> Quản lý phòng</a>
+      <a href="QuanLyPhong.html" class="active"><i class="fa-solid fa-bed"></i> Quản lý phòng</a>
       <a href="QuanLyKhachHang.html"><i class="fa-solid fa-users"></i> Quản lý khách hàng</a>
       <a href="quanly_tk.html"><i class="fa-solid fa-user-gear"></i> Quản lý tài khoản</a>
       <a href="LichSuDatPhong.html"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử đặt phòng</a>
-      <a href="#" class="active"><i class="fa-solid fa-chart-line"></i> Thống kê thu nhập</a>
+      <a href="#"><i class="fa-solid fa-chart-line"></i> Thống kê thu nhập</a>
     </div>
     <div class="main">
         <header>
@@ -246,12 +270,11 @@
     let rooms = [];
 
     // Lấy dữ liệu phòng từ server khi tải trang
-    async function fetchRoomList() {
+    async function fetchRoomList(highlightCode = null) {
         try {
             const res = await fetch('PHP/get_phong.php');
             if (!res.ok) throw new Error('Lỗi khi lấy dữ liệu phòng');
             const data = await res.json();
-            // Chuyển đổi dữ liệu từ DB sang format JS
             rooms = data.map(room => ({
                 code: room.maPhong,
                 name: room.tenPhong,
@@ -259,7 +282,7 @@
                 price: room.giaPhong,
                 status: room.tinhTrang
             }));
-            renderRoomList();
+            renderRoomList(undefined, highlightCode);
         } catch (e) {
             alert('Không thể tải danh sách phòng từ server!');
         }
@@ -278,7 +301,7 @@
         return '';
     }
 
-    function renderRoomList(list = rooms) {
+    function renderRoomList(list = rooms, highlightCode = null) {
         const tbody = document.querySelector('#room-table tbody');
         tbody.innerHTML = '';
         list.forEach(room => {
@@ -290,6 +313,9 @@
                 <td>${Number(room.price).toLocaleString()} đ</td>
                 <td>${getStatusText(room.status)}</td>
             `;
+            if (highlightCode && room.code === highlightCode) {
+                row.classList.add('highlight-row');
+            }
             row.onclick = () => {
                 document.getElementById('room-name').value = room.name;
                 document.getElementById('room-type').value = room.type;
@@ -309,13 +335,30 @@
             alert('Vui lòng nhập đầy đủ thông tin phòng!');
             return;
         }
-        const newRoom = {
-            code: 'R' + String(rooms.length + 1).padStart(3, '0'),
-            name, type, price, status
-        };
-        rooms.push(newRoom);
-        renderRoomList();
-        document.getElementById('room-form').reset();
+        fetch('PHP/add_phong.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, type, price, status })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                fetchRoomList(data.maPhong); // highlight mã phòng vừa thêm
+                setTimeout(() => {
+                    const room = rooms.find(r => r.code === data.maPhong);
+                    if (room) {
+                        document.getElementById('room-name').value = room.name;
+                        document.getElementById('room-type').value = room.type;
+                        document.getElementById('room-price').value = room.price;
+                        document.getElementById('room-status').value = room.status;
+                        alert('Đã thêm phòng. Mã phòng là: ' + room.code);
+                    }
+                }, 400);
+            } else {
+                alert(data.message || 'Thêm phòng thất bại!');
+            }
+        })
+        .catch(() => alert('Lỗi kết nối server!'));
     }
 
     function updateRoom() {
@@ -337,16 +380,26 @@
 
     function deleteRoom() {
         const name = document.getElementById('room-name').value.trim();
-        const idx = rooms.findIndex(r => r.name === name);
-        if (idx !== -1) {
-            if (confirm('Bạn có chắc muốn xóa phòng này?')) {
-                rooms.splice(idx, 1);
-                renderRoomList();
-                document.getElementById('room-form').reset();
-            }
-        } else {
-            alert('Không tìm thấy phòng để xóa!');
+        if (!name) {
+            alert('Vui lòng nhập tên phòng để xóa!');
+            return;
         }
+        if (!confirm('Bạn có chắc muốn xóa phòng này?')) return;
+        fetch('PHP/delete_phong.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                fetchRoomList();
+                document.getElementById('room-form').reset();
+            } else {
+                alert(data.message || 'Xóa phòng thất bại!');
+            }
+        })
+        .catch(() => alert('Lỗi kết nối server!'));
     }
 
     function searchRoom() {

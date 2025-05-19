@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($stmt->execute()) {
         $last_id = $conn->insert_id;
         // Bước 2: Sinh bookingCode duy nhất
-        $bookingCode = 'BK' . date('Ymd') . str_pad($last_id, 3, '0', STR_PAD_LEFT);
+        $bookingCode = 'TCH' . date('Ymd') . str_pad($last_id, 3, '0', STR_PAD_LEFT);
         // Bước 3: Update bookingCode cho bản ghi vừa chèn
         $stmt2 = $conn->prepare("UPDATE bookings SET bookingCode = ? WHERE id = ?");
         $stmt2->bind_param("si", $bookingCode, $last_id);

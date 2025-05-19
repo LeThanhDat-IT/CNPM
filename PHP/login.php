@@ -6,7 +6,6 @@ header('Content-Type: application/json');
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['HTTP_X_REQUESTED_WITH'])) {
     $username = trim($_POST['username'] ?? '');
     $password = trim($_POST['password'] ?? '');
-
     if ($username && $password) {
         $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
         $stmt->bind_param('s', $username);
