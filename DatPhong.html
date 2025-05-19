@@ -146,7 +146,6 @@
       messageDiv.textContent = '';
       messageDiv.className = '';
 
-      // Validate ngày
       if (!room || !fullname || !phone || !email || !checkin || !checkout) {
         messageDiv.textContent = 'Vui lòng nhập đầy đủ thông tin!';
         messageDiv.className = 'error';
@@ -158,16 +157,43 @@
         return;
       }
 
-      // Lưu thông tin đặt phòng vào localStorage trước khi chuyển trang
-      const bookingData = { room, fullname, phone, email, checkin, checkout };
-      localStorage.setItem('lastBooking', JSON.stringify(bookingData));
+      // Gửi đúng tên trường cho PHP
+      const bookingData = { 
+        room, 
+        fullname, 
+        phone, 
+        email, 
+        date: checkin,    // Đổi tên trường
+        time: checkout,   // Đổi tên trường
+        note: ''
+      };
+      // Lưu lại thông tin đầy đủ cho trang thanh toán
+      localStorage.setItem('lastBooking', JSON.stringify({
+        room, fullname, phone, email, checkin, checkout
+      }));
+
       fetch('PHP/datphong.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams(bookingData)
       })
-      .finally(() => {
-        window.location.href = 'ThanhToan.html';
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          // Lưu lại thông tin đầy đủ cho trang thanh toán, bao gồm bookingCode
+          localStorage.setItem('lastBooking', JSON.stringify({
+            room, fullname, phone, email, checkin, checkout,
+            bookingCode: data.bookingCode // Thêm dòng này
+          }));
+          window.location.href = 'ThanhToan.html';
+        } else {
+          messageDiv.textContent = data.message || 'Đặt phòng thất bại!';
+          messageDiv.className = 'error';
+        }
+      })
+      .catch(() => {
+        messageDiv.textContent = 'Có lỗi xảy ra khi đặt phòng!';
+        messageDiv.className = 'error';
       });
     });
   </script>

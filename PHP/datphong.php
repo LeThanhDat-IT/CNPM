@@ -20,31 +20,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Lưu thông tin đặt phòng vào cơ sở dữ liệu
-    $stmt = $conn->prepare("INSERT INTO DatPhong (room, fullname, phone, email, date, time, note) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssss", $room, $fullname, $phone, $email, $date, $time, $note);
+    // Sinh mã đặt phòng tự động (ví dụ: BK20240520001)
+    $prefix = 'BK' . date('Ymd');
+    $sql_max = "SELECT MAX(bookingCode) AS max_code FROM bookings WHERE bookingCode LIKE '{$prefix}%'";
+    $result = $conn->query($sql_max);
+    $row = $result->fetch_assoc();
+    if ($row && $row['max_code']) {
+        $num = intval(substr($row['max_code'], -3)) + 1;
+        $bookingCode = $prefix . str_pad($num, 3, '0', STR_PAD_LEFT);
+    } else {
+        $bookingCode = $prefix . '001';
+    }
+
+    // Lưu thông tin đặt phòng vào bảng bookings (đồng bộ với các file get)
+    $stmt = $conn->prepare("INSERT INTO bookings (room, fullname, phone, email, checkin, checkout, time, bookingCode) VALUES (?, ?, ?, ?, ?, ?, NOW(), ?)");
+    $stmt->bind_param("sssssss", $room, $fullname, $phone, $email, $date, $time, $bookingCode);
 
     if ($stmt->execute()) {
-        echo json_encode(['success' => 'Đặt phòng thành công.']);
-    } else {
-        echo json_encode(['error' => 'Đã xảy ra lỗi. Vui lòng thử lại sau.']);
+        echo json_encode(['success' => true, 'message' => 'Đặt phòng thành công!', 'bookingCode' => $bookingCode]);
     }
 
     $stmt->close();
-}
-
-// Lấy danh sách khách hàng
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'list') {
-    $sql = "SELECT maKH, ten, gioiTinh, sdt, ngaySinh, email, diaChi FROM QuanLyKhachhang ORDER BY maKH ASC";
-    $result = $conn->query($sql);
-    $khachhang = array();
-    if ($result && $result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $khachhang[] = $row;
-        }
-    }
-    echo json_encode($khachhang, JSON_UNESCAPED_UNICODE);
-    exit;
 }
 
 $conn->close();

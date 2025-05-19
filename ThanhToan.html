@@ -175,10 +175,26 @@
           currentBooking = data.booking;
           renderBooking(currentBooking);
         } else {
-          renderBooking(null);
+          // Nếu không lấy được từ server, lấy từ localStorage
+          const lastBooking = localStorage.getItem('lastBooking');
+          if (lastBooking) {
+            currentBooking = JSON.parse(lastBooking);
+            renderBooking(currentBooking);
+          } else {
+            renderBooking(null);
+          }
         }
       })
-      .catch(() => renderBooking(null));
+      .catch(() => {
+        // Nếu lỗi, lấy từ localStorage
+        const lastBooking = localStorage.getItem('lastBooking');
+        if (lastBooking) {
+          currentBooking = JSON.parse(lastBooking);
+          renderBooking(currentBooking);
+        } else {
+          renderBooking(null);
+        }
+      });
     };
 
     function showResultPage(booking, total, method) {

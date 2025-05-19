@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `bookings` (
   `checkin` date NOT NULL,
   `checkout` date NOT NULL,
   `time` datetime NOT NULL,
+  `bookingCode` varchar(20) UNIQUE,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -44,10 +45,10 @@ CREATE TABLE IF NOT EXISTS `bookings` (
 -- Đang đổ dữ liệu cho bảng `bookings`
 --
 
-INSERT INTO `bookings` (`id`, `room`, `fullname`, `phone`, `email`, `checkin`, `checkout`, `time`) VALUES
-(1, 'Phòng Gia Đình', 'sds sd', '0385751026', 'gaterhunter4@gmail.com', '2025-05-18', '2025-05-19', '2025-05-17 04:01:27'),
-(2, 'Phòng Gia Đình', 'sds sd', '0385751026', 'gaterhunter4@gmail.com', '2025-05-18', '2025-05-20', '2025-05-17 04:01:57'),
-(3, 'Phòng Gia Đình', 'sds sd', '0385751026', 'gaterhunter4@gmail.com', '2025-12-05', '2025-12-06', '2025-05-17 04:36:03');
+INSERT INTO `bookings` (`id`, `room`, `fullname`, `phone`, `email`, `checkin`, `checkout`, `time`, `bookingCode`) VALUES
+(1, 'Phòng Gia Đình', 'sds sd', '0385751026', 'gaterhunter4@gmail.com', '2025-05-18', '2025-05-19', '2025-05-17 04:01:27', 'BK001'),
+(2, 'Phòng Gia Đình', 'sds sd', '0385751026', 'gaterhunter4@gmail.com', '2025-05-18', '2025-05-20', '2025-05-17 04:01:57', 'BK002'),
+(3, 'Phòng Gia Đình', 'sds sd', '0385751026', 'gaterhunter4@gmail.com', '2025-12-05', '2025-12-06', '2025-05-17 04:36:03', 'BK003');
 
 -- --------------------------------------------------------
 
@@ -88,15 +89,14 @@ INSERT INTO `users` (`id`, `name`, `phone`, `email`, `gender`, `dob`, `address`,
 DROP TABLE IF EXISTS `QuanLyKhachhang`;
 CREATE TABLE IF NOT EXISTS `QuanLyKhachhang` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `maKH` varchar(10) NOT NULL,
   `ten` varchar(100) NOT NULL,
   `gioiTinh` varchar(10) DEFAULT NULL,
   `sdt` varchar(20) DEFAULT NULL,
   `ngaySinh` date DEFAULT NULL,
   `email` varchar(100) NOT NULL,
   `diaChi` varchar(255) DEFAULT NULL,
+  `maKH` varchar(20) UNIQUE,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `maKH` (`maKH`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

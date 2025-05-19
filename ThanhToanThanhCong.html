@@ -12,92 +12,97 @@
       background-color: #f9f9f9;
       text-align: center;
     }
-
     .container {
-      max-width: 800px;
+      max-width: 600px;
       margin: 50px auto;
-      padding: 20px;
+      padding: 24px 20px;
       background-color: white;
       border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
     }
-
     h1 {
-      color: green;
+      color: #1a8f3c;
       font-size: 32px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
-
     .info {
       text-align: left;
       margin-bottom: 20px;
-    }
-
-    .info p {
       font-size: 18px;
-      margin: 5px 0;
     }
-
+    .info p {
+      margin: 6px 0;
+    }
+    .info strong {
+      color: #223B79;
+    }
+    .label-red {
+      color: #d10000;
+      font-weight: bold;
+    }
+    .label-green {
+      color: #1a8f3c;
+      font-weight: bold;
+    }
     .buttons {
       display: flex;
-      justify-content: space-around;
-      margin-top: 20px;
+      justify-content: center;
+      gap: 18px;
+      margin-top: 24px;
     }
-
     .buttons button {
-      background-color: red;
+      background-color: #223B79;
       color: white;
-      font-size: 18px;
-      padding: 10px 20px;
+      font-size: 17px;
+      padding: 10px 22px;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
       cursor: pointer;
+      transition: background 0.2s;
     }
-
     .buttons button:hover {
-      background-color: darkred;
+      background-color: #d10000;
     }
-
     header {
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 30px;
     }
-
     header img {
       height: 40px;
       cursor: pointer;
-      vertical-align: middle;
       margin-right: 18px;
     }
-
     header h1 {
       display: inline;
-      vertical-align: middle;
       margin: 0;
       font-size: 28px;
-      color: #333;
+      color: #223B79;
+      letter-spacing: 2px;
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="images/a3.jpg" alt="Logo" style="height:40px;cursor:pointer;vertical-align:middle;margin-right:18px;" onclick="window.location.href='HomePage.html'">
-    <h1 style="display:inline;vertical-align:middle;">THE COW</h1>
+    <img src="images/a3.jpg" alt="Logo" onclick="window.location.href='HomePage.html'">
+    <h1>THE COW</h1>
   </header>
 
   <div class="container">
     <h1>THANH TOÁN THÀNH CÔNG</h1>
-
-    <div class="info">
+    <div class="info" id="bookingInfo">
       <p><strong>Thông tin khách hàng:</strong></p>
-      <p>SỐ PHÒNG: <span id="room-number">...</span></p>
-      <p>MÃ HĐ: <span id="contract-id">...</span></p>
-      <p>TÊN KH: <span id="customer-name">...</span></p>
-      <p><strong>TỔNG CỘNG:</strong> <span id="total-amount">0 VND</span></p>
+      <p><strong>Phòng:</strong> <span id="room-number">...</span></p>
+      <p><strong>Mã đặt phòng:</strong> <span class="label-red" id="booking-code">...</span></p>
+      <p><strong>Tên khách:</strong> <span id="customer-name">...</span></p>
+      <p><strong>Email:</strong> <span id="customer-email">...</span></p>
+      <p><strong>Điện thoại:</strong> <span id="customer-phone">...</span></p>
+      <p><strong>Nhận phòng:</strong> <span id="checkin-date">...</span></p>
+      <p><strong>Trả phòng:</strong> <span id="checkout-date">...</span></p>
+      <p><strong>Tổng cộng:</strong> <span class="label-red" id="total-amount">0 VND</span></p>
+      <p class="label-green" style="margin-top:14px;">Vui lòng lưu lại mã đặt phòng để xuất trình khi đến khách sạn check-in.</p>
     </div>
-
     <div class="buttons">
       <button onclick="printInvoice()">In hóa đơn</button>
       <button onclick="reportIssue()">Báo lỗi hoàn tiền</button>
@@ -105,17 +110,7 @@
   </div>
 
   <script>
-    // Lấy email user từ localStorage (sau đăng nhập), nếu chưa có thì yêu cầu nhập
-    function getUserEmail() {
-      let email = localStorage.getItem('user_email');
-      if (!email) {
-        email = prompt('Vui lòng nhập email đã dùng để đặt phòng:');
-        if (email) localStorage.setItem('user_email', email);
-      }
-      return email;
-    }
-
-    // Danh sách phòng và giá (nên đồng bộ với file tìm kiếm phòng)
+    // Giá phòng mẫu (đồng bộ với các trang khác)
     const roomPrices = {
       'Phòng Gia Đình': 360000,
       'Phòng Đôi Cao Cấp': 1200000,
@@ -123,7 +118,6 @@
       'Phòng Tình Nhân': 560000
     };
 
-    // Tính tổng tiền
     function getTotalAmount(booking) {
       if (!booking) return 0;
       const price = roomPrices[booking.room] || 0;
@@ -134,11 +128,25 @@
       return price * nights;
     }
 
+    // Lấy email user từ localStorage (sau đăng nhập), nếu chưa có thì yêu cầu nhập
+    function getUserEmail() {
+      let email = localStorage.getItem('user_email');
+      if (!email) {
+        email = prompt('Vui lòng nhập email đã dùng để đặt phòng:');
+        if (email) localStorage.setItem('user_email', email);
+      }
+      return email;
+    }
+
     // Hiển thị thông tin đặt phòng
     function renderBooking(booking) {
       document.getElementById('room-number').textContent = booking?.room || '...';
-      document.getElementById('contract-id').textContent = booking?.bookingCode || booking?.code || '...';
+      document.getElementById('booking-code').textContent = booking?.bookingCode || booking?.code || '...';
       document.getElementById('customer-name').textContent = booking?.fullname || '...';
+      document.getElementById('customer-email').textContent = booking?.email || '...';
+      document.getElementById('customer-phone').textContent = booking?.phone || '...';
+      document.getElementById('checkin-date').textContent = booking?.checkin || '...';
+      document.getElementById('checkout-date').textContent = booking?.checkout || '...';
       const total = getTotalAmount(booking);
       document.getElementById('total-amount').textContent = total ? total.toLocaleString() + ' VND' : '0 VND';
       // Lưu lại để in hóa đơn
@@ -146,7 +154,7 @@
       window._currentTotal = total;
     }
 
-    // Lấy booking mới nhất từ server
+    // Lấy booking mới nhất từ server, fallback sang localStorage nếu không có
     window.onload = function() {
       const email = getUserEmail();
       if (!email) {
@@ -163,10 +171,23 @@
         if (data.success && data.booking) {
           renderBooking(data.booking);
         } else {
-          renderBooking(null);
+          // Fallback: lấy từ localStorage
+          const lastBooking = localStorage.getItem('lastBooking');
+          if (lastBooking) {
+            renderBooking(JSON.parse(lastBooking));
+          } else {
+            renderBooking(null);
+          }
         }
       })
-      .catch(() => renderBooking(null));
+      .catch(() => {
+        const lastBooking = localStorage.getItem('lastBooking');
+        if (lastBooking) {
+          renderBooking(JSON.parse(lastBooking));
+        } else {
+          renderBooking(null);
+        }
+      });
     };
 
     function printInvoice() {
@@ -178,15 +199,14 @@
       }
       const printContent = `
         <h1>Hóa Đơn Thanh Toán</h1>
-        <p><strong>Thông tin khách hàng:</strong></p>
-        <p>SỐ PHÒNG: ${booking.room || ''}</p>
-        <p>MÃ HĐ: ${booking.bookingCode || booking.code || ''}</p>
-        <p>TÊN KH: ${booking.fullname || ''}</p>
-        <p>EMAIL: ${booking.email || ''}</p>
-        <p>ĐIỆN THOẠI: ${booking.phone || ''}</p>
-        <p>GIỜ NHẬN PHÒNG: ${booking.checkin || ''}</p>
-        <p>GIỜ TRẢ PHÒNG: ${booking.checkout || ''}</p>
-        <p><strong>TỔNG CỘNG:</strong> ${total ? total.toLocaleString() + ' VND' : '0 VND'}</p>
+        <p><strong>Phòng:</strong> ${booking.room || ''}</p>
+        <p><strong>Mã đặt phòng:</strong> ${booking.bookingCode || booking.code || ''}</p>
+        <p><strong>Tên khách:</strong> ${booking.fullname || ''}</p>
+        <p><strong>Email:</strong> ${booking.email || ''}</p>
+        <p><strong>Điện thoại:</strong> ${booking.phone || ''}</p>
+        <p><strong>Nhận phòng:</strong> ${booking.checkin || ''}</p>
+        <p><strong>Trả phòng:</strong> ${booking.checkout || ''}</p>
+        <p><strong>Tổng cộng:</strong> ${total ? total.toLocaleString() + ' VND' : '0 VND'}</p>
       `;
       const printWindow = window.open('', '_blank');
       printWindow.document.write(printContent);
