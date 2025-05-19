@@ -2,26 +2,205 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Check-in Khách Sạn Bằng Mã Đặt Phòng</title>
+  <title>Check-in Khách Sạn</title>
   <link rel="stylesheet" href="checkin.css">
+  <style>
+    body { background: #f6f8fa; font-family: 'Segoe UI', Arial, sans-serif; }
+    .container {
+      max-width: 420px; margin: 40px auto; background: #fff; border-radius: 12px;
+      box-shadow: 0 2px 12px #0001; padding: 32px 28px;
+    }
+    h2 { color: #183153; text-align: center; margin-bottom: 28px; }
+    .form-group { margin-bottom: 18px; }
+    label { font-weight: 600; color: #183153; }
+    input[type="text"] {
+      width: 100%; padding: 10px 12px; border: 1px solid #bfc9d1; border-radius: 6px;
+      font-size: 1.1em; margin-top: 6px; box-sizing: border-box;
+    }
+    button[type="submit"] {
+      width: 100%; background: #183153; color: #fff; font-size: 1.1em;
+      padding: 12px 0; border: none; border-radius: 6px; font-weight: bold;
+      margin-top: 8px; cursor: pointer; transition: background 0.2s;
+    }
+    button[type="submit"]:hover { background: #2d4379; }
+    #message { margin: 14px 0 0 0; text-align: center; font-weight: 500; }
+    #bookingInfo {
+      margin-top: 22px; background: #f2f7fa; border-radius: 8px; padding: 18px 14px;
+      font-size: 1.05em; color: #222;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <img src="images/a3.jpg" alt="Logo" style="height:40px;cursor:pointer;vertical-align:middle;margin-right:18px;" onclick="window.location.href='HomePage.html'">
-    <h1 style="display:inline;vertical-align:middle;">THE COW</h1>
+  <header style="text-align:center; margin-bottom: 18px;">
+    <img src="images/a3.jpg" alt="Logo" style="height:44px;vertical-align:middle;cursor:pointer;margin-right:14px;" onclick="window.location.href='HomePage.html'">
+    <span style="font-size:1.6em;font-weight:bold;color:#2e7d32;vertical-align:middle;">THE COW HOTEL</span>
   </header>
   <div class="container">
     <h2>Check-in Bằng Mã Đặt Phòng</h2>
     <form id="checkinForm" autocomplete="off">
       <div class="form-group">
         <label for="bookingCode">Nhập mã đặt phòng</label>
-        <input type="text" id="bookingCode" required placeholder="Nhập mã đặt phòng...">
+        <input type="text" id="bookingCode" required placeholder="VD: BK20250519015">
       </div>
       <button type="submit">Kiểm tra & Check-in</button>
       <div id="message"></div>
     </form>
     <div id="bookingInfo"></div>
   </div>
-  <script src="checkin.js"></script>
+  <!-- Bắt đầu nhúng JS trực tiếp -->
+  <script>
+    // Lấy danh sách đặt phòng từ localStorage
+    const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+
+    // Giá phòng (đồng bộ với các file khác)
+    const roomPrices = {
+      'Phòng Gia Đình': 360000,
+      'Phòng Đôi Cao Cấp': 1200000,
+      'Phòng Mini': 200000,
+      'Phòng Tình Nhân': 560000
+    };
+
+    // Map loại phòng sang ảnh
+    const roomImages = {
+      'Phòng Gia Đình': 'images/family-suite-la-gi.webp',
+      'Phòng Đôi Cao Cấp': 'images/phong_caocap.webp',
+      'Phòng Mini': 'images/phong_don.webp',
+      'Phòng Tình Nhân': 'images/a3.jpg'
+    };
+
+    function getTotalAmount(booking) {
+      if (!booking) return 0;
+      const price = roomPrices[booking.room] || 0;
+      const checkin = new Date(booking.checkin);
+      const checkout = new Date(booking.checkout);
+      let nights = Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24));
+      if (nights < 1) nights = 1;
+      return price * nights;
+    }
+
+    document.getElementById('checkinForm').onsubmit = function(e) {
+      e.preventDefault();
+      const code = document.getElementById('bookingCode').value.trim();
+      const msgDiv = document.getElementById('message');
+      const infoDiv = document.getElementById('bookingInfo');
+      msgDiv.textContent = '';
+      infoDiv.innerHTML = '';
+
+      fetch('PHP/checkin_api.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ bookingCode: code })
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log('Kết quả fetch:', data);
+
+        if (!data.success) {
+          msgDiv.textContent = data.message || 'Có lỗi xảy ra!';
+          msgDiv.style.color = 'red';
+          infoDiv.innerHTML = '';
+          return;
+        }
+
+        const b = data.booking;
+        console.log('API trả về:', b);
+        console.log('TrangThaiThanhToan:', b.TrangThaiThanhToan);
+
+        if (b.TrangThaiThanhToan != 1 && b.TrangThaiThanhToan != "1") {
+          msgDiv.textContent = '';
+          // Hiển thị thông tin + nút thanh toán
+          infoDiv.innerHTML = `
+            <div><strong>Phòng:</strong> ${b.room}</div>
+            <div><strong>Tên khách:</strong> ${b.fullname}</div>
+            <div><strong>Email:</strong> ${b.email}</div>
+            <div><strong>Điện thoại:</strong> ${b.phone}</div>
+            <div><strong>Nhận phòng:</strong> ${b.checkin}</div>
+            <div><strong>Trả phòng:</strong> ${b.checkout}</div>
+            <div><strong>Trạng thái thanh toán:</strong> 
+              <span style="color:red;font-weight:bold;">Chưa thanh toán</span>
+            </div>
+            <div style="margin:12px 0 6px 0;"><strong>Chọn phương thức thanh toán:</strong></div>
+            <div>
+              <label><input type="radio" name="paymethod" value="bank" checked> Chuyển khoản</label>
+              <label style="margin-left:18px;"><input type="radio" name="paymethod" value="card"> Thẻ</label>
+            </div>
+            <div id="payMethodContent" style="margin:10px 0;"></div>
+            <button id="payBtn" style="margin-top:10px;padding:8px 18px;background:#2e7d32;color:#fff;border:none;border-radius:5px;cursor:pointer;">Thanh toán ngay</button>
+          `;
+
+          // Hiển thị QR nếu chọn chuyển khoản
+          function renderPayMethod() {
+            const method = document.querySelector('input[name="paymethod"]:checked').value;
+            const payContent = document.getElementById('payMethodContent');
+            if (method === 'bank') {
+              payContent.innerHTML = `
+                <div><img src="images/qr-demo.png" alt="QR chuyển khoản" style="width:120px;"><br>
+                <small>Quét mã QR để chuyển khoản<br>STK: 123456789 - Ngân hàng ABC</small></div>
+              `;
+            } else {
+              payContent.innerHTML = `
+                <div>
+                  <input type="text" placeholder="Nhập số thẻ" style="padding:6px;width:160px;">
+                  <input type="text" placeholder="Tên chủ thẻ" style="padding:6px;width:120px;margin-left:8px;">
+                </div>
+              `;
+            }
+          }
+          renderPayMethod();
+          document.querySelectorAll('input[name="paymethod"]').forEach(radio => {
+            radio.onchange = renderPayMethod;
+          });
+
+          // Xử lý khi bấm nút thanh toán
+          document.getElementById('payBtn').onclick = function() {
+            msgDiv.textContent = 'Thanh toán thành công! Bạn có thể check-in.';
+            msgDiv.style.color = 'green';
+            infoDiv.innerHTML += `<div style="color:green;font-weight:bold;margin-top:8px;">Bạn đã thanh toán thành công. Vui lòng làm thủ tục check-in!</div>`;
+            // Có thể gọi API cập nhật trạng thái thanh toán ở đây nếu cần
+          };
+          return;
+        }
+
+        msgDiv.textContent = '';
+        infoDiv.innerHTML = `
+          <div><strong>Phòng:</strong> ${b.room}</div>
+          <div><strong>Tên khách:</strong> ${b.fullname}</div>
+          <div><strong>Email:</strong> ${b.email}</div>
+          <div><strong>Điện thoại:</strong> ${b.phone}</div>
+          <div><strong>Nhận phòng:</strong> ${b.checkin}</div>
+          <div><strong>Trả phòng:</strong> ${b.checkout}</div>
+          <div><strong>Trạng thái thanh toán:</strong> 
+            <span style="color:green;font-weight:bold;">Đã thanh toán</span>
+          </div>
+          <div style="color:green;font-weight:bold;">Bạn có thể check-in!</div>
+        `;
+      })
+      .catch((err) => {
+        console.log('Lỗi fetch:', err); // Thêm dòng này
+        msgDiv.textContent = 'Có lỗi xảy ra, vui lòng thử lại!';
+        msgDiv.style.color = 'red';
+        infoDiv.innerHTML = '';
+      });
+    };
+
+    // Hàm xử lý thanh toán tại quầy check-in
+    function payAtCheckin(bookingCode) {
+      const method = document.querySelector('input[name="paymethod"]:checked').value;
+      // Cập nhật trạng thái thanh toán cho booking
+      const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+      const idx = bookings.findIndex(b => (b.bookingCode || '').toUpperCase() === bookingCode.toUpperCase());
+      if (idx !== -1) {
+        bookings[idx].paymentStatus = 'TrangThaiThanhToan';
+        localStorage.setItem('bookings', JSON.stringify(bookings));
+        document.getElementById('message').textContent = 'Thanh toán thành công! Bạn có thể check-in.';
+        document.getElementById('message').className = 'success';
+        // Hiện lại thông tin đã thanh toán
+        setTimeout(() => {
+          document.getElementById('bookingInfo').innerHTML += `<div class="info"><label>Trạng thái thanh toán:</label> <span class="paid">Đã thanh toán</span></div>`;
+        }, 300);
+      }
+    }
+  </script>
+  <!-- Kết thúc nhúng JS -->
 </body>
 </html>
