@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE COW - Thống Kê Thu Nhập</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f6f8fb;
+      margin: 0;
+      padding: 0;
+    }
+    .topbar {
+      background: #1a2d6c;
+      color: #fff;
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 0 0 18px 18px;
+    }
+    .topbar .logo {
+      font-size: 1.6em;
+      font-weight: bold;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .topbar .nav {
+      display: flex;
+      gap: 18px;
+    }
+    .topbar .nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.08em;
+      padding: 8px 18px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .topbar .nav a.active, .topbar .nav a:hover {
+      background: #223b79;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 32px auto 0 auto;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 4px 24px rgba(34,59,121,0.08);
+      padding: 32px 24px 24px 24px;
+    }
+    .section-title {
+      color: #223B79;
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+    .filter-bar {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .filter-bar select, .filter-bar input[type="date"] {
+      padding: 10px 12px;
+      border: 1px solid #cfd8e3;
+      border-radius: 6px;
+      font-size: 1em;
+      background: #f8fafc;
+    }
+    .filter-bar button {
+      padding: 10px 22px;
+      border: none;
+      border-radius: 6px;
+      background: #1a2d6c;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .filter-bar button:hover {
+      background: #d10000;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 18px;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(34,59,121,0.06);
+    }
+    th, td {
+      padding: 14px 10px;
+      text-align: center;
+    }
+    th {
+      background: #f1f5f9;
+      color: #223b79;
+      font-weight: 600;
+      font-size: 1.05em;
+    }
+    tr:nth-child(even) {
+      background: #f8fafc;
+    }
+    tr:hover {
+      background: #e9f0fa;
+    }
+    .total-row td {
+      font-weight: bold;
+      color: #d10000;
+      background: #f1f5f9;
+    }
+    .report-btn {
+      margin-top: 24px;
+      padding: 12px 32px;
+      background: #1a2d6c;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: block;
+      margin-left: auto;
+    }
+    .report-btn:hover {
+      background: #d10000;
+    }
+    @media (max-width: 900px) {
+      .container { padding: 12px 2px; }
+      .filter-bar { flex-direction: column; gap: 8px; }
+      .topbar { flex-direction: column; gap: 10px; padding: 12px 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="logo"><i class="fa-solid fa-cow"></i> THE COW</div>
+    <div class="nav">
+      <a href="QuanLyPhong.html"><i class="fa-solid fa-bed"></i> Quản lý phòng</a>
+      <a href="QuanLyKhachHang.html"><i class="fa-solid fa-users"></i> Quản lý khách hàng</a>
+      <a href="quanly_tk.html"><i class="fa-solid fa-user-gear"></i> Quản lý tài khoản</a>
+      <a href="LichSuDatPhong.html"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử đặt phòng</a>
+      <a href="#" class="active"><i class="fa-solid fa-chart-line"></i> Thống kê thu nhập</a>
+    </div>
+  </div>
+  <div class="container">
+    <div class="section-title">Thống Kê Thu Nhập</div>
+    <div class="filter-bar">
+      <select id="filter-type">
+        <option>Theo ngày</option>
+        <option>Theo tháng</option>
+        <option>Theo quý</option>
+        <option>Theo năm</option>
+      </select>
+      <input type="date" id="filter-date" value="2025-05-16">
+      <button id="stats-btn"><i class="fa-solid fa-chart-simple"></i> Thống kê</button>
+    </div>
+    <table id="income-table">
+      <thead>
+        <tr>
+          <th>Mã phòng</th>
+          <th>Tên phòng</th>
+          <th>Mã dịch vụ</th>
+          <th>Tên dịch vụ</th>
+          <th>Thời gian đặt phòng</th>
+          <th>Tổng tiền</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>R001</td>
+          <td>Phòng gia đình</td>
+          <td>DV011</td>
+          <td>Đưa đón sân bay bằng xe máy</td>
+          <td>16-05-2025</td>
+          <td>650,000</td>
+        </tr>
+        <tr>
+          <td>R002</td>
+          <td>Phòng đôi cao cấp</td>
+          <td>DV002</td>
+          <td>Bữa sáng buffet</td>
+          <td>16-05-2025</td>
+          <td>1,200,000</td>
+        </tr>
+        <tr>
+          <td>R003</td>
+          <td>Phòng mini</td>
+          <td>DV005</td>
+          <td>Giặt là</td>
+          <td>16-05-2025</td>
+          <td>200,000</td>
+        </tr>
+        <tr class="total-row">
+          <td colspan="5" style="text-align:right;">Tổng doanh thu:</td>
+          <td id="total-revenue">2,050,000 đ</td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="report-btn" id="report-btn"><i class="fa-solid fa-file-arrow-down"></i> Xuất báo cáo</button>
+  </div>
+  <script>
+    document.getElementById('stats-btn').addEventListener('click', function() {
+      const filterType = document.getElementById('filter-type').value;
+      const filterDate = document.getElementById('filter-date').value;
+      alert(`Thống kê theo ${filterType} cho ngày ${filterDate}`);
+    });
+    document.getElementById('report-btn').addEventListener('click', function() {
+      alert('Xuất báo cáo thành công!');
+    });
+  </script>
+</body>
+</html>

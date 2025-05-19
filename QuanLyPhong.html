@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Phòng - THE COW HOTEL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f6f8fb;
+            margin: 0;
+        }
+        .layout {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        .nav {
+            width: 100%;
+            height: 70px;
+            background: #1a2d6c;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            border-radius: 0 0 18px 18px;
+            padding: 0 24px;
+            gap: 8px;
+            font-size: 1.1em;
+            margin-bottom: 28px;
+        }
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            transition: background 0.2s, color 0.2s;
+        }
+        .nav a.active, .nav a:hover {
+            background: #223b79;
+            color: #ffd700;
+        }
+        .main {
+            flex: 1;
+            padding: 0 32px 32px 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 28px 0 18px 0;
+        }
+        header h1 {
+            color: #1a2d6c;
+            font-size: 2.2em;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #223B79;
+            font-weight: 500;
+            font-size: 1.2em;
+            background: #f6f8fb;
+            padding: 8px 18px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(34,59,121,0.06);
+        }
+        .user-info .user-icon i {
+            color: #223B79;
+            background: #e6f0fa;
+            border-radius: 50%;
+            font-size: 1.2em;
+            padding: 3px 4px 3px 4px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(34,59,121,0.10);
+            padding: 32px 24px 24px 24px;
+            margin-top: 12px;
+        }
+        .form-row {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 18px;
+        }
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #223b79;
+        }
+        input[type="text"], select {
+            padding: 12px 14px;
+            border: 1.5px solid #cfd8e3;
+            border-radius: 8px;
+            font-size: 1em;
+            background: #f8fafc;
+            transition: border 0.2s;
+        }
+        input[type="text"]:focus, select:focus {
+            border: 2px solid #1a2d6c;
+            outline: none;
+        }
+        .form-actions {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 10px;
+        }
+        .form-actions button {
+            padding: 12px 26px;
+            border: none;
+            border-radius: 8px;
+            background: #1a2d6c;
+            color: #fff;
+            font-weight: 500;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.2s;
+            box-shadow: 0 2px 8px rgba(34,59,121,0.06);
+        }
+        .form-actions button:hover {
+            background: #d10000;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(34,59,121,0.08);
+        }
+        th, td {
+            padding: 16px 10px;
+            text-align: center;
+            font-size: 1.05em;
+        }
+        th {
+            background: #f1f5f9;
+            color: #223b79;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+        tr:hover {
+            background: #e9f0fa;
+        }
+        @media (max-width: 900px) {
+            .layout { flex-direction: column; }
+            .nav { flex-direction: column; height: auto; border-radius: 0; padding: 0 4px; }
+            .main { padding: 0 8px; }
+            .card { padding: 18px 6px; }
+            .form-row { flex-direction: column; gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+<div class="layout">
+    <div class="nav">
+      <a href="QuanLyPhong.html"><i class="fa-solid fa-bed"></i> Quản lý phòng</a>
+      <a href="QuanLyKhachHang.html"><i class="fa-solid fa-users"></i> Quản lý khách hàng</a>
+      <a href="quanly_tk.html"><i class="fa-solid fa-user-gear"></i> Quản lý tài khoản</a>
+      <a href="LichSuDatPhong.html"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử đặt phòng</a>
+      <a href="#" class="active"><i class="fa-solid fa-chart-line"></i> Thống kê thu nhập</a>
+    </div>
+    <div class="main">
+        <header>
+            <img src="images/a3.jpg" alt="Logo" style="height:40px;cursor:pointer;vertical-align:middle;margin-right:18px;" onclick="window.location.href='HomePage.html'">
+            <h1 style="display:inline;vertical-align:middle;">THE COW</h1>
+            <div class="user-info" id="adminInfo" style="display:none">
+                <span id="adminName">Xin chào, Quản trị viên</span>
+                <span class="user-icon"><i class="fa-solid fa-user-circle"></i></span>
+            </div>
+        </header>
+        <div class="card">
+            <form id="room-form" autocomplete="off">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="room-name">Tên phòng</label>
+                        <input type="text" id="room-name" placeholder="Nhập tên phòng...">
+                    </div>
+                    <div class="form-group">
+                        <label for="room-type">Kiểu phòng</label>
+                        <select id="room-type">
+                            <option value="">Chọn kiểu phòng</option>
+                            <option value="1">Thường</option>
+                            <option value="2">Cao cấp</option>
+                            <option value="3">VIP</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="room-price">Giá phòng (VNĐ)</label>
+                        <input type="text" id="room-price" placeholder="VD: 400000">
+                    </div>
+                    <div class="form-group">
+                        <label for="room-status">Tình trạng</label>
+                        <select id="room-status">
+                            <option value="">Chọn tình trạng</option>
+                            <option value="1">Còn trống</option>
+                            <option value="0">Đã thuê</option>
+                            <option value="2">Bảo trì</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" onclick="addRoom()"><i class="fa-solid fa-plus"></i> Thêm</button>
+                    <button type="button" onclick="updateRoom()"><i class="fa-solid fa-pen"></i> Cập nhật</button>
+                    <button type="button" onclick="deleteRoom()"><i class="fa-solid fa-trash"></i> Xóa</button>
+                    <button type="button" onclick="searchRoom()"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</button>
+                    <button type="button" onclick="renderRoomList()"><i class="fa-solid fa-list"></i> Hiển thị tất cả</button>
+                </div>
+            </form>
+            <table id="room-table">
+                <thead>
+                <tr>
+                    <th>Mã phòng</th>
+                    <th>Tên phòng</th>
+                    <th>Kiểu phòng</th>
+                    <th>Giá phòng</th>
+                    <th>Tình trạng</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Dữ liệu phòng sẽ được hiển thị ở đây -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    let rooms = [];
+
+    // Lấy dữ liệu phòng từ server khi tải trang
+    async function fetchRoomList() {
+        try {
+            const res = await fetch('PHP/get_phong.php');
+            if (!res.ok) throw new Error('Lỗi khi lấy dữ liệu phòng');
+            const data = await res.json();
+            // Chuyển đổi dữ liệu từ DB sang format JS
+            rooms = data.map(room => ({
+                code: room.maPhong,
+                name: room.tenPhong,
+                type: room.kieuPhong,
+                price: room.giaPhong,
+                status: room.tinhTrang
+            }));
+            renderRoomList();
+        } catch (e) {
+            alert('Không thể tải danh sách phòng từ server!');
+        }
+    }
+
+    function getTypeText(type) {
+        if (type === '1') return 'Thường';
+        if (type === '2') return 'Cao cấp';
+        if (type === '3') return 'VIP';
+        return '';
+    }
+    function getStatusText(status) {
+        if (status === '1') return 'Còn trống';
+        if (status === '0') return 'Đã thuê';
+        if (status === '2') return 'Bảo trì';
+        return '';
+    }
+
+    function renderRoomList(list = rooms) {
+        const tbody = document.querySelector('#room-table tbody');
+        tbody.innerHTML = '';
+        list.forEach(room => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${room.code}</td>
+                <td>${room.name}</td>
+                <td>${getTypeText(room.type)}</td>
+                <td>${Number(room.price).toLocaleString()} đ</td>
+                <td>${getStatusText(room.status)}</td>
+            `;
+            row.onclick = () => {
+                document.getElementById('room-name').value = room.name;
+                document.getElementById('room-type').value = room.type;
+                document.getElementById('room-price').value = room.price;
+                document.getElementById('room-status').value = room.status;
+            };
+            tbody.appendChild(row);
+        });
+    }
+
+    function addRoom() {
+        const name = document.getElementById('room-name').value.trim();
+        const type = document.getElementById('room-type').value;
+        const price = document.getElementById('room-price').value.trim();
+        const status = document.getElementById('room-status').value;
+        if (!name || !type || !price || !status) {
+            alert('Vui lòng nhập đầy đủ thông tin phòng!');
+            return;
+        }
+        const newRoom = {
+            code: 'R' + String(rooms.length + 1).padStart(3, '0'),
+            name, type, price, status
+        };
+        rooms.push(newRoom);
+        renderRoomList();
+        document.getElementById('room-form').reset();
+    }
+
+    function updateRoom() {
+        const name = document.getElementById('room-name').value.trim();
+        const type = document.getElementById('room-type').value;
+        const price = document.getElementById('room-price').value.trim();
+        const status = document.getElementById('room-status').value;
+        const room = rooms.find(r => r.name === name);
+        if (room) {
+            room.type = type;
+            room.price = price;
+            room.status = status;
+            renderRoomList();
+            document.getElementById('room-form').reset();
+        } else {
+            alert('Không tìm thấy phòng để cập nhật!');
+        }
+    }
+
+    function deleteRoom() {
+        const name = document.getElementById('room-name').value.trim();
+        const idx = rooms.findIndex(r => r.name === name);
+        if (idx !== -1) {
+            if (confirm('Bạn có chắc muốn xóa phòng này?')) {
+                rooms.splice(idx, 1);
+                renderRoomList();
+                document.getElementById('room-form').reset();
+            }
+        } else {
+            alert('Không tìm thấy phòng để xóa!');
+        }
+    }
+
+    function searchRoom() {
+        const name = document.getElementById('room-name').value.trim();
+        const result = rooms.filter(r => r.name.includes(name));
+        renderRoomList(result);
+    }
+    window.onload = renderRoomList;
+
+    // Hiển thị tên admin trên menu nếu có
+    window.addEventListener('DOMContentLoaded', function() {
+      fetchRoomList();
+      var adminName = localStorage.getItem('adminUsername');
+      if(adminName) {
+        document.getElementById('adminInfo').style.display = 'flex';
+        document.getElementById('adminName').textContent = 'Xin chào, ' + adminName;
+      }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Thanh Toán Đặt Phòng</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; }
+    .container {
+      max-width: 480px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(34,59,121,0.10);
+      padding: 32px 28px 24px 28px;
+    }
+    h2 { text-align: center; color: #223B79; margin-bottom: 28px; }
+    .info { margin-bottom: 18px; }
+    .info label { font-weight: bold; color: #223B79; }
+    .pay-btn, .later-btn {
+      width: 100%; padding: 13px; border-radius: 8px; font-size: 1.1em; font-weight: bold;
+      margin-top: 10px; cursor: pointer; border: none; letter-spacing: 1px;
+    }
+    .pay-btn { background: #1a2d6c; color: #fff; }
+    .pay-btn:hover { background: #d10000; }
+    .later-btn { background: #f5f5f5; color: #223B79; border: 1px solid #223B79; }
+    .later-btn:hover { background: #e0e0e0; }
+    .success { color: #1a8f2b; text-align: center; margin-top: 18px; font-weight: bold; }
+    .error { color: #d10000; text-align: center; margin-top: 18px; font-weight: bold; }
+    .total {
+      font-size: 1.15em;
+      color: #d10000;
+      font-weight: bold;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+    .pay-methods {
+      margin: 18px 0 10px 0;
+      padding: 0;
+    }
+    .pay-methods label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .pay-methods input[type="radio"] {
+      margin-right: 8px;
+      accent-color: #223B79;
+    }
+    .back-btn {
+      width: 100%;
+      padding: 13px;
+      background: #223B79;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 18px;
+      transition: background 0.2s;
+      letter-spacing: 1px;
+    }
+    .back-btn:hover {
+      background: #142155;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    header img {
+      height: 40px;
+      cursor: pointer;
+      vertical-align: middle;
+      margin-right: 18px;
+    }
+    header h1 {
+      display: inline;
+      vertical-align: middle;
+      font-size: 1.5em;
+      color: #223B79;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="images/a3.jpg" alt="Logo" style="height:40px;cursor:pointer;vertical-align:middle;margin-right:18px;" onclick="window.location.href='HomePage.html'">
+    <h1 style="display:inline;vertical-align:middle;">THE COW</h1>
+  </header>
+  <div class="container" id="mainContainer">
+    <h2>Thanh Toán Đặt Phòng</h2>
+    <div id="bookingInfo"></div>
+    <div class="total" id="totalAmount"></div>
+    <div>
+      <div style="font-weight:bold; color:#223B79; margin-bottom:6px;">Chọn phương thức thanh toán:</div>
+      <div class="pay-methods">
+        <label><input type="radio" name="paymethod" value="bank" checked> Chuyển khoản ngân hàng</label>
+        <label><input type="radio" name="paymethod" value="card"> Thẻ (ATM/Visa/MasterCard)</label>
+      </div>
+    </div>
+    <button class="pay-btn" onclick="payNow()">Thanh toán ngay</button>
+    <button class="later-btn" onclick="payLater()">Thanh toán sau khi nhận phòng</button>
+    <div id="message"></div>
+  </div>
+  <script>
+    // Lấy email user từ localStorage (sau đăng nhập), nếu chưa có thì yêu cầu nhập
+    function getUserEmail() {
+      let email = localStorage.getItem('user_email');
+      if (!email) {
+        email = prompt('Vui lòng nhập email đã dùng để đặt phòng:');
+        if (email) localStorage.setItem('user_email', email);
+      }
+      return email;
+    }
+
+    // Danh sách phòng và giá (nên đồng bộ với file tìm kiếm phòng)
+    const roomPrices = {
+      'Phòng Gia Đình': 360000,
+      'Phòng Đôi Cao Cấp': 1200000,
+      'Phòng Mini': 200000,
+      'Phòng Tình Nhân': 560000
+    };
+
+    // Tính tổng tiền
+    function getTotalAmount(booking) {
+      if (!booking) return 0;
+      const price = roomPrices[booking.room] || 0;
+      const checkin = new Date(booking.checkin);
+      const checkout = new Date(booking.checkout);
+      let nights = Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24));
+      if (nights < 1) nights = 1;
+      return price * nights;
+    }
+
+    // Hiển thị thông tin đặt phòng
+    function renderBooking(booking) {
+      const infoDiv = document.getElementById('bookingInfo');
+      const totalDiv = document.getElementById('totalAmount');
+      if (!booking) {
+        infoDiv.innerHTML = '<div class="error">Không tìm thấy thông tin đặt phòng.</div>';
+        totalDiv.textContent = '';
+        document.querySelector('.pay-btn').disabled = true;
+        document.querySelector('.later-btn').disabled = true;
+        return;
+      }
+      infoDiv.innerHTML = `
+        <div class="info"><label>Phòng:</label> ${booking.room}</div>
+        <div class="info"><label>Khách:</label> ${booking.fullname}</div>
+        <div class="info"><label>Điện thoại:</label> ${booking.phone}</div>
+        <div class="info"><label>Email:</label> ${booking.email}</div>
+        <div class="info"><label>Nhận phòng:</label> ${booking.checkin}</div>
+        <div class="info"><label>Trả phòng:</label> ${booking.checkout}</div>
+      `;
+      const total = getTotalAmount(booking);
+      totalDiv.textContent = `Tổng số tiền cần thanh toán: ${total.toLocaleString()} đ`;
+    }
+
+    // Lấy booking mới nhất từ server
+    let currentBooking = null;
+    window.onload = function() {
+      const email = getUserEmail();
+      if (!email) {
+        renderBooking(null);
+        return;
+      }
+      fetch('PHP/get_last_booking.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'email=' + encodeURIComponent(email)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.booking) {
+          currentBooking = data.booking;
+          renderBooking(currentBooking);
+        } else {
+          renderBooking(null);
+        }
+      })
+      .catch(() => renderBooking(null));
+    };
+
+    function showResultPage(booking, total, method) {
+      // Hiển thị trang kết quả, không lưu localStorage nữa
+      const bookingCode = booking.bookingCode || booking.code || '';
+      document.getElementById('mainContainer').innerHTML = `
+        <h2>Đặt Phòng Thành Công</h2>
+        <div class="info"><label>Phòng:</label> ${booking.room}</div>
+        <div class="info"><label>Khách:</label> ${booking.fullname}</div>
+        <div class="info"><label>Điện thoại:</label> ${booking.phone}</div>
+        <div class="info"><label>Email:</label> ${booking.email}</div>
+        <div class="info"><label>Nhận phòng:</label> ${booking.checkin}</div>
+        <div class="info"><label>Trả phòng:</label> ${booking.checkout}</div>
+        <div class="total">Tổng số tiền: ${total.toLocaleString()} đ</div>
+        <div class="info"><label>Phương thức thanh toán:</label> ${method}</div>
+        <div class="info"><label style="color:#d10000;">Mã đặt phòng của bạn:</label> <span style="font-size:1.2em;font-weight:bold;">${bookingCode}</span></div>
+        <div class="success">Vui lòng lưu lại mã đặt phòng để xuất trình khi đến khách sạn check-in.</div>
+        <button class="back-btn" onclick="window.location.href='TIm_kiemphong.html'">Quay lại trang tìm phòng</button>
+      `;
+    }
+
+    function payNow() {
+      if (!currentBooking) return;
+      const methodRadio = document.querySelector('input[name="paymethod"]:checked');
+      const method = methodRadio ? methodRadio.nextSibling.textContent.trim() : '';
+      const total = getTotalAmount(currentBooking);
+      showResultPage(currentBooking, total, method);
+      setTimeout(() => {
+        window.location.href = 'ThanhToanThanhCong.html';
+      }, 1000);
+    }
+    function payLater() {
+      if (!currentBooking) return;
+      const total = getTotalAmount(currentBooking);
+      showResultPage(currentBooking, total, 'Thanh toán tại khách sạn');
+    }
+  </script>
+</body>
+</html>

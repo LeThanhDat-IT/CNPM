@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Tài Khoản</title>
+    <style>
+        body {
+            font-family: system-ui;
+            margin: 0;
+            padding: 0;
+            background-color: #E3F7F6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            background: #FFFFFF;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #223B79;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 14px;
+            color: #8692A6;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            font-size: 18px;
+            color: #312E49;
+            font-weight: bold;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #A2A2A6;
+            padding-bottom: 5px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            color: #312E49;
+            margin: 8px 0 4px;
+        }
+        input, select {
+            width: 100%;
+            height: 36px;
+            padding: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #A2A2A6;
+            border-radius: 4px;
+            font-size: 13px;
+            background: #F0FDFC; 
+            box-sizing: border-box;
+        }
+        .gender {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 12px;
+        }
+
+        .gender-label {
+            min-width: 80px;
+            font-weight: bold;
+            color: #312E49;
+            font-size: 15px;
+        }
+
+        .gender label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .gender input[type="radio"] {
+            width: 18px;
+            height: 18px;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin: 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #1BE877;
+            color: black;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #17d66b;
+        }
+        .delete-button {
+            background: #FF4444;
+            margin-top: 10px;
+        }
+        .delete-button:hover {
+            background: #CC0000;
+        }
+        .layout {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .navigation {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-right: 20px;
+        }
+
+        .navigation button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .navigation button:hover {
+            background-color: #0056b3;
+        }
+
+        .form-container {
+            flex: 1;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        header img {
+            height: 40px;
+            cursor: pointer;
+            vertical-align: middle;
+            margin-right: 18px;
+        }
+
+        header h1 {
+            display: inline;
+            vertical-align: middle;
+            font-size: 28px;
+            color: #223B79;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container layout">
+        <header>
+            <img src="images/a3.jpg" alt="Logo" onclick="window.location.href='HomePage.html'">
+            <h1>THE COW</h1>
+        </header>
+
+        <div class="navigation">
+            <button onclick="window.location.href='QuanLyPhong.html'">Quản Lý Phòng</button>
+            <button onclick="window.location.href='QuanLyKhachHang.html'">Quản Lý Khách Hàng</button>
+            <button onclick="window.location.href='quanly_tk.html'">Quản Lý Tài Khoản</button>
+            <button onclick="window.location.href='LichSuDatPhong.html'">Lịch Sử Đặt Phòng</button>
+            <button onclick="window.location.href='ThongKeThuNhap.html'">Thống Kê Thu Nhập</button>
+        </div>
+
+        <div class="form-container">
+            <div class="title">Quản Lý Tài Khoản</div>
+            <div class="subtitle">Chọn tài khoản để xem và cập nhật thông tin.</div>
+
+            <div class="section">
+                <h2>Chọn Tài Khoản</h2>
+                <label for="account-select">Tài Khoản</label>
+                <select id="account-select" onchange="loadAccountDetails()">
+                    <option value="">-- Chọn tài khoản --</option>
+                </select>
+            </div>
+
+            <div class="section" id="profile-section" style="display: none;">
+                <h2>Thông Tin Cá Nhân</h2>
+                <label for="name">Họ và Tên</label>
+                <input type="text" id="name" placeholder="Nhập họ và tên">
+
+                <label for="phone">Số Điện Thoại</label>
+                <input type="tel" id="phone" placeholder="Nhập số điện thoại">
+
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Nhập email">
+
+                <div class="gender">
+                    <span class="gender-label">Giới tính:</span>
+                    <label><input type="radio" name="gender" value="Nam"> Nam</label>
+                    <label><input type="radio" name="gender" value="Nữ"> Nữ</label>
+                </div>
+
+                <label for="dob">Ngày sinh</label>
+                <input type="date" id="dob">
+
+                <label for="address">Địa chỉ</label>
+                <input type="text" id="address" placeholder="Nhập địa chỉ">
+
+                <button onclick="updateProfile()">Cập Nhật Thông Tin</button>
+            </div>
+
+            <div class="section" id="password-section" style="display: none;">
+                <h2>Đổi Mật Khẩu</h2>
+                <label for="current-password">Mật Khẩu Hiện Tại</label>
+                <input type="password" id="current-password" placeholder="Nhập mật khẩu hiện tại">
+
+                <label for="new-password">Mật Khẩu Mới</label>
+                <input type="password" id="new-password" placeholder="Nhập mật khẩu mới">
+
+                <label for="confirm-password">Nhập Lại Mật Khẩu Mới</label>
+                <input type="password" id="confirm-password" placeholder="Nhập lại mật khẩu mới">
+
+                <button onclick="changePassword()">Đổi Mật Khẩu</button>
+            </div>
+
+            <div class="section" id="settings-section" style="display: none;">
+                <h2>Cài Đặt Tài Khoản</h2>
+                <label for="language">Ngôn Ngữ</label>
+                <select id="language">
+                    <option value="vi">Tiếng Việt</option>
+                    <option value="en">Tiếng Anh</option>
+                </select>
+
+                <div class="checkbox">
+                    <input type="checkbox" id="notifications">
+                    <label for="notifications">Nhận thông báo qua email</label>
+                </div>
+
+                <button onclick="saveSettings()">Lưu Cài Đặt</button>
+                <button class="delete-button" onclick="deleteAccount()">Xóa Tài Khoản</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load accounts from localStorage
+        const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+        const adminAccounts = JSON.parse(localStorage.getItem('adminAccounts')) || [];
+
+        // Populate account dropdown
+        function populateAccountSelect() {
+            const select = document.getElementById('account-select');
+            // Clear existing options except the default
+            select.innerHTML = '<option value="">-- Chọn tài khoản --</option>';
+
+            // Add user accounts
+            accounts.forEach(account => {
+                const option = document.createElement('option');
+                option.value = account.username;
+                option.textContent = `User: ${account.name} (${account.username})`;
+                select.appendChild(option);
+            });
+
+            // Add admin accounts
+            adminAccounts.forEach(account => {
+                const option = document.createElement('option');
+                option.value = account.username;
+                option.textContent = `Admin: ${account.username}`;
+                select.appendChild(option);
+            });
+        }
+
+        // Load selected account details
+        function loadAccountDetails() {
+            const username = document.getElementById('account-select').value;
+            const account = accounts.find(acc => acc.username === username) || adminAccounts.find(acc => acc.username === username);
+            const profileSection = document.getElementById('profile-section');
+            const passwordSection = document.getElementById('password-section');
+            const settingsSection = document.getElementById('settings-section');
+
+            if (account) {
+                profileSection.style.display = 'block';
+                passwordSection.style.display = 'block';
+                settingsSection.style.display = 'block';
+
+                document.getElementById('name').value = account.name || '';
+                document.getElementById('phone').value = account.phone || '';
+                document.getElementById('email').value = account.email || '';
+                document.getElementById('dob').value = account.dob || '';
+                document.getElementById('address').value = account.address || '';
+                document.getElementById('language').value = account.language || 'vi';
+                document.getElementById('notifications').checked = account.notifications || false;
+
+                const genderInputs = document.getElementsByName('gender');
+                genderInputs.forEach(input => {
+                    input.checked = input.value === account.gender;
+                });
+            } else {
+                profileSection.style.display = 'none';
+                passwordSection.style.display = 'none';
+                settingsSection.style.display = 'none';
+            }
+        }
+
+        // Update profile
+        function updateProfile() {
+            const username = document.getElementById('account-select').value;
+            const account = accounts.find(acc => acc.username === username) || adminAccounts.find(acc => acc.username === username);
+
+            if (account) {
+                const nameValue    = document.getElementById('name').value;
+                const phoneValue   = document.getElementById('phone').value;
+                const emailValue   = document.getElementById('email').value;
+                const dobValue     = document.getElementById('dob').value;
+                const addressValue = document.getElementById('address').value;
+                const genderInputs = document.getElementsByName('gender');
+                const selectedGender = Array.from(genderInputs).find(input => input.checked)?.value || account.gender;
+                // Kiểm tra định dạng email
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailValue)) {
+                    alert("Email không đúng định dạng!");
+                    return;
+                }
+                // Kiểm tra số điện thoại: đủ 10 số và bắt đầu bằng số 0
+                const phoneRegex = /^0\d{9}$/;
+                if (!phoneRegex.test(phoneValue)) {
+                    alert("Số điện thoại phải bắt đầu bằng số 0 và đủ 10 chữ số!");
+                    return;
+                }
+                account.name    = nameValue;
+                account.phone   = phoneValue;               
+                account.email   = emailValue;
+                account.dob     = dobValue;
+                account.address = addressValue;
+                account.gender  = selectedGender;
+
+                if (accounts.includes(account)) {
+                    localStorage.setItem('accounts', JSON.stringify(accounts));
+                } else if (adminAccounts.includes(account)) {
+                    localStorage.setItem('adminAccounts', JSON.stringify(adminAccounts));
+                }
+
+                alert("Thông tin cá nhân đã được cập nhật!");
+                populateAccountSelect();
+                document.getElementById('account-select').value = username;
+            }
+        }
+
+        // Change password
+        function changePassword() {
+            const username = document.getElementById('account-select').value;
+            const account = accounts.find(acc => acc.username === username) || adminAccounts.find(acc => acc.username === username);
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (account) {
+                if (currentPassword !== account.password) {
+                    alert("Mật khẩu hiện tại không đúng!");
+                    return;
+                }
+                if (newPassword !== confirmPassword) {
+                    alert("Mật khẩu mới và xác nhận mật khẩu không khớp!");
+                    return;
+                }
+                account.password = newPassword;
+                if (accounts.includes(account)) {
+                    localStorage.setItem('accounts', JSON.stringify(accounts));
+                } else {
+                    localStorage.setItem('adminAccounts', JSON.stringify(adminAccounts));
+                }
+                alert("Mật khẩu đã được thay đổi!");
+                document.getElementById('current-password').value = '';
+                document.getElementById('new-password').value = '';
+                document.getElementById('confirm-password').value = '';
+            }
+        }
+
+        // Save settings
+        function saveSettings() {
+            const username = document.getElementById('account-select').value;
+            const account = accounts.find(acc => acc.username === username) || adminAccounts.find(acc => acc.username === username);
+            if (account) {
+                account.language = document.getElementById('language').value;
+                account.notifications = document.getElementById('notifications').checked;
+                if (accounts.includes(account)) {
+                    localStorage.setItem('accounts', JSON.stringify(accounts));
+                } else {
+                    localStorage.setItem('adminAccounts', JSON.stringify(adminAccounts));
+                }
+                alert("Cài đặt đã được lưu!");
+            }
+        }
+
+        // Delete account
+        function deleteAccount() {
+            const username = document.getElementById('account-select').value;
+            const account = accounts.find(acc => acc.username === username) || adminAccounts.find(acc => acc.username === username);
+            if (account)            if (confirm("Bạn có chắc chắn muốn xóa tài khoản này? Hành động này không thể hoàn tác.")) {
+                const index = accounts.findIndex(acc => acc.username === username);
+                if (index !== -1) {
+                    accounts.splice(index, 1);
+                    localStorage.setItem('accounts', JSON.stringify(accounts));
+                    alert("Tài khoản đã được xóa!");
+                    populateAccountSelect();
+                    loadAccountDetails(); // Reset form
+                } else {
+                    const adminIndex = adminAccounts.findIndex(acc => acc.username === username);
+                    if (adminIndex !== -1) {
+                        adminAccounts.splice(adminIndex, 1);
+                        localStorage.setItem('adminAccounts', JSON.stringify(adminAccounts));
+                        alert("Tài khoản đã được xóa!");
+                        populateAccountSelect();
+                        loadAccountDetails(); // Reset form
+                    }
+                }
+            }
+        }
+
+        // Initialize
+        populateAccountSelect();
+
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93e466bfbf354514',t:'MTc0Njk5NTA4Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

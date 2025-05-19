@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Check-out Khách Sạn Bằng Mã Đặt Phòng</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 480px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(34,59,121,0.10);
+      padding: 32px 28px 24px 28px;
+    }
+    h2 {
+      text-align: center;
+      color: #223B79;
+      margin-bottom: 28px;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: #223B79;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+      margin-bottom: 2px;
+    }
+    button {
+      width: 100%;
+      padding: 13px;
+      background: #1a2d6c;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.2s;
+      letter-spacing: 1px;
+    }
+    button:hover {
+      background: #d10000;
+    }
+    .success {
+      color: #1a8f2b;
+      text-align: center;
+      margin-top: 18px;
+      font-weight: bold;
+    }
+    .error {
+      color: #d10000;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .info {
+      margin-bottom: 12px;
+    }
+    .info label {
+      color: #223B79;
+      font-weight: bold;
+    }
+    .paid {
+      color: #1a8f2b;
+      font-weight: bold;
+    }
+    .unpaid {
+      color: #d10000;
+      font-weight: bold;
+    }
+    .checkedout {
+      color: #888;
+      font-weight: bold;
+    }
+    /* Đưa radio và label về cùng dòng, căn trái */
+    .room-status-group {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      margin: 8px 0 0 0;
+    }
+    .room-status-group label {
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+      color: #223B79;
+      margin: 0;
+      gap: 6px;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    header img {
+      height: 40px;
+      cursor: pointer;
+      vertical-align: middle;
+      margin-right: 18px;
+    }
+    header h1 {
+      display: inline;
+      vertical-align: middle;
+      font-size: 1.5em;
+      color: #223B79;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="images/a3.jpg" alt="Logo" onclick="window.location.href='HomePage.html'">
+    <h1>THE COW</h1>
+  </header>
+  <div class="container">
+    <h2>Check-out Bằng Mã Đặt Phòng</h2>
+    <form id="checkoutForm" autocomplete="off">
+      <div class="form-group">
+        <label for="bookingCode">Nhập mã đặt phòng</label>
+        <input type="text" id="bookingCode" required placeholder="Nhập mã đặt phòng...">
+      </div>
+      <button type="submit">Kiểm tra & Trả phòng</button>
+      <div id="message"></div>
+    </form>
+    <div id="bookingInfo"></div>
+    <div id="extraCostSection" style="display:none; margin-top:18px;">
+      <label><b>Nhập số tiền phát sinh (nếu có):</b></label>
+      <input type="number" id="extraCost" min="0" value="0" style="width:100%;padding:8px;margin:8px 0 0 0;">
+      <button id="payExtraBtn" style="margin-top:10px;">Thanh toán chi phí phát sinh</button>
+      <div id="extraCostMsg" style="margin-top:8px;"></div>
+    </div>
+  </div>
+  <script>
+    // Lấy danh sách đặt phòng từ localStorage
+    const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+    let currentBooking = null;
+
+    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const code = document.getElementById('bookingCode').value.trim().toUpperCase();
+      const messageDiv = document.getElementById('message');
+      const infoDiv = document.getElementById('bookingInfo');
+      messageDiv.textContent = '';
+      infoDiv.innerHTML = '';
+
+      if (!code) {
+        messageDiv.textContent = 'Vui lòng nhập mã đặt phòng!';
+        messageDiv.className = 'error';
+        return;
+      }
+
+      // Tìm booking theo mã
+      const booking = bookings.find(b => (b.bookingCode || '').toUpperCase() === code);
+
+      if (!booking) {
+        messageDiv.textContent = 'Không tìm thấy mã đặt phòng này!';
+        messageDiv.className = 'error';
+        return;
+      }
+
+      // Nếu đã trả phòng
+      if (booking.checkoutStatus === 'checkedout') {
+        let html = `
+          <div class="info"><label>Phòng:</label> ${booking.room}</div>
+          <div class="info"><label>Khách:</label> ${booking.fullname}</div>
+          <div class="info"><label>Mã đặt phòng:</label> <span style="font-weight:bold;">${booking.bookingCode}</span></div>
+          <div class="info"><label>Trạng thái:</label> <span class="checkedout">Đã trả phòng</span></div>
+        `;
+        infoDiv.innerHTML = html;
+        messageDiv.textContent = 'Phòng này đã được trả!';
+        messageDiv.className = 'success';
+        return;
+      }
+
+      // Hiện thông tin đặt phòng
+      let html = `
+        <div class="info"><label>Phòng:</label> ${booking.room}</div>
+        <div class="info"><label>Khách:</label> ${booking.fullname}</div>
+        <div class="info"><label>Điện thoại:</label> ${booking.phone}</div>
+        <div class="info"><label>Email:</label> ${booking.email}</div>
+        <div class="info"><label>Nhận phòng:</label> ${booking.checkin}</div>
+        <div class="info"><label>Trả phòng:</label> ${booking.checkout}</div>
+        <div class="info"><label>Mã đặt phòng:</label> <span style="font-weight:bold;">${booking.bookingCode}</span></div>
+      `;
+
+      if (booking.paymentStatus === 'paid') {
+        html += `<div class="info"><label>Trạng thái thanh toán:</label> <span class="paid">Đã thanh toán</span></div>`;
+      } else {
+        html += `<div class="info"><label>Trạng thái thanh toán:</label> <span class="unpaid">Chưa thanh toán</span></div>`;
+      }
+
+      currentBooking = booking; // Lưu booking hiện tại
+
+      // Thêm lựa chọn tình trạng phòng
+      html += `
+        <div class="info">
+          <label style="margin-bottom:6px;">Tình trạng phòng khi trả:</label>
+          <div class="room-status-group">
+            <label><input type="radio" name="roomStatus" value="ok" checked> Bình thường</label>
+            <label><input type="radio" name="roomStatus" value="extra"> Có phát sinh chi phí</label>
+          </div>
+        </div>
+        <div id="extraCostTrigger"></div>
+        <button id="checkoutBtn" style="margin-top:14px;">Xác nhận trả phòng</button>
+      `;
+      infoDiv.innerHTML = html;
+      messageDiv.textContent = '';
+
+      // Sự kiện chọn tình trạng phòng
+      document.querySelectorAll('input[name="roomStatus"]').forEach(radio => {
+        radio.onchange = function() {
+          if (this.value === 'extra') {
+            document.getElementById('extraCostSection').style.display = 'block';
+          } else {
+            document.getElementById('extraCostSection').style.display = 'none';
+          }
+        };
+      });
+
+      // Sự kiện xác nhận trả phòng
+      document.getElementById('checkoutBtn').onclick = function(e) {
+        e.preventDefault();
+        const status = document.querySelector('input[name="roomStatus"]:checked').value;
+        if (status === 'extra') {
+          document.getElementById('extraCostSection').style.display = 'block';
+          document.getElementById('extraCostMsg').textContent = 'Vui lòng thanh toán chi phí phát sinh trước khi trả phòng.';
+          return;
+        }
+        checkoutRoom(booking.bookingCode, 0);
+      };
+    });
+
+    // Sự kiện thanh toán chi phí phát sinh
+    document.getElementById('payExtraBtn').onclick = function() {
+      const extra = parseInt(document.getElementById('extraCost').value) || 0;
+      if (extra <= 0) {
+        document.getElementById('extraCostMsg').textContent = 'Vui lòng nhập số tiền phát sinh hợp lệ!';
+        return;
+      }
+      checkoutRoom(currentBooking.bookingCode, extra);
+    };
+
+    // Hàm xác nhận trả phòng (có thể có chi phí phát sinh)
+    function checkoutRoom(bookingCode, extraCost) {
+      const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+      const idx = bookings.findIndex(b => (b.bookingCode || '').toUpperCase() === bookingCode.toUpperCase());
+      if (idx !== -1) {
+        bookings[idx].checkoutStatus = 'checkedout';
+        if (extraCost && extraCost > 0) {
+          bookings[idx].extraCost = extraCost;
+        }
+        localStorage.setItem('bookings', JSON.stringify(bookings));
+        document.getElementById('message').textContent = extraCost > 0 ? 
+          `Trả phòng thành công! Đã thanh toán thêm ${extraCost.toLocaleString()} đ.` : 
+          'Trả phòng thành công!';
+        document.getElementById('message').className = 'success';
+        setTimeout(() => {
+          document.getElementById('bookingInfo').innerHTML += `<div class="info"><label>Trạng thái:</label> <span class="checkedout">Đã trả phòng</span></div>`;
+          if (extraCost > 0) {
+            document.getElementById('bookingInfo').innerHTML += `<div class="info"><label>Chi phí phát sinh:</label> <span style="color:#d10000;font-weight:bold;">${extraCost.toLocaleString()} đ</span></div>`;
+          }
+          document.getElementById('extraCostSection').style.display = 'none';
+        }, 300);
+      }
+    }
+  </script>
+</body>
+</html>

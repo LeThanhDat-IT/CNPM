@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập</title>
+    <style>
+        body {
+            font-family: system-ui;
+            margin: 0;
+            padding: 0;
+            background-color: #E3F7F6;
+        }
+        .container {
+            max-width: 500px;
+            margin: 100px auto;
+            background: #FFFFFF;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #223B79;
+        }
+        label {
+            display: block;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #312E49;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #A2A2A6;
+            border-radius: 4px;
+            background: #F0FDFC;
+        }
+        button {
+            width: 100%;
+            margin-top: 30px;
+            background: #1BE877;
+            color: black;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #223B79;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin-bottom: 40px;
+        }
+        header h1 {
+            display: inline;
+            vertical-align: middle;
+            font-size: 40px;
+            color: #223B79;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>THE COW</h1>
+    </header>
+
+    <div class="container">
+        <h2>ĐĂNG NHẬP</h2>
+        <form id="loginForm">
+            <label for="username">Tên đăng nhập</label>
+            <input type="text" id="username" name="username" placeholder="Tên đăng nhập" required>
+
+            <label for="password">Mật khẩu</label>
+            <input type="password" id="password" name="password" placeholder="Mật khẩu" required>
+
+            <button type="submit">Đăng nhập</button>
+        </form>
+        <a href="dangky_visitor.html" style="margin-top: 10px;">Chưa có tài khoản? Đăng ký tại đây</a>
+        <a href="dangky_admin.html" style="margin-top: 10px;">Đăng ký tài khoản admin</a>
+        <a href="quanly_tk.html">Quên mật khẩu?</a>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Kiểm tra tài khoản admin (giữ nguyên nếu bạn dùng localStorage cho admin)
+            const adminAccounts = JSON.parse(localStorage.getItem('adminAccounts')) || [];
+            const matchedAdmin = adminAccounts.find(acc => acc.username === username && acc.password === password);
+
+            if (matchedAdmin) {
+                alert("Đăng nhập admin thành công!");
+                localStorage.setItem('adminUsername', matchedAdmin.username);
+                window.location.href = "HomePage.html"; // <-- chuyển về trang chủ
+                return;
+            }
+
+            // Kiểm tra tài khoản user từ database qua PHP
+            fetch('PHP/login.php', {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: new URLSearchParams({
+                    username: username,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    localStorage.setItem('username', data.user.username);
+                    window.location.href = "HomePage.html";
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                alert("Có lỗi xảy ra khi đăng nhập!");
+                console.error(error);
+            });
+        });
+    </script>
+</body>
+</html>

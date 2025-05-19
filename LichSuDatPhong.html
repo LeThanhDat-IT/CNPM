@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quản lý Khách Sạn</title>
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f5f9;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #1a2d6c;
+      color: white;
+      padding: 20px;
+    }
+    header h1 {
+      font-size: 28px;
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+    }
+    .user-icon {
+      margin-left: 10px;
+      font-size: 24px;
+    }
+    .menu {
+      margin-top: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .menu ul {
+      list-style-type: none;
+      padding: 10px;
+    }
+    .menu li {
+      padding: 10px;
+      cursor: pointer;
+      color: #333;
+    }
+    .menu li.active {
+      background-color: #1a2d6c;
+      color: white;
+    }
+    .main-content {
+      margin-top: 20px;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    input[type="text"], input[type="date"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #1a2d6c;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #314a9c;
+    }
+    table {
+      width: 100%;
+      margin-top: 30px;
+      border-collapse: collapse;
+    }
+    table th, table td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    table th {
+      background-color: #f1f5f9;
+    }
+    tr.selected {
+      background-color: #dbeafe;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="images/a3.jpg" alt="Logo" style="height:40px;cursor:pointer;vertical-align:middle;margin-right:18px;" onclick="window.location.href='HomePage.html'">
+      <h1 style="display:inline;vertical-align:middle;">THE COW</h1>
+    </header>
+
+    <div class="menu">
+      <ul>
+        <li>Quản lý phòng</li>
+        <li>Quản lý khách hàng</li>
+        <li>Quản lý tài khoản</li>
+        <li class="active">Lịch sử đặt phòng</li>
+        <li>Thống kê thu nhập</li>
+      </ul>
+    </div>
+
+    <div class="main-content">
+      <form id="reservation-form">
+        <div class="form-group">
+          <label for="room-name">Tên phòng:</label>
+          <input type="text" id="room-name" value="Phòng gia đình" />
+        </div>
+        <div class="form-group">
+          <label for="customer-name">Tên khách hàng:</label>
+          <input type="text" id="customer-name" value="Trần Quang Khái" />
+        </div>
+        <div class="form-group">
+          <label for="reservation-date">Thời gian đặt phòng:</label>
+          <input type="date" id="reservation-date" value="2023-04-19" />
+        </div>
+        <div class="form-group">
+          <label for="room-code">Mã phòng:</label>
+          <input type="text" id="room-code" readonly />
+        </div>
+        <div class="form-group">
+          <label for="customer-code">Mã KH:</label>
+          <input type="text" id="customer-code" readonly />
+        </div>
+        <div class="form-actions">
+          <button type="button" onclick="addReservation()">Thêm</button>
+          <button type="button" onclick="updateReservation()">Cập nhật</button>
+          <button type="button" onclick="deleteReservation()">Xóa</button>
+          <button type="button" onclick="searchReservation()">Tìm kiếm</button>
+          <button type="button" onclick="renderReservationHistory()">Hiển thị tất cả</button>
+        </div>
+      </form>
+
+      <table id="reservation-history">
+        <thead>
+          <tr>
+            <th>Mã phòng</th>
+            <th>Tên phòng</th>
+            <th>Mã KH</th>
+            <th>Tên khách hàng</th>
+            <th>Thời gian đặt phòng</th>
+            <th>Tổng tiền</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Data here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    let reservationHistory = [];
+    let selectedIndex = -1;
+
+    function addReservation() {
+      const roomName = document.getElementById('room-name').value;
+      const customerName = document.getElementById('customer-name').value;
+      const reservationDate = document.getElementById('reservation-date').value;
+
+      const newReservation = {
+        roomCode: 'R00' + (reservationHistory.length + 1),
+        roomName,
+        customerCode: 'KH00' + (reservationHistory.length + 1),
+        customerName,
+        reservationDate,
+        totalAmount: '760,000',
+      };
+
+      reservationHistory.push(newReservation);
+      renderReservationHistory();
+    }
+
+    function updateReservation() {
+      alert('Cập nhật thông tin đặt phòng');
+    }
+
+    function deleteReservation() {
+  // Lấy dữ liệu từ localStorage
+  let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+  if (selectedIndex >= 0 && selectedIndex < bookings.length) {
+    // Xóa phần tử tại vị trí selectedIndex
+    bookings.splice(selectedIndex, 1);
+    // Lưu lại vào localStorage
+    localStorage.setItem('bookings', JSON.stringify(bookings));
+    selectedIndex = -1;
+    renderReservationHistory();
+  } else {
+    alert('Vui lòng chọn một dòng để xóa');
+  }
+}
+
+    function searchReservation() {
+      const searchValue = document.getElementById('customer-name').value.toLowerCase();
+      const tbody = document.querySelector('#reservation-history tbody');
+      tbody.innerHTML = '';
+
+      const filtered = reservationHistory.filter(r =>
+        r.customerName.toLowerCase().includes(searchValue)
+      );
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6">Không tìm thấy kết quả phù hợp.</td></tr>';
+        return;
+      }
+
+      filtered.forEach((reservation, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${reservation.roomCode}</td>
+          <td>${reservation.roomName}</td>
+          <td>${reservation.customerCode}</td>
+          <td>${reservation.customerName}</td>
+          <td>${reservation.reservationDate}</td>
+          <td>${reservation.totalAmount}</td>
+        `;
+        row.onclick = () => {
+          clearSelection();
+          row.classList.add('selected');
+          selectedIndex = reservationHistory.indexOf(reservation);
+        };
+        tbody.appendChild(row);
+      });
+    }
+
+    function renderReservationHistory() {
+      const tbody = document.querySelector('#reservation-history tbody');
+      tbody.innerHTML = '';
+      // Lấy lịch sử đặt phòng từ localStorage
+      const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+      if (bookings.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6">Chưa có lịch sử đặt phòng.</td></tr>';
+        return;
+      }
+      bookings.forEach((booking, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${booking.roomCode || ''}</td>
+          <td>${booking.room || booking.roomName || ''}</td>
+          <td>${booking.customerCode || ''}</td>
+          <td>${booking.fullname || booking.customerName || ''}</td>
+          <td>${booking.time || booking.reservationDate || ''}</td>
+          <td>${booking.totalAmount || ''}</td>
+        `;
+        row.onclick = () => {
+          clearSelection();
+          row.classList.add('selected');
+          selectedIndex = index;
+          // Hiển thị mã phòng và mã KH lên input (hoặc tạo input nếu chưa có)
+          document.getElementById('room-name').value = booking.roomName || booking.room || '';
+          document.getElementById('customer-name').value = booking.customerName || booking.fullname || '';
+          document.getElementById('reservation-date').value = booking.reservationDate || booking.time || '';
+          document.getElementById('room-code').value = booking.roomCode || '';
+          document.getElementById('customer-code').value = booking.customerCode || '';
+          // Hiển thị mã phòng và mã KH (tạo input ẩn hoặc alert, ví dụ alert)
+        };
+        tbody.appendChild(row);
+      });
+    }
+
+    function clearSelection() {
+      document.querySelectorAll('#reservation-history tbody tr').forEach(tr => {
+        tr.classList.remove('selected');
+      });
+    }
+
+    window.onload = function() {
+      renderReservationHistory();
+    };
+  </script>
+</body>
+</html>

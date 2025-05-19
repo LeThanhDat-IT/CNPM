@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanh toán Thành Công</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: green;
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .info {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .info p {
+      font-size: 18px;
+      margin: 5px 0;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+
+    .buttons button {
+      background-color: red;
+      color: white;
+      font-size: 18px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .buttons button:hover {
+      background-color: darkred;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    header img {
+      height: 40px;
+      cursor: pointer;
+      vertical-align: middle;
+      margin-right: 18px;
+    }
+
+    header h1 {
+      display: inline;
+      vertical-align: middle;
+      margin: 0;
+      font-size: 28px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="images/a3.jpg" alt="Logo" style="height:40px;cursor:pointer;vertical-align:middle;margin-right:18px;" onclick="window.location.href='HomePage.html'">
+    <h1 style="display:inline;vertical-align:middle;">THE COW</h1>
+  </header>
+
+  <div class="container">
+    <h1>THANH TOÁN THÀNH CÔNG</h1>
+
+    <div class="info">
+      <p><strong>Thông tin khách hàng:</strong></p>
+      <p>SỐ PHÒNG: <span id="room-number">...</span></p>
+      <p>MÃ HĐ: <span id="contract-id">...</span></p>
+      <p>TÊN KH: <span id="customer-name">...</span></p>
+      <p><strong>TỔNG CỘNG:</strong> <span id="total-amount">0 VND</span></p>
+    </div>
+
+    <div class="buttons">
+      <button onclick="printInvoice()">In hóa đơn</button>
+      <button onclick="reportIssue()">Báo lỗi hoàn tiền</button>
+    </div>
+  </div>
+
+  <script>
+    // Lấy email user từ localStorage (sau đăng nhập), nếu chưa có thì yêu cầu nhập
+    function getUserEmail() {
+      let email = localStorage.getItem('user_email');
+      if (!email) {
+        email = prompt('Vui lòng nhập email đã dùng để đặt phòng:');
+        if (email) localStorage.setItem('user_email', email);
+      }
+      return email;
+    }
+
+    // Danh sách phòng và giá (nên đồng bộ với file tìm kiếm phòng)
+    const roomPrices = {
+      'Phòng Gia Đình': 360000,
+      'Phòng Đôi Cao Cấp': 1200000,
+      'Phòng Mini': 200000,
+      'Phòng Tình Nhân': 560000
+    };
+
+    // Tính tổng tiền
+    function getTotalAmount(booking) {
+      if (!booking) return 0;
+      const price = roomPrices[booking.room] || 0;
+      const checkin = new Date(booking.checkin);
+      const checkout = new Date(booking.checkout);
+      let nights = Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24));
+      if (nights < 1) nights = 1;
+      return price * nights;
+    }
+
+    // Hiển thị thông tin đặt phòng
+    function renderBooking(booking) {
+      document.getElementById('room-number').textContent = booking?.room || '...';
+      document.getElementById('contract-id').textContent = booking?.bookingCode || booking?.code || '...';
+      document.getElementById('customer-name').textContent = booking?.fullname || '...';
+      const total = getTotalAmount(booking);
+      document.getElementById('total-amount').textContent = total ? total.toLocaleString() + ' VND' : '0 VND';
+      // Lưu lại để in hóa đơn
+      window._currentBooking = booking;
+      window._currentTotal = total;
+    }
+
+    // Lấy booking mới nhất từ server
+    window.onload = function() {
+      const email = getUserEmail();
+      if (!email) {
+        renderBooking(null);
+        return;
+      }
+      fetch('PHP/get_last_booking.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'email=' + encodeURIComponent(email)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.booking) {
+          renderBooking(data.booking);
+        } else {
+          renderBooking(null);
+        }
+      })
+      .catch(() => renderBooking(null));
+    };
+
+    function printInvoice() {
+      const booking = window._currentBooking;
+      const total = window._currentTotal;
+      if (!booking) {
+        alert('Không có thông tin hóa đơn để in!');
+        return;
+      }
+      const printContent = `
+        <h1>Hóa Đơn Thanh Toán</h1>
+        <p><strong>Thông tin khách hàng:</strong></p>
+        <p>SỐ PHÒNG: ${booking.room || ''}</p>
+        <p>MÃ HĐ: ${booking.bookingCode || booking.code || ''}</p>
+        <p>TÊN KH: ${booking.fullname || ''}</p>
+        <p>EMAIL: ${booking.email || ''}</p>
+        <p>ĐIỆN THOẠI: ${booking.phone || ''}</p>
+        <p>GIỜ NHẬN PHÒNG: ${booking.checkin || ''}</p>
+        <p>GIỜ TRẢ PHÒNG: ${booking.checkout || ''}</p>
+        <p><strong>TỔNG CỘNG:</strong> ${total ? total.toLocaleString() + ' VND' : '0 VND'}</p>
+      `;
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(printContent);
+      printWindow.document.close();
+      printWindow.print();
+    }
+
+    function reportIssue() {
+      alert('Báo lỗi hoàn tiền đã được gửi!');
+    }
+  </script>
+</body>
+</html>

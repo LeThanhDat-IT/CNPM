@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ĐĂNG KÍ</title>
+	<style>
+		body {
+			font-family: system-ui;
+			margin: 0;
+			padding: 0;
+			background-color: #D8F7F2;
+			display: flex;
+			justify-content: center;
+			align-items: flex-start;
+			height: 100vh;
+		}
+
+		.container {
+			background-color: #FFFFFF;
+			padding: 40px;
+			border-radius: 10px;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			width: 800px;
+			max-width: 80%;
+			margin: 50px auto;
+		}
+
+		h2 {
+			text-align: center;
+			color: #223B79;
+			margin-bottom: 30px;
+		}
+
+		label {
+			display: block;
+			margin-top: 20px;
+			font-weight: bold;
+			color: #312E49;
+		}
+
+		input, select {
+			width: 100%;
+			padding: 12px;
+			margin-top: 8px;
+			border: 1px solid #A2A2A6;
+			border-radius: 5px;
+			background-color: #FFFFFF;
+		}
+
+		button {
+			width: 100%;
+			padding: 15px;
+			margin-top: 30px;
+			background-color: #223B79;
+			color: #FFFFFF;
+			font-size: 18px;
+			font-weight: bold;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		button:hover {
+			background-color: #1A2F5D;
+		}
+
+		.note {
+			text-align: center;
+			margin-top: 20px;
+			font-size: 16px;
+			color: #666666;
+		}
+
+		.checkbox-container {
+			display: flex;
+			align-items: center;
+			margin-top: 20px;
+			justify-content: flex-start;
+		}
+
+		.checkbox-container label {
+			text-align: left;
+			font-size: 16px;
+			color: #312E49;
+		}
+
+		.checkbox-container input {
+			margin-right: 10px;
+		}
+
+		header {
+			text-align: center;
+			margin-bottom: 40px;
+		}
+
+		header img {
+			height: 40px;
+			cursor: pointer;
+			vertical-align: middle;
+			margin-right: 18px;
+		}
+
+		header h1 {
+			display: inline;
+			vertical-align: middle;
+			color: #223B79;
+			font-size: 36px;
+			margin: 0;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<img src="images/a3.jpg" alt="Logo" onclick="window.location.href='HomePage.html'">
+		<h1>THE COW</h1>
+	</header>
+	<div class="container">
+		<h2>Đăng Ký Admin</h2>
+		<form>
+			<label for="fullname">Họ và Tên</label>
+			<input type="text" id="fullname" placeholder="Nhập họ và tên" required>
+
+			<label for="phone">Số Điện Thoại</label>
+			<input type="text" id="phone" placeholder="Nhập số điện thoại" required>
+
+			<label for="email">Email</label>
+			<input type="email" id="email" placeholder="Nhập email" required>
+
+			<label for="gender">Giới tính</label>
+			<select id="gender" required>
+				<option value="male">Nam</option>
+				<option value="female">Nữ</option>
+				<option value="other">Khác</option>
+			</select>
+
+			<label for="dob">Ngày sinh</label>
+			<input type="date" id="dob" required>
+
+			<label for="address">Địa chỉ</label>
+			<input type="text" id="address" placeholder="Nhập địa chỉ" required>
+
+			<label for="username">Tên Đăng Nhập</label>
+			<input type="text" id="username" placeholder="Nhập tên đăng nhập" required>
+
+			<label for="password">Mật Khẩu</label>
+			<input type="password" id="password" placeholder="Nhập mật khẩu" required>
+
+			<label for="confirmPassword">Nhập Lại Mật Khẩu</label>
+			<input type="password" id="confirmPassword" placeholder="Nhập lại mật khẩu" required>
+
+			<div class="checkbox-container">
+				<input type="checkbox" id="terms" checked>
+				<label for="terms">Tôi đồng ý với Điều khoản sử dụng và Chính sách bảo mật.</label>
+			</div>
+
+			<button type="button" onclick="registerAdmin()">Tạo Tài Khoản</button>
+		</form>
+		<p class="note">Bằng cách đăng ký, bạn đồng ý với Điều khoản sử dụng và Chính sách bảo mật.</p>
+	</div>
+	<script>
+		function registerAdmin() {
+			const username = document.getElementById('username').value;
+			const password = document.getElementById('password').value;
+			const confirmPassword = document.getElementById('confirmPassword').value;
+
+			// Điều kiện: ít nhất 8 ký tự, có ký tự đặc biệt, chữ hoa, số
+			const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
+			if (!regex.test(password)) {
+				alert('Mật khẩu phải từ 8 ký tự trở lên, có ít nhất 1 ký tự đặc biệt, 1 chữ cái in hoa và 1 số.');
+				return;
+			}
+
+			if (password !== confirmPassword) {
+				alert('Mật khẩu và xác nhận mật khẩu không khớp!');
+				return;
+			}
+
+			// Lấy danh sách tài khoản admin từ localStorage
+			const adminAccounts = JSON.parse(localStorage.getItem('adminAccounts')) || [];
+
+			// Kiểm tra xem tên đăng nhập đã tồn tại chưa
+			if (adminAccounts.some(account => account.username === username)) {
+				alert('Tên đăng nhập đã tồn tại!');
+				return;
+			}
+
+			// Thêm tài khoản mới vào danh sách
+			adminAccounts.push({ username, password });
+
+			// Lưu danh sách tài khoản admin vào localStorage
+			localStorage.setItem('adminAccounts', JSON.stringify(adminAccounts));
+
+			alert('Đã tạo tài khoản admin thành công!');
+			window.location.href = 'dangnhap.html';
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Tìm kiếm phòng khách sạn</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f2f5;
+    }
+    header {
+      background-color: #1a2d6c;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 { margin: 0; font-size: 26px; }
+    .container {
+      display: flex;
+      max-width: 1300px;
+      margin: 30px auto;
+      padding: 0 20px;
+      gap: 20px;
+    }
+    .filter {
+      width: 280px;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .filter h3 { margin-bottom: 15px; font-size: 18px; }
+    .filter label { display: block; margin: 10px 0 5px; font-weight: 500; }
+    .filter input, .filter select {
+      width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px;
+    }
+    .filter input[type="radio"] { width: auto; margin-right: 6px; }
+    .filter button {
+      margin-top: 20px; width: 100%; padding: 10px;
+      background-color: #1a2d6c; color: white; border: none; border-radius: 6px;
+      font-weight: bold; cursor: pointer; transition: 0.3s;
+    }
+    .filter button:hover { background-color: #142155; }
+    .results {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .room-card {
+      display: flex;
+      background: white;
+      padding: 16px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      transition: 0.3s;
+      cursor: pointer;
+      position: relative;
+    }
+    .room-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+      background: #f6f8fc;
+    }
+    .room-card img {
+      width: 180px;
+      height: 120px;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-right: 20px;
+    }
+    .room-info { flex: 1; }
+    .room-info h4 { margin: 0 0 8px; font-size: 20px; }
+    .room-info .details { color: #555; margin-bottom: 10px; font-size: 14px; }
+    .room-info .price { font-size: 20px; font-weight: bold; color: #d10000; margin-bottom: 10px; }
+    .room-info button {
+      background-color: #1a2d6c;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .room-info button:hover { background-color: #142155; }
+    .history-section {
+      max-width: 1300px;
+      margin: 30px auto 0 auto;
+      padding: 0 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .history-section h3 { margin: 0 0 16px 0; color: #223B79; font-size: 1.2em; }
+    .history-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .history-item {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 14px 18px;
+      min-width: 220px;
+      box-shadow: 0 1px 4px rgba(34,59,121,0.06);
+      margin-bottom: 10px;
+    }
+    .history-item strong { color: #223B79; }
+    .history-item span {
+      display: block;
+      color: #444;
+      margin-top: 4px;
+      font-size: 0.98em;
+    }
+    /* Popup chi tiết phòng */
+    .room-detail-popup {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.35);
+      align-items: center;
+      justify-content: center;
+    }
+    .room-detail-popup.active {
+      display: flex;
+    }
+    .room-detail-content {
+      background: #fff;
+      border-radius: 14px;
+      max-width: 380px; /* Giảm từ 500px xuống 380px */
+      width: 95vw;
+      padding: 24px 16px 16px 16px; /* Giảm padding */
+      box-shadow: 0 8px 32px rgba(34,59,121,0.18);
+      position: relative;
+      animation: popupShow 0.2s;
+    }
+    @keyframes popupShow {
+      from { transform: translateY(40px) scale(0.98); opacity: 0; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    .room-detail-content h2 { margin-top: 0; color: #223B79; }
+    .room-detail-content ul { padding-left: 18px; }
+    .room-detail-content .close-btn {
+      position: absolute;
+      top: 12px; right: 18px;
+      background: none;
+      border: none;
+      font-size: 22px;
+      color: #223B79;
+      cursor: pointer;
+    }
+    .room-detail-content img {
+      width: 100%;
+      max-height: 160px; /* Giảm chiều cao ảnh */
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+    .room-detail-content .price {
+      color: #d10000;
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .room-detail-content .section-title {
+      font-weight: bold;
+      margin-top: 12px;
+      margin-bottom: 4px;
+      color: #223B79;
+    }
+    .room-detail-content .book-btn {
+      display: block;
+      width: 90%;
+      margin: 16px auto 0 auto;
+      padding: 10px 0;
+      background: #1a2d6c;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    .room-detail-content .book-btn:hover {
+      background: #d10000;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="images/a3.jpg" alt="Logo" style="height:40px;cursor:pointer;vertical-align:middle;margin-right:18px;" onclick="window.location.href='HomePage.html'">
+    <h1 style="display:inline;vertical-align:middle;">THE COW</h1>
+    <button style="background:#fff;color:#1a2d6c;font-weight:bold;padding:8px 18px;border-radius:6px;border:none;cursor:pointer;font-size:16px;transition:background 0.2s;" onclick="window.location.href='LichSuDatPhong.html'">Lịch Sử Đặt Phòng</button>
+  </header>
+
+  <div class="container">
+    <div class="filter">
+      <h3>Tìm kiếm phòng</h3>
+      <label for="searchName">Tên phòng</label>
+      <input type="text" id="searchName" placeholder="Nhập tên phòng...">
+
+      <label for="guests">Số người</label>
+      <select id="guests">
+        <option value="">Tất cả</option>
+        <option value="1">1 người</option>
+        <option value="2">2 người</option>
+        <option value="3">3 người</option>
+        <option value="4">4 người</option>
+      </select>
+
+      <h3 style="margin-top: 20px;">Sắp xếp kết quả</h3>
+      <label><input type="radio" name="sort" value="desc" checked> Giá cao nhất</label>
+      <label><input type="radio" name="sort" value="asc"> Giá thấp nhất</label>
+      <label><input type="radio" name="sort" value="popular"> Thuê nhiều nhất</label>
+
+      <h3 style="margin-top: 20px;">Lọc theo giá</h3>
+      <label for="minPrice">Tối thiểu</label>
+      <input type="number" id="minPrice" value="0">
+
+      <label for="maxPrice">Tối đa</label>
+      <input type="number" id="maxPrice" value="100000000">
+
+      <button onclick="applyFilter()">Áp dụng</button>
+    </div>
+
+    <div class="results" id="room-list">
+      <!-- Danh sách phòng -->
+    </div>
+  </div>
+
+  <!-- Lịch sử thuê phòng -->
+  <div class="history-section">
+    <h3>Lịch sử thuê phòng</h3>
+    <div class="history-list" id="history-list">
+      <!-- Lịch sử sẽ được render ở đây -->
+    </div>
+  </div>
+
+  <!-- Popup chi tiết phòng -->
+  <div class="room-detail-popup" id="roomDetailPopup" onclick="closeRoomDetail()">
+    <div class="room-detail-content" id="roomDetailContent" onclick="event.stopPropagation()">
+      <!-- Nội dung chi tiết phòng sẽ được render ở đây -->
+    </div>
+  </div>
+
+<script>
+  const rooms = [
+    {
+      name: 'Phòng Gia Đình',
+      price: 360000,
+      guests: 4,
+      img: 'images/family-suite-la-gi.webp',
+      popularity: 5,
+      bedType: '2 giường đôi lớn',
+      amenities: ['Wi-Fi miễn phí', 'TV màn hình phẳng', 'Điều hòa', 'Tủ lạnh', 'Bàn làm việc'],
+      services: ['Dọn phòng hàng ngày', 'Phục vụ ăn sáng', 'Gọi taxi'],
+      area: '40m²'
+    },
+    {
+      name: 'Phòng Đôi Cao Cấp',
+      price: 1200000,
+      guests: 2,
+      img: 'images/phong_caocap.webp',
+      popularity: 8,
+      bedType: '1 giường King',
+      amenities: ['Wi-Fi miễn phí', 'TV 50 inch', 'Điều hòa', 'Bồn tắm', 'Ban công riêng'],
+      services: ['Ăn sáng buffet', 'Giặt là', 'Đưa đón sân bay'],
+      area: '35m²'
+    },
+    {
+      name: 'Phòng Mini',
+      price: 200000,
+      guests: 1,
+      img: 'images/phong_don.webp',
+      popularity: 3,
+      bedType: '1 giường đơn',
+      amenities: ['Wi-Fi miễn phí', 'Điều hòa', 'Tủ lạnh mini'],
+      services: ['Dọn phòng', 'Gọi taxi'],
+      area: '18m²'
+    },
+    {
+      name: 'Phòng Tình Nhân',
+      price: 560000,
+      guests: 2,
+      img: 'images/momo-upload-api-220102154452-637767350924938334.jpg',
+      popularity: 6,
+      bedType: '1 giường Queen',
+      amenities: ['Wi-Fi miễn phí', 'TV màn hình phẳng', 'Bồn tắm đôi', 'Loa bluetooth'],
+      services: ['Trang trí lãng mạn', 'Ăn sáng tại phòng'],
+      area: '28m²'
+    }
+  ];
+
+  function renderRooms(list) {
+    const container = document.getElementById('room-list');
+    container.innerHTML = '';
+    if (list.length === 0) {
+      container.innerHTML = '<p style="color: #d10000;">Không tìm thấy phòng phù hợp.</p>';
+      return;
+    }
+    list.forEach((room, idx) => {
+      const card = document.createElement('div');
+      card.className = 'room-card';
+      card.onclick = (e) => {
+        // Nếu click vào nút Đặt phòng thì không mở popup chi tiết
+        if (e.target.tagName === 'BUTTON') return;
+        showRoomDetail(room);
+      };
+      card.innerHTML = `
+        <img src="${room.img}" alt="${room.name}">
+        <div class="room-info">
+          <h4>${room.name}</h4>
+          <div class="details">👥 ${room.guests} người &nbsp; | &nbsp; ${room.bedType} &nbsp; | &nbsp; ${room.area}</div>
+          <div class="price">${room.price.toLocaleString()} đ</div>
+          <button onclick='event.stopPropagation(); bookRoom(${JSON.stringify(room).replace(/'/g,"\\'")})'>Đặt phòng</button>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function showRoomDetail(room) {
+    const popup = document.getElementById('roomDetailPopup');
+    const content = document.getElementById('roomDetailContent');
+    content.innerHTML = `
+      <img src="${room.img}" alt="${room.name}">
+      <h2>${room.name}</h2>
+      <div class="price">${room.price.toLocaleString()} đ / đêm</div>
+      <div><span class="section-title">Sức chứa:</span> ${room.guests} người</div>
+      <div><span class="section-title">Loại giường:</span> ${room.bedType}</div>
+      <div><span class="section-title">Diện tích:</span> ${room.area}</div>
+      <div><span class="section-title">Tiện nghi:</span>
+        <ul>${room.amenities.map(a => `<li>${a}</li>`).join('')}</ul>
+      </div>
+      <div><span class="section-title">Dịch vụ:</span>
+        <ul>${room.services.map(s => `<li>${s}</li>`).join('')}</ul>
+      </div>
+      <button class="book-btn" onclick='bookRoom(${JSON.stringify(room).replace(/'/g,"\\'")});closeRoomDetail();'>Đặt phòng</button>
+    `;
+    popup.classList.add('active');
+}
+
+  function closeRoomDetail() {
+    document.getElementById('roomDetailPopup').classList.remove('active');
+  }
+
+  function bookRoom(room) {
+    // Lưu tên phòng vào localStorage để truyền sang trang đặt phòng
+    localStorage.setItem('selectedRoomName', room.name);
+    // Chuyển sang trang đặt phòng
+    window.location.href = 'DatPhong.html';
+  }
+
+  function applyFilter() {
+    const nameKeyword = document.getElementById('searchName').value.toLowerCase();
+    const guests = document.getElementById('guests').value;
+    const minPrice = parseInt(document.getElementById('minPrice').value);
+    const maxPrice = parseInt(document.getElementById('maxPrice').value);
+    const sort = document.querySelector('input[name="sort"]:checked').value;
+
+    let filtered = rooms.filter(room => {
+      const matchesName = room.name.toLowerCase().includes(nameKeyword);
+      const matchesGuests = guests ? room.guests === parseInt(guests) : true;
+      const matchesPrice = room.price >= minPrice && room.price <= maxPrice;
+      return matchesName && matchesGuests && matchesPrice;
+    });
+
+    if (sort === 'asc') {
+      filtered.sort((a, b) => a.price - b.price);
+    } else if (sort === 'desc') {
+      filtered.sort((a, b) => b.price - a.price);
+    } else if (sort === 'popular') {
+      filtered.sort((a, b) => b.popularity - a.popularity);
+    }
+
+    renderRooms(filtered);
+  }
+
+  function getUserEmail() {
+    let email = localStorage.getItem('user_email');
+    if (!email) {
+      email = prompt('Vui lòng nhập email đã dùng để đặt phòng:');
+      if (email) localStorage.setItem('user_email', email);
+    }
+    return email;
+  }
+
+  function renderHistory() {
+    const historyList = document.getElementById('history-list');
+    const email = getUserEmail();
+    if (!email) {
+      historyList.innerHTML = '<span style="color:#d10000;">Vui lòng đăng nhập để xem lịch sử đặt phòng.</span>';
+      return;
+    }
+    historyList.innerHTML = '<span>Đang tải...</span>';
+    fetch('PHP/get_bookings.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'email=' + encodeURIComponent(email)
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (!data.success || !data.bookings || data.bookings.length === 0) {
+        historyList.innerHTML = '<span style="color:#888;">Chưa có lịch sử thuê phòng.</span>';
+        return;
+      }
+      historyList.innerHTML = '';
+      data.bookings.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'history-item';
+        div.innerHTML = `
+          <strong>${item.room || item.name}</strong>
+          <span>Khách: ${item.fullname || ''}</span>
+          <span>Điện thoại: ${item.phone || ''}</span>
+          <span>Email: ${item.email || ''}</span>
+          <span>Nhận phòng: ${item.checkin || ''}</span>
+          <span>Trả phòng: ${item.checkout || ''}</span>
+          <span>Mã đặt phòng: ${item.bookingCode || item.code || '(Chưa thanh toán)'}</span>
+          <span>Thời gian đặt: ${item.time || ''}</span>
+        `;
+        historyList.appendChild(div);
+      });
+    })
+    .catch(() => {
+      historyList.innerHTML = '<span style="color:#d10000;">Lỗi tải lịch sử đặt phòng.</span>';
+    });
+  }
+
+  // Hiển thị mặc định
+  renderRooms(rooms);
+  renderHistory();
+
+  // Hiện lịch sử ngay khi quay lại từ trang ThanhToan.html
+  window.addEventListener('pageshow', function() {
+    renderHistory();
+  });
+
+  
+</script>
+</body>
+</html>

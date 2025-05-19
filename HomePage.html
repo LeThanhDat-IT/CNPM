@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>THE COW HOTEL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f5f5f5;
+        }
+
+        .topbar {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: #fff;
+        }
+
+        .logo {
+            float: left;
+            padding: 24px 0 18px 0;
+            font-size: 2em;
+            font-weight: bold;
+            color: #223B79;
+            letter-spacing: 2px;
+        }
+
+        nav {
+            float: right;
+            margin-top: 32px;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin: 10px 18px 10px 0;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #223B79;
+            font-weight: 500;
+            font-size: 17px;
+            transition: color 0.2s;
+            padding: 10px 16px;
+            border-radius: 8px;
+            margin-right: 6px;
+        }
+
+        nav ul li a:hover {
+            color: #CD202B;
+            background: #f1f5f9;
+        }
+
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .slider {
+            background: #fff;
+            margin-top: 18px;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px #223b7911;
+            padding: 18px;
+            position: relative;
+        }
+
+        .slider-img {
+            width: 100%;
+            max-height: 340px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .slider-caption {
+            text-align: center;
+            margin-top: 18px;
+        }
+
+        .slider-caption h2 {
+            color: #CD202B;
+            font-size: 1.7em;
+            margin-bottom: 8px;
+        }
+
+        .slider-caption p {
+            color: #444;
+            font-size: 1.1em;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            color: #fff;
+            border: none;
+            font-size: 2em;
+            padding: 0 16px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 2;
+            transition: background 0.2s;
+        }
+
+        .slider-btn.left {
+            left: 10px;
+        }
+
+        .slider-btn.right {
+            right: 10px;
+        }
+
+        .slider-btn:hover {
+            background: #CD202B;
+        }
+
+        .rooms-section {
+            background: #fff;
+            margin: 32px 0 0 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px #223b7911;
+            padding: 28px 18px;
+        }
+
+        .rooms-list {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .room-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #223b7911;
+            width: 320px;
+            overflow: hidden;
+        }
+
+        .room-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .room-info {
+            padding: 16px 14px 12px 14px;
+        }
+
+        .room-info h3 {
+            margin: 0 0 8px 0;
+            color: #223B79;
+        }
+
+        .room-info ul {
+            padding-left: 18px;
+            margin: 0 0 10px 0;
+            color: #444;
+            font-size: 15px;
+        }
+
+        .room-info .price {
+            color: #CD202B;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .room-info button {
+            background: #223B79;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .room-info button:hover {
+            background: #CD202B;
+        }
+
+        .main-content {
+            display: flex;
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .welcome,
+        .special-offer {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #223b7911;
+            padding: 22px 18px;
+        }
+
+        .welcome {
+            flex: 2;
+        }
+
+        .special-offer {
+            flex: 1;
+        }
+
+        .welcome img {
+            width: 100%;
+            border-radius: 6px;
+            margin-bottom: 14px;
+        }
+
+        .welcome h2 {
+            color: #223B79;
+            margin-bottom: 10px;
+        }
+
+        .special-offer h3 {
+            color: #CD202B;
+            margin-bottom: 10px;
+        }
+
+        .special-offer .offer-box {
+            background: #f9f9f9;
+            border-radius: 6px;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+
+        footer {
+            background: #223B79;
+            color: #fff;
+            text-align: center;
+            padding: 18px 0 10px 0;
+            font-size: 16px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 1000px) {
+            .container {
+                max-width: 98vw;
+            }
+
+            .rooms-list,
+            .main-content {
+                flex-direction: column;
+            }
+
+            .room-card {
+                width: 100%;
+            }
+        }
+
+        .slider-img,
+        .slider-caption {
+            transition: opacity 0.7s;
+        }
+
+        .slider.fade-out .slider-img,
+        .slider.fade-out .slider-caption {
+            opacity: 0;
+        }
+
+        .slider.fade-in .slider-img,
+        .slider.fade-in .slider-caption {
+            opacity: 1;
+        }
+
+        @keyframes fadeInModal {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeOutModal {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+        }
+    </style>
+    <script>
+        const banners = [{
+                img: "images/phong_caocap.webp",
+                title: "Thiên Đường Thật Sự Trong Tầm Mắt",
+                desc: "Trải nghiệm nghỉ dưỡng đẳng cấp, dịch vụ tận tâm, giá cả hợp lý.<br>THE COW HOTEL - Nơi bạn luôn được chào đón như người thân trong gia đình!"
+            },
+            {
+                img: "images/phong_doi.webp",
+                title: "Không Gian Sang Trọng & Hiện Đại",
+                desc: "Phòng nghỉ tiện nghi, view đẹp, dịch vụ chuyên nghiệp.<br>Đặt phòng ngay để nhận ưu đãi hấp dẫn!"
+            },
+            {
+                img: "images/phong_don.webp",
+                title: "Ưu Đãi Đặc Biệt Mùa Hè",
+                desc: "Giảm giá lên đến 20% cho khách đặt phòng sớm.<br>Liên hệ ngay để biết thêm chi tiết!"
+            }
+        ];
+
+        let current = 0;
+        let sliderInterval;
+
+        function renderSliderDots() {
+            const sliderDots = document.getElementById('sliderDots');
+            if (!sliderDots) return;
+            let html = '';
+            for (let i = 0; i < banners.length; i++) {
+                html += `<span class="slider-dot" data-idx="${i}" style="display:inline-block; width:14px; height:14px; margin:0 5px; border-radius:50%; background:${i===current?'#223B79':'#bbb'}; cursor:pointer; transition:background 0.2s;"></span>`;
+            }
+            sliderDots.innerHTML = html;
+            // Gán sự kiện click cho từng dot
+            Array.from(sliderDots.children).forEach(dot => {
+                dot.onclick = function() {
+                    current = parseInt(this.getAttribute('data-idx'));
+                    showBanner(current);
+                    resetSliderInterval();
+                };
+            });
+        }
+
+        // Sửa showBanner để cập nhật dot
+        function showBanner(idx) {
+            const slider = document.getElementById('slider');
+            const img = document.getElementById('sliderImg');
+            const caption = document.getElementById('sliderCaption');
+            slider.classList.remove('fade-in');
+            slider.classList.add('fade-out');
+            setTimeout(() => {
+                img.src = banners[idx].img;
+                caption.innerHTML = `<h2>${banners[idx].title}</h2><p>${banners[idx].desc}</p>`;
+                slider.classList.remove('fade-out');
+                slider.classList.add('fade-in');
+                renderSliderDots();
+            }, 400);
+        }
+
+        function nextBanner() {
+            current = (current + 1) % banners.length;
+            showBanner(current);
+            resetSliderInterval();
+        }
+
+        function prevBanner() {
+            current = (current - 1 + banners.length) % banners.length;
+            showBanner(current);
+            resetSliderInterval();
+        }
+
+        function resetSliderInterval() {
+            clearInterval(sliderInterval);
+            sliderInterval = setInterval(() => {
+                nextBanner();
+            }, 4000);
+        }
+
+        window.onload = () => {
+            showBanner(0);
+            sliderInterval = setInterval(() => {
+                nextBanner();
+            }, 4000);
+            renderSliderDots();
+        };
+    </script>
+    <script>
+        // Hiển thị tài khoản trên menu nếu đã đăng nhập
+        window.addEventListener('DOMContentLoaded', function() {
+            const username = localStorage.getItem('username');
+            const adminUsername = localStorage.getItem('adminUsername');
+            const loginMenu = document.getElementById('loginMenu');
+            const registerMenu = document.getElementById('registerMenu');
+            const userMenu = document.getElementById('userMenu');
+            const welcomeUser = document.getElementById('welcomeUser');
+            if (adminUsername && adminUsername !== 'null' && adminUsername !== 'undefined') {
+                // Nếu là admin
+                if (loginMenu) loginMenu.style.display = 'none';
+                if (registerMenu) registerMenu.style.display = 'none';
+                if (userMenu) {
+                    userMenu.style.display = 'inline-block';
+                    userMenu.innerHTML = `<span style='color:#223B79;font-weight:500;font-size:17px;'><i class='fa fa-user-shield'></i> Admin: ${adminUsername}</span> <a href='#' id='logoutBtn' style='color:#CD202B; margin-left:10px; font-size:15px;'>Đăng xuất</a>`;
+                }
+                if (welcomeUser) {
+                    welcomeUser.style.display = 'none';
+                }
+                setTimeout(function() {
+                    const logoutBtn = document.getElementById('logoutBtn');
+                    if (logoutBtn) {
+                        logoutBtn.onclick = function(e) {
+                            e.preventDefault();
+                            localStorage.removeItem('adminUsername');
+                            location.reload();
+                        };
+                    }
+                }, 100);
+            } else if (username && username !== 'null' && username !== 'undefined') {
+                // Nếu là user thường
+                if (loginMenu) loginMenu.style.display = 'none';
+                if (registerMenu) registerMenu.style.display = 'none';
+                if (userMenu) {
+                    userMenu.style.display = 'inline-block';
+                    userMenu.innerHTML = `<span style='color:#223B79;font-weight:500;font-size:17px;'><i class='fa fa-user'></i> ${username}</span> <a href='#' id='logoutBtn' style='color:#CD202B; margin-left:10px; font-size:15px;'>Đăng xuất</a>`;
+                }
+                if (welcomeUser) {
+                    welcomeUser.style.display = 'none';
+                }
+                setTimeout(function() {
+                    const logoutBtn = document.getElementById('logoutBtn');
+                    if (logoutBtn) {
+                        logoutBtn.onclick = function(e) {
+                            e.preventDefault();
+                            localStorage.removeItem('username');
+                            location.reload();
+                        };
+                    }
+                }, 100);
+            } else {
+                if (loginMenu) loginMenu.style.display = 'inline-block';
+                if (registerMenu) registerMenu.style.display = 'inline-block';
+                if (userMenu) {
+                    userMenu.style.display = 'none';
+                    userMenu.innerHTML = '';
+                }
+                if (welcomeUser) {
+                    welcomeUser.style.display = '';
+                    welcomeUser.textContent = '';
+                }
+            }
+        });
+    </script>
+    <script>
+// Ẩn/hiện menu theo quyền
+document.addEventListener('DOMContentLoaded', function() {
+    // Lấy quyền từ localStorage
+    const isAdmin = !!localStorage.getItem('adminUsername');
+    // Các mục menu
+    const menuItems = {
+        quanLyPhong: document.querySelector('a[href="QuanLyPhong.html"]')?.parentElement,
+        quanLyKhachHang: document.querySelector('a[href="QuanLyKhachHang.html"]')?.parentElement,
+        quanLyTaiKhoan: document.querySelector('a[href="quanly_tk.html"]')?.parentElement,
+        thongKeThuNhap: document.querySelector('a[href="ThongKeThuNhap.html"]')?.parentElement,
+        lichSuDatPhong: document.querySelector('a[href="LichSuDatPhong.html"]')?.parentElement,
+        datPhong: document.querySelector('a[href="TIm_kiemphong.html"]')?.parentElement,
+    };
+
+    if (isAdmin) {
+        // Admin: hiện các mục quản lý, ẩn đặt phòng & lịch sử đặt phòng
+        if (menuItems.quanLyPhong) menuItems.quanLyPhong.style.display = '';
+        if (menuItems.quanLyKhachHang) menuItems.quanLyKhachHang.style.display = '';
+        if (menuItems.quanLyTaiKhoan) menuItems.quanLyTaiKhoan.style.display = '';
+        if (menuItems.thongKeThuNhap) menuItems.thongKeThuNhap.style.display = '';
+        if (menuItems.lichSuDatPhong) menuItems.lichSuDatPhong.style.display = 'none';
+        if (menuItems.datPhong) menuItems.datPhong.style.display = 'none';
+    } else {
+        // User: ẩn các mục quản lý, hiện đặt phòng & lịch sử đặt phòng
+        if (menuItems.quanLyPhong) menuItems.quanLyPhong.style.display = 'none';
+        if (menuItems.quanLyKhachHang) menuItems.quanLyKhachHang.style.display = 'none';
+        if (menuItems.quanLyTaiKhoan) menuItems.quanLyTaiKhoan.style.display = 'none';
+        if (menuItems.thongKeThuNhap) menuItems.thongKeThuNhap.style.display = 'none';
+        if (menuItems.lichSuDatPhong) menuItems.lichSuDatPhong.style.display = '';
+        if (menuItems.datPhong) menuItems.datPhong.style.display = '';
+    }
+});
+</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="topbar">
+        <div class="container clearfix">
+            <div class="logo">THE COW HOTEL</div>
+            <nav>
+                <ul>
+                    <li><a href="HomePage.html">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#rooms">Rooms & Rates</a></li>
+                    <li><a href="#contact">Liên Hệ</a></li>
+                    <li><a href="TIm_kiemphong.html">Đặt Phòng</a></li>
+                    <li><a href="QuanLyPhong.html">Quản lý phòng</a></li>
+                    <li><a href="QuanLyKhachHang.html">Quản lý khách hàng</a></li>
+                    <li><a href="quanly_tk.html">Quản lý tài khoản</a></li>
+                    <li><a href="LichSuDatPhong.html">Lịch sử đặt phòng</a></li>
+                    <li><a href="ThongKeThuNhap.html">Thống kê thu nhập</a></li>
+                    <li id="registerMenu"><a href="dangky_visitor.html">Đăng ký</a></li> <!-- Thêm dòng này -->
+                    <li id="loginMenu"><a href="dangnhap.html">Đăng nhập</a></li>
+                    <li id="userMenu" style="display:none;"></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div id="welcomeUser" style="display:none;text-align:center; font-size:20px; color:#223B79; font-weight:bold; margin:18px 0 0 0;"></div>
+    <div class="container">
+        <div class="slider" id="slider">
+            <img class="slider-img" id="sliderImg" src="images/banner1.jpg" alt="Hotel Banner">
+            <div class="slider-caption" id="sliderCaption">
+                <h2>Thiên Đường Thật Sự Trong Tầm Mắt</h2>
+                <p>Trải nghiệm nghỉ dưỡng đẳng cấp, dịch vụ tận tâm, giá cả hợp lý.<br>
+                THE COW HOTEL - Nơi bạn luôn được chào đón như người thân trong gia đình!</p>
+            </div>
+            <div id="sliderDots" style="text-align:center; margin-top:16px;"></div>
+        </div>
+
+        <div class="rooms-section" id="rooms">
+            <div class="rooms-list">
+                <div class="room-card">
+                    <img src="images/family-suite-la-gi.webp" alt="Phòng Gia Đình">
+                    <div class="room-info">
+                        <h3>Phòng Gia Đình</h3>
+                        <ul>
+                            <li>Giường Queen size</li>
+                            <li>Cửa cách âm</li>
+                            <li>Điều hoà hai chiều</li>
+                        </ul>
+                        <div class="price">360,000 đ/đêm</div>
+                        <button onclick="bookRoom('Phòng Gia Đình')">Read More</button>
+                    </div>
+                </div>
+                <div class="room-card">
+                    <img src="images/phong_doi.webp" alt="Phòng Đôi">
+                    <div class="room-info">
+                        <h3>Phòng Đôi</h3>
+                        <ul>
+                            <li>1 Giường Queen size</li>
+                            <li>Cửa cách âm</li>
+                            <li>Điều hoà hai chiều</li>
+                        </ul>
+                        <div class="price">280,000 đ/đêm</div>
+                        <button onclick="bookRoom('Phòng Đôi')">Read More</button>
+                    </div>
+                </div>
+                <div class="room-card">
+                    <img src="images/phong_caocap.webp" alt="Phòng Cao Cấp">
+                    <div class="room-info">
+                        <h3>Phòng Cao Cấp</h3>
+                        <ul>
+                            <li>1 giường King</li>
+                            <li>Cửa cách âm</li>
+                            <li>Điều hoà hai chiều</li>
+                        </ul>
+                        <div class="price">500,000 đ/đêm</div>
+                        <button onclick="bookRoom('Phòng Cao Cấp')">Read More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="welcome" id="about">
+                <img src="images/a3.jpg" alt="Hotel Overview">
+                <h2>WELCOME TO THE COW HOTEL</h2>
+                <p>
+                    THE COW HOTEL là khách sạn đạt chuẩn quốc tế, tọa lạc ngay trung tâm thành phố với hơn 10 năm kinh nghiệm phục vụ khách hàng trong và ngoài nước. Chúng tôi tự hào mang đến không gian nghỉ dưỡng hiện đại, tiện nghi cùng đội ngũ nhân viên chuyên nghiệp, tận tâm.<br><br>
+                    Sứ mệnh của chúng tôi là mang lại cho quý khách trải nghiệm lưu trú tuyệt vời nhất với dịch vụ chất lượng, giá cả hợp lý và sự hài lòng tối đa. Hãy đến và cảm nhận sự khác biệt tại THE COW HOTEL – nơi bạn luôn được chào đón như người thân trong gia đình!
+                </p>
+            </div>
+            <div class="special-offer" id="offers">
+                <h3>Ưu đãi đặc biệt</h3>
+                <div class="offer-box">
+                    <b>Early Bird Booking</b><br>
+                    Đặt phòng sớm - nhận ưu đãi lên đến 20% cho kỳ nghỉ từ 1/6 đến 30/9!
+                </div>
+                <div class="offer-box">
+                    <b>Free Airport Pickup</b><br>
+                    Miễn phí đưa đón sân bay cho khách đặt phòng từ 3 đêm trở lên.
+                </div>
+                <div class="offer-box">
+                    <b>Buffet sáng miễn phí</b><br>
+                    Tận hưởng bữa sáng buffet đa dạng, hấp dẫn mỗi ngày.
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer id="contact">
+        &copy; 2025 THE COW HOTEL | Địa chỉ: 180 Đường Cao Lỗ, Quận 8, TP.HCM | Hotline: 0123 456 789<br>
+        Email: info@thecowhotel.vn
+    </footer>
+
+    <!-- Modal hiển thị thông tin phòng -->
+    <div id="roomModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); align-items:center; justify-content:center;">
+        <div id="roomModalContent" style="background:#fff; border-radius:10px; max-width:420px; width:90vw; padding:28px 22px; box-shadow:0 8px 32px #223b7933; position:relative; animation:fadeInModal 0.4s;">
+            <span id="closeModal" style="position:absolute; top:12px; right:18px; font-size:22px; color:#223B79; cursor:pointer;">&times;</span>
+            <div id="roomDetail"></div>
+        </div>
+    </div>
+
+    <script>
+        const roomDetails = {
+            "Phòng Gia Đình": {
+                img: "images/family-suite-la-gi.webp",
+                name: "Phòng Gia Đình",
+                desc: "Phòng rộng rãi cho gia đình, giường Queen size, cửa cách âm, điều hoà hai chiều, phòng tắm riêng, wifi miễn phí, TV màn hình phẳng.",
+                price: "360,000 đ/đêm"
+            },
+            "Phòng Đôi": {
+                img: "images/phong_doi.webp",
+                name: "Phòng Đôi",
+                desc: "Phòng đôi tiện nghi, 1 giường Queen size, cửa cách âm, điều hoà hai chiều, phòng tắm riêng, wifi miễn phí, TV màn hình phẳng.",
+                price: "280,000 đ/đêm"
+            },
+            "Phòng Cao Cấp": {
+                img: "images/phong_caocap.webp",
+                name: "Phòng Cao Cấp",
+                desc: "Phòng cao cấp sang trọng, 1 giường King, cửa cách âm, điều hoà hai chiều, phòng tắm riêng, minibar, wifi miễn phí, TV màn hình lớn.",
+                price: "500,000 đ/đêm"
+            }
+        };
+
+        function showRoomDetail(roomName) {
+            const modal = document.getElementById('roomModal');
+            const content = document.getElementById('roomModalContent');
+            const detail = document.getElementById('roomDetail');
+            const info = roomDetails[roomName];
+            if (!info) return;
+            detail.innerHTML = `
+                <img src="${info.img}" alt="${info.name}" style="width:100%; border-radius:8px; margin-bottom:14px;">
+                <h2 style="color:#223B79; margin:0 0 10px 0;">${info.name}</h2>
+                <div style="color:#444; font-size:16px; margin-bottom:10px;">${info.desc}</div>
+                <div style="color:#CD202B; font-weight:bold; font-size:1.1em;">${info.price}</div>
+                <button onclick="bookRoom('${info.name}')" style="margin-top:18px; background:#223B79; color:#fff; border:none; border-radius:4px; padding:10px 22px; font-weight:bold; cursor:pointer;">Đặt phòng</button>
+            `;
+            modal.style.display = 'flex';
+            content.style.animation = 'fadeInModal 0.4s';
+        }
+
+        // Đóng modal khi click ra ngoài hoặc click nút đóng
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('roomModal');
+            const content = document.getElementById('roomModalContent');
+            document.getElementById('closeModal').onclick = closeRoomModal;
+            modal.onclick = function(e) {
+                if (e.target === modal) closeRoomModal();
+            };
+            function closeRoomModal() {
+                content.style.animation = 'fadeOutModal 0.3s';
+                setTimeout(() => { modal.style.display = 'none'; }, 280);
+            }
+        });
+
+        // Ghi đè hàm bookRoom để show modal thay vì chuyển trang
+        function bookRoom(roomName) {
+            showRoomDetail(roomName);
+        }
+    </script>
+</body>
+
+</html>

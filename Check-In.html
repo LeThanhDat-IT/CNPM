@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Check-in Khách Sạn Bằng Mã Đặt Phòng</title>
+  <link rel="stylesheet" href="checkin.css">
+</head>
+<body>
+  <header>
+    <img src="images/a3.jpg" alt="Logo" style="height:40px;cursor:pointer;vertical-align:middle;margin-right:18px;" onclick="window.location.href='HomePage.html'">
+    <h1 style="display:inline;vertical-align:middle;">THE COW</h1>
+  </header>
+  <div class="container">
+    <h2>Check-in Bằng Mã Đặt Phòng</h2>
+    <form id="checkinForm" autocomplete="off">
+      <div class="form-group">
+        <label for="bookingCode">Nhập mã đặt phòng</label>
+        <input type="text" id="bookingCode" required placeholder="Nhập mã đặt phòng...">
+      </div>
+      <button type="submit">Kiểm tra & Check-in</button>
+      <div id="message"></div>
+    </form>
+    <div id="bookingInfo"></div>
+  </div>
+  <script src="checkin.js"></script>
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE COW - Quản Lý Khách Sạn</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 1200px;
+      margin-bottom: 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #fff;
+      padding: 10px 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+    .header .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .header .logo span {
+      background-color: #1DA1F2;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+    .header .logo .btn {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      color: white;
+      margin-left: 10px;
+    }
+    .header .logo .btn-active {
+      background-color: #1DA1F2;
+    }
+    .header .logo .btn-inactive {
+      background-color: #ccc;
+      color: #000;
+    }
+    .header .nav {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .header .nav a {
+      text-decoration: none;
+      color: #000;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+    }
+    .header .nav a i {
+      margin-right: 5px;
+    }
+    .header .nav .user {
+      display: flex;
+      align-items: center;
+    }
+    .header .nav .user i {
+      margin-right: 5px;
+    }
+    .form-container {
+      background-color: white;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      width: 400px;
+      margin-top: 70px;
+      text-align: left;
+    }
+    .form-container label {
+      font-weight: bold;
+      margin-right: 10px;
+      display: inline-block;
+      width: 80px;
+    }
+    .form-container input, .form-container select {
+      width: 200px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .buttons {
+      margin-top: 10px;
+      text-align: center;
+    }
+    .buttons button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      margin-right: 10px;
+      background-color: #1DA1F2;
+      color: white;
+    }
+    .buttons .search-btn {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      color: #000;
+    }
+    .table-container {
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      overflow-x: auto;
+      width: 100%;
+      max-width: 1200px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      font-size: 14px;
+    }
+    th {
+      background-color: #1DA1F2;
+      color: white;
+      font-weight: bold;
+    }
+    tr:nth-child(even) {
+      background-color: #e6f0fa;
+    }
+    tr:hover {
+      background-color: #d3e3fd;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <img src="images/a3.jpg" alt="Logo" style="height:40px;cursor:pointer;vertical-align:middle;margin-right:18px;" onclick="window.location.href='HomePage.html'">
+      <h1 style="display:inline;vertical-align:middle;">THE COW</h1>
+    </div>
+    <div class="nav">
+      <a href="#"><i class="fas fa-hotel"></i> Thuê phòng khách sạn</a>
+      <div class="user">
+        <i class="fas fa-user"></i>
+        <span id="adminName"></span>
+      </div>
+      <a href="#"><i class="fas fa-history"></i> Lịch sử thuê phòng</a>
+      <a href="#"><i class="fas fa-clock"></i></a>
+      <a href="#"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="form-container">
+    <label>Tên:</label>
+    <input type="text" id="ten"><br>
+    
+    <label>Giới tính:</label>
+    <select id="gioiTinh">
+      <option>Nam</option>
+      <option>Nữ</option>
+    </select><br>
+    
+    <label>SDT:</label>
+    <input type="text" id="sdt"><br>
+    
+    <label>Ngày sinh:</label>
+    <input type="text" id="ngaySinh"><br>
+    
+    <label>Email:</label>
+    <input type="email" id="email"><br>
+    
+    <label>Địa chỉ:</label>
+    <input type="text" id="diaChi"><br>
+  </div>
+
+ 
+
+  <div class="buttons">
+    <button class="add" onclick="themKhachHang()">Thêm</button>
+    <button class="update" onclick="capNhatKhachHang()">Cập nhật</button>
+    <button class="delete" onclick="xoaKhachHang()">Xóa</button>
+    <button class="search-btn" onclick="timKiem()">Tìm kiếm</button>
+  </div>
+
+  <div class="table-container">
+    <table id="khachHangTable">
+      <thead>
+        <tr>
+          <th>Mã KH</th>
+          <th>Tên</th>
+          <th>Giới tính</th>
+          <th>SDT</th>
+          <th>Ngày sinh</th>
+          <th>Email</th>
+          <th>Địa chỉ</th>
+        </tr>
+      </thead>
+      <tbody id="khachHangBody">
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    let khachHangList = [];
+
+    // Lấy dữ liệu khách hàng từ server khi tải trang
+    async function fetchKhachHangList() {
+      try {
+        const res = await fetch('PHP/datphong.php?action=list');
+        if (!res.ok) throw new Error('Lỗi khi lấy dữ liệu khách hàng');
+        khachHangList = await res.json();
+        hienThiDanhSach();
+      } catch (e) {
+        alert('Không thể tải danh sách khách hàng từ server!');
+      }
+    }
+
+    let selectedRow = null;
+
+    function hienThiDanhSach() {
+      const tbody = document.getElementById("khachHangBody");
+      tbody.innerHTML = "";
+      khachHangList.forEach((khachHang, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${khachHang.maKH}</td>
+          <td>${khachHang.ten}</td>
+          <td>${khachHang.gioiTinh}</td>
+          <td>${khachHang.sdt}</td>
+          <td>${khachHang.ngaySinh}</td>
+          <td>${khachHang.email}</td>
+          <td>${khachHang.diaChi}</td>
+        `;
+        row.addEventListener("click", () => chonKhachHang(khachHang, row, index));
+        tbody.appendChild(row);
+      });
+    }
+
+    function chonKhachHang(khachHang, row, index) {
+      if (selectedRow) selectedRow.style.backgroundColor = "";
+      selectedRow = row;
+      selectedRow.style.backgroundColor = "#d3e3fd";
+      document.getElementById("ten").value = khachHang.ten;
+      document.getElementById("gioiTinh").value = khachHang.gioiTinh;
+      document.getElementById("sdt").value = khachHang.sdt;
+      document.getElementById("ngaySinh").value = khachHang.ngaySinh;
+      document.getElementById("email").value = khachHang.email;
+      document.getElementById("diaChi").value = khachHang.diaChi;
+      selectedRow.dataset.index = index;
+    }
+
+    function themKhachHang() {
+      const ten = document.getElementById("ten").value;
+      const gioiTinh = document.getElementById("gioiTinh").value;
+      const sdt = document.getElementById("sdt").value;
+      const ngaySinh = document.getElementById("ngaySinh").value;
+      const email = document.getElementById("email").value;
+      const diaChi = document.getElementById("diaChi").value;
+
+      if (!ten || !sdt || !ngaySinh || !email || !diaChi) {
+        alert("Vui lòng điền đầy đủ thông tin!");
+        return;
+      }
+
+      const maKH = "A" + String(khachHangList.length + 1).padStart(3, "0");
+      khachHangList.push({ maKH, ten, gioiTinh, sdt, ngaySinh, email, diaChi });
+      hienThiDanhSach();
+      resetForm();
+    }
+
+    function capNhatKhachHang() {
+      if (!selectedRow) {
+        alert("Vui lòng chọn một khách hàng để cập nhật!");
+        return;
+      }
+
+      const index = selectedRow.dataset.index;
+      const ten = document.getElementById("ten").value;
+      const gioiTinh = document.getElementById("gioiTinh").value;
+      const sdt = document.getElementById("sdt").value;
+      const ngaySinh = document.getElementById("ngaySinh").value;
+      const email = document.getElementById("email").value;
+      const diaChi = document.getElementById("diaChi").value;
+
+      if (!ten || !sdt || !ngaySinh || !email || !diaChi) {
+        alert("Vui lòng điền đầy đủ thông tin!");
+        return;
+      }
+
+      khachHangList[index] = { ...khachHangList[index], ten, gioiTinh, sdt, ngaySinh, email, diaChi };
+      hienThiDanhSach();
+      resetForm();
+    }
+
+    function xoaKhachHang() {
+      if (!selectedRow) {
+        alert("Vui lòng chọn một khách hàng để xóa!");
+        return;
+      }
+
+      const index = selectedRow.dataset.index;
+      khachHangList.splice(index, 1);
+      hienThiDanhSach();
+      resetForm();
+    }
+
+    function timKiem() {
+      const searchTerm = prompt("Nhập thông tin để tìm kiếm (tên, SDT, email hoặc địa chỉ):");
+      if (!searchTerm) return;
+
+      const filteredList = khachHangList.filter(khachHang =>
+        khachHang.ten.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        khachHang.sdt.includes(searchTerm) ||
+        khachHang.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        khachHang.diaChi.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      const tbody = document.getElementById("khachHangBody");
+      tbody.innerHTML = "";
+      filteredList.forEach((khachHang, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${khachHang.maKH}</td>
+          <td>${khachHang.ten}</td>
+          <td>${khachHang.gioiTinh}</td>
+          <td>${khachHang.sdt}</td>
+          <td>${khachHang.ngaySinh}</td>
+          <td>${khachHang.email}</td>
+          <td>${khachHang.diaChi}</td>
+        `;
+        row.addEventListener("click", () => chonKhachHang(khachHang, row, khachHangList.indexOf(khachHang)));
+        tbody.appendChild(row);
+      });
+    }
+
+    function resetForm() {
+      document.getElementById("ten").value = "";
+      document.getElementById("gioiTinh").value = "Nam";
+      document.getElementById("sdt").value = "";
+      document.getElementById("ngaySinh").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("diaChi").value = "";
+      if (selectedRow) {
+        selectedRow.style.backgroundColor = "";
+        selectedRow = null;
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', function() {
+      fetchKhachHangList();
+      var adminName = localStorage.getItem('adminUsername');
+      if(adminName) {
+        document.getElementById('adminName').textContent = adminName;
+      } else {
+        document.getElementById('adminName').textContent = 'Admin';
+      }
+    });
+
+    // Cập nhật tên admin trong header khi người dùng nhập thủ công
+    adminInput.addEventListener('input', () => {
+      userElement.textContent = adminInput.value || 'Tên Admin';
+    });
+  </script>
+</body>
+</html>
