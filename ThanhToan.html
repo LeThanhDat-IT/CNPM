@@ -159,6 +159,14 @@
     // Lấy booking mới nhất từ server
     let currentBooking = null;
     window.onload = function() {
+      // Ưu tiên lấy từ localStorage
+      const lastBooking = localStorage.getItem('lastBooking');
+      if (lastBooking) {
+        currentBooking = JSON.parse(lastBooking);
+        renderBooking(currentBooking);
+        return;
+      }
+      // Nếu không có thì mới lấy từ server
       const email = getUserEmail();
       if (!email) {
         renderBooking(null);
@@ -175,25 +183,11 @@
           currentBooking = data.booking;
           renderBooking(currentBooking);
         } else {
-          // Nếu không lấy được từ server, lấy từ localStorage
-          const lastBooking = localStorage.getItem('lastBooking');
-          if (lastBooking) {
-            currentBooking = JSON.parse(lastBooking);
-            renderBooking(currentBooking);
-          } else {
-            renderBooking(null);
-          }
+          renderBooking(null);
         }
       })
       .catch(() => {
-        // Nếu lỗi, lấy từ localStorage
-        const lastBooking = localStorage.getItem('lastBooking');
-        if (lastBooking) {
-          currentBooking = JSON.parse(lastBooking);
-          renderBooking(currentBooking);
-        } else {
-          renderBooking(null);
-        }
+        renderBooking(null);
       });
     };
 
@@ -222,7 +216,14 @@
       const method = methodRadio ? methodRadio.nextSibling.textContent.trim() : '';
       const total = getTotalAmount(currentBooking);
       showResultPage(currentBooking, total, method);
+      // Sau khi thanh toán thành công, gọi API cập nhật trạng thái
+      fetch('PHP/update_paid.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'bookingCode=' + encodeURIComponent(currentBooking.bookingCode)
+      });
       setTimeout(() => {
+        // KHÔNG xóa localStorage ở đây!
         window.location.href = 'ThanhToanThanhCong.html';
       }, 1000);
     }

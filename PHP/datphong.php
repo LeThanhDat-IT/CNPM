@@ -20,24 +20,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Sinh mã đặt phòng tự động (ví dụ: BK20240520001)
-    $prefix = 'BK' . date('Ymd');
-    $sql_max = "SELECT MAX(bookingCode) AS max_code FROM bookings WHERE bookingCode LIKE '{$prefix}%'";
-    $result = $conn->query($sql_max);
-    $row = $result->fetch_assoc();
-    if ($row && $row['max_code']) {
-        $num = intval(substr($row['max_code'], -3)) + 1;
-        $bookingCode = $prefix . str_pad($num, 3, '0', STR_PAD_LEFT);
-    } else {
-        $bookingCode = $prefix . '001';
-    }
-
-    // Lưu thông tin đặt phòng vào bảng bookings (đồng bộ với các file get)
-    $stmt = $conn->prepare("INSERT INTO bookings (room, fullname, phone, email, checkin, checkout, time, bookingCode) VALUES (?, ?, ?, ?, ?, ?, NOW(), ?)");
-    $stmt->bind_param("sssssss", $room, $fullname, $phone, $email, $date, $time, $bookingCode);
+    // Bước 1: Chèn bản ghi chưa có bookingCode
+    $stmt = $conn->prepare("INSERT INTO bookings (room, fullname, phone, email, checkin, checkout, time) VALUES (?, ?, ?, ?, ?, ?, NOW())");
+    $stmt->bind_param("ssssss", $room, $fullname, $phone, $email, $date, $time);
 
     if ($stmt->execute()) {
+        $last_id = $conn->insert_id;
+        // Bước 2: Sinh bookingCode duy nhất
+        $bookingCode = 'BK' . date('Ymd') . str_pad($last_id, 3, '0', STR_PAD_LEFT);
+        // Bước 3: Update bookingCode cho bản ghi vừa chèn
+        $stmt2 = $conn->prepare("UPDATE bookings SET bookingCode = ? WHERE id = ?");
+        $stmt2->bind_param("si", $bookingCode, $last_id);
+        $stmt2->execute();
+        $stmt2->close();
+
         echo json_encode(['success' => true, 'message' => 'Đặt phòng thành công!', 'bookingCode' => $bookingCode]);
+    } else {
+        echo json_encode(['error' => 'Đã xảy ra lỗi. Vui lòng thử lại sau.']);
     }
 
     $stmt->close();

@@ -156,6 +156,15 @@
 
     // Lấy booking mới nhất từ server, fallback sang localStorage nếu không có
     window.onload = function() {
+      // Ưu tiên lấy từ localStorage
+      const lastBooking = localStorage.getItem('lastBooking');
+      if (lastBooking) {
+        renderBooking(JSON.parse(lastBooking));
+        // Xóa localStorage sau khi đã render xong
+        setTimeout(() => localStorage.removeItem('lastBooking'), 500);
+        return;
+      }
+      // Nếu không có thì mới lấy từ server
       const email = getUserEmail();
       if (!email) {
         renderBooking(null);
@@ -171,22 +180,11 @@
         if (data.success && data.booking) {
           renderBooking(data.booking);
         } else {
-          // Fallback: lấy từ localStorage
-          const lastBooking = localStorage.getItem('lastBooking');
-          if (lastBooking) {
-            renderBooking(JSON.parse(lastBooking));
-          } else {
-            renderBooking(null);
-          }
+          renderBooking(null);
         }
       })
       .catch(() => {
-        const lastBooking = localStorage.getItem('lastBooking');
-        if (lastBooking) {
-          renderBooking(JSON.parse(lastBooking));
-        } else {
-          renderBooking(null);
-        }
+        renderBooking(null);
       });
     };
 
