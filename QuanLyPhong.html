@@ -9,42 +9,48 @@
     <style>
         body {
             font-family: 'Montserrat', Arial, sans-serif;
-            background: linear-gradient(120deg, #e0f7fa 0%, #f8f9fa 100%);
+            background: linear-gradient(120deg, #f6f8fb 60%, #e9eafc 100%);
             margin: 0;
+            min-height: 100vh;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px);}
+            to { opacity: 1; transform: none;}
         }
         .layout {
             display: flex;
             min-height: 100vh;
             flex-direction: column;
         }
-        .nav {
-            width: 100%;
-            height: 70px;
-            background: linear-gradient(90deg, #1a2d6c 60%, #223b79 100%);
-            color: #fff;
+        .nav-bar {
             display: flex;
+            gap: 16px;
+            justify-content: center;
             align-items: center;
-            border-radius: 0 0 18px 18px;
-            padding: 0 24px;
-            gap: 8px;
-            font-size: 1.1em;
-            margin-bottom: 28px;
-            box-shadow: 0 4px 16px #223b7922;
+            margin-bottom: 32px;
+            margin-top: 10px;
+            z-index: 2;
+            position: relative;
         }
-        .nav a {
-            color: #fff;
+        .nav-bar a {
             text-decoration: none;
-            padding: 12px 24px;
-            border-radius: 8px;
+            padding: 9px 22px;
+            border-radius: 7px;
+            background: linear-gradient(90deg, #1a2d6c 60%, #d10000 100%);
+            color: #fff;
+            font-weight: 600;
+            font-size: 1em;
+            box-shadow: 0 2px 8px rgba(34,59,121,0.08);
+            transition: background 0.2s, transform 0.1s;
+            letter-spacing: 0.5px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-weight: 500;
-            transition: background 0.2s, color 0.2s;
+            gap: 7px;
         }
-        .nav a.active, .nav a:hover {
-            background: #ffd700;
-            color: #223b79;
+        .nav-bar a:hover, .nav-bar a.active {
+            background: linear-gradient(90deg, #d10000 60%, #1a2d6c 100%);
+            transform: translateY(-2px) scale(1.03);
+            color: #fff;
         }
         .main {
             flex: 1;
@@ -91,10 +97,17 @@
             padding: 38px 28px 28px 28px;
             margin-top: 12px;
             animation: fadeIn 0.7s;
+            position: relative;
+            overflow: hidden;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px);}
-            to { opacity: 1; transform: none;}
+        .card::before {
+            content: "";
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 220px; height: 220px;
+            background: radial-gradient(circle, #d10000 0%, #fff0 70%);
+            opacity: 0.13;
+            z-index: 0;
         }
         .form-row {
             display: flex;
@@ -129,6 +142,7 @@
             display: flex;
             gap: 14px;
             margin-bottom: 10px;
+            margin-top: 14px; /* Thêm dòng này để tạo khoảng cách với input phía trên */
         }
         .form-actions button {
             padding: 12px 26px;
@@ -186,7 +200,7 @@
         }
         @media (max-width: 900px) {
             .layout { flex-direction: column; }
-            .nav { flex-direction: column; height: auto; border-radius: 0; padding: 0 4px; }
+            .nav-bar { flex-wrap: wrap; gap: 8px; font-size: 0.97em;}
             .main { padding: 0 8px; }
             .card { padding: 18px 6px; }
             .form-row { flex-direction: column; gap: 8px; }
@@ -195,11 +209,11 @@
 </head>
 <body>
 <div class="layout">
-    <div class="nav">
-      <a href="QuanLyPhong.html" class="active"><i class="fa-solid fa-bed"></i> Quản lý phòng</a>
-      <a href="QuanLyKhachHang.html"><i class="fa-solid fa-users"></i> Quản lý khách hàng</a>
-      <a href="quanly_tk.html"><i class="fa-solid fa-user-gear"></i> Quản lý tài khoản</a>
-      <a href="#"><i class="fa-solid fa-chart-line"></i> Thống kê thu nhập</a>
+    <div class="nav-bar">
+        <a href="QuanLyPhong.html" class="active"><i class="fa-solid fa-bed"></i> Quản lý phòng</a>
+        <a href="QuanLyKhachHang.html"><i class="fa-solid fa-users"></i> Quản lý khách hàng</a>
+        <a href="quanly_tk.html"><i class="fa-solid fa-user-gear"></i> Quản lý tài khoản</a>
+        <a href="ThongKeThuNhap.html"><i class="fa-solid fa-chart-line"></i> Thống kê thu nhập</a>
     </div>
     <div class="main">
         <header>
@@ -239,6 +253,24 @@
                             <option value="2">Bảo trì</option>
                         </select>
                     </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bed-type">Loại giường</label>
+                        <input type="text" id="bed-type" placeholder="VD: 1 giường đôi">
+                    </div>
+                    <div class="form-group">
+                        <label for="amenities">Tiện nghi</label>
+                        <input type="text" id="amenities" placeholder="VD: Wifi, TV, Điều hòa">
+                    </div>
+                    <div class="form-group">
+                        <label for="area">Diện tích</label>
+                        <input type="text" id="area" placeholder="VD: 25m²">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="hinhAnh">Đường dẫn ảnh</label>
+                    <input type="text" id="hinhAnh" name="hinhAnh" placeholder="images/doi_2_giuong.jpg">
                 </div>
                 <div class="form-actions">
                     <button type="button" onclick="addRoom()"><i class="fa-solid fa-plus"></i> Thêm</button>
@@ -330,6 +362,10 @@
         const type = document.getElementById('room-type').value;
         const price = document.getElementById('room-price').value.trim();
         const status = document.getElementById('room-status').value;
+        const hinhAnh = document.getElementById('hinhAnh').value.trim();
+        const bedType = document.getElementById('bed-type').value.trim();
+        const amenities = document.getElementById('amenities').value.trim();
+        const area = document.getElementById('area').value.trim();
         if (!name || !type || !price || !status) {
             alert('Vui lòng nhập đầy đủ thông tin phòng!');
             return;
@@ -337,7 +373,7 @@
         fetch('PHP/add_phong.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, type, price, status })
+            body: JSON.stringify({ name, type, price, status, hinhAnh, bedType, amenities, area })
         })
         .then(res => res.json())
         .then(data => {

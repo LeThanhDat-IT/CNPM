@@ -12,10 +12,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = isset($_POST['password']) ? trim($_POST['password']) : '';
     $confirm_password = isset($_POST['confirm-password']) ? trim($_POST['confirm-password']) : '';
     $agree = isset($_POST['agree']);
+    $role = $_POST['role'] ?? 'user'; // Mặc định là user nếu không có
 
     if ($name && $phone && $email && $gender && $dob && $address && $username && $password && $confirm_password && $agree) {
         if ($password !== $confirm_password) {
-            echo "Mật khẩu và xác nhận mật khẩu không khớp!";
+            echo "<script>alert('Mật khẩu và xác nhận mật khẩu không khớp!'); window.history.back();</script>";
         } else {
             // Kiểm tra trùng email, số điện thoại, tên đăng nhập
             $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? OR phone = ? OR username = ?");
@@ -25,31 +26,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($result && $result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 if ($row['email'] === $email) {
-                    echo "Email đã được sử dụng!";
+                    echo "<script>alert('Email đã được sử dụng!'); window.history.back();</script>";
                 } elseif ($row['phone'] === $phone) {
-                    echo "Số điện thoại đã được sử dụng!";
+                    echo "<script>alert('Số điện thoại đã được sử dụng!'); window.history.back();</script>";
                 } elseif ($row['username'] === $username) {
-                    echo "Tên đăng nhập đã được sử dụng!";
+                    echo "<script>alert('Tên đăng nhập đã được sử dụng!'); window.history.back();</script>";
                 } else {
-                    echo "Thông tin đã được sử dụng!";
+                    echo "<script>alert('Thông tin đã được sử dụng!'); window.history.back();</script>";
                 }
                 $stmt->close();
             } else {
                 $stmt->close();
                 $password_hash = password_hash($password, PASSWORD_DEFAULT);
-                $stmt2 = $conn->prepare("INSERT INTO users (name, phone, email, gender, dob, address, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt2->bind_param('ssssssss', $name, $phone, $email, $gender, $dob, $address, $username, $password_hash);
+                $stmt2 = $conn->prepare("INSERT INTO users (name, phone, email, gender, dob, address, username, password, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt2->bind_param('sssssssss', $name, $phone, $email, $gender, $dob, $address, $username, $password_hash, $role);
                 if ($stmt2->execute()) {
-                    header("Location: ../dangnhap.html");
+                    echo "<script>alert('Đăng ký thành công! Vui lòng đăng nhập.'); window.location.href='../dangnhap.html';</script>";
                     exit();
                 } else {
-                    echo "Lỗi: " . $stmt2->error;
+                    echo "<script>alert('Lỗi: " . addslashes($stmt2->error) . "'); window.history.back();</script>";
                 }
                 $stmt2->close();
             }
         }
     } else {
-        echo "Vui lòng nhập đầy đủ thông tin!";
+        echo "<script>alert('Vui lòng nhập đầy đủ thông tin!'); window.history.back();</script>";
     }
 }
 $conn->close();

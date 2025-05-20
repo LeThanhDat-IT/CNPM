@@ -3,135 +3,191 @@
 <head>
   <meta charset="UTF-8">
   <title>Đặt Phòng Khách Sạn</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f0f2f5;
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: linear-gradient(120deg, #f0f2f5 60%, #e9eafc 100%);
       margin: 0;
       padding: 0;
+      min-height: 100vh;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 32px;
+      padding: 32px 0 0 0;
+      background: none;
+    }
+    header img {
+      height: 48px;
+      cursor: pointer;
+      vertical-align: middle;
+      margin-right: 18px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(34,59,121,0.10);
+      transition: transform 0.15s;
+    }
+    header img:hover { transform: scale(1.07); }
+    header h1 {
+      display: inline;
+      vertical-align: middle;
+      font-size: 2em;
+      color: #223B79;
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: 2px;
     }
     .container {
       max-width: 480px;
       margin: 40px auto;
       background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 16px rgba(34,59,121,0.10);
-      padding: 32px 28px 24px 28px;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(34,59,121,0.13);
+      padding: 38px 32px 28px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .container::before {
+      content: "";
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 220px; height: 220px;
+      background: radial-gradient(circle, #d10000 0%, #fff0 70%);
+      opacity: 0.13;
+      z-index: 0;
     }
     h2 {
       text-align: center;
       color: #223B79;
       margin-bottom: 28px;
+      font-size: 1.5em;
+      font-weight: 700;
+      letter-spacing: 1px;
+      position: relative;
+      z-index: 1;
     }
     .form-group {
       margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
     }
     label {
       display: block;
-      font-weight: 500;
-      margin-bottom: 6px;
+      font-weight: 600;
+      margin-bottom: 7px;
       color: #223B79;
+      font-size: 1.04em;
     }
     input {
       width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 1em;
+      padding: 12px;
+      border-radius: 7px;
+      border: 1.5px solid #cfd8e3;
+      font-size: 1.08em;
+      background: #f8fafc;
       margin-bottom: 2px;
+      transition: border 0.2s;
+    }
+    input:focus {
+      border-color: #1a2d6c;
+      outline: none;
     }
     input[readonly] {
       background: #f5f5f5;
       color: #888;
       cursor: not-allowed;
     }
-    button {
+    button[type="submit"] {
       width: 100%;
-      padding: 13px;
-      background: #1a2d6c;
+      padding: 14px 0;
+      background: linear-gradient(90deg, #1a2d6c 60%, #d10000 100%);
       color: #fff;
       border: none;
       border-radius: 8px;
-      font-size: 1.1em;
+      font-size: 1.13em;
       font-weight: bold;
       cursor: pointer;
       margin-top: 10px;
-      transition: background 0.2s;
+      transition: background 0.2s, transform 0.1s;
       letter-spacing: 1px;
+      box-shadow: 0 2px 8px rgba(34,59,121,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
     }
-    button:hover {
-      background: #d10000;
+    button[type="submit"]:hover {
+      background: linear-gradient(90deg, #d10000 60%, #1a2d6c 100%);
+      transform: translateY(-2px) scale(1.03);
     }
     .success {
       color: #1a8f2b;
       text-align: center;
       margin-top: 18px;
       font-weight: bold;
+      font-size: 1.08em;
     }
     .error {
       color: #d10000;
       margin-bottom: 10px;
       text-align: center;
+      font-size: 1.08em;
+      font-weight: 600;
     }
-    header {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-    header img {
-      height: 40px;
-      cursor: pointer;
-      vertical-align: middle;
-      margin-right: 18px;
-    }
-    header h1 {
-      display: inline;
-      vertical-align: middle;
-      font-size: 1.5em;
-      color: #223B79;
-      margin: 0;
+    @media (max-width: 600px) {
+      .container { padding: 12px 4px; }
+      h2 { font-size: 1.1em; }
+      header h1 { font-size: 1.2em; }
     }
   </style>
 </head>
 <body>
   <header>
     <img src="images/a3.jpg" alt="Logo" onclick="window.location.href='HomePage.html'">
-    <h1>THE COW</h1>
+    <h1><i class="fa-solid fa-hotel"></i> THE COW</h1>
   </header>
   <div class="container">
-    <h2>Đặt Phòng Khách Sạn</h2>
+    <h2><i class="fa-solid fa-calendar-check" style="color:#d10000;margin-right:8px;"></i>Đặt Phòng Khách Sạn</h2>
     <form id="bookingForm" autocomplete="off">
       <div class="form-group">
-        <label for="room">Loại phòng</label>
+        <label for="room"><i class="fa-solid fa-door-closed"></i> Loại phòng</label>
         <input type="text" id="room" readonly>
       </div>
       <div class="form-group">
-        <label for="fullname">Họ và tên</label>
+        <label for="fullname"><i class="fa-solid fa-user"></i> Họ và tên</label>
         <input type="text" id="fullname" required placeholder="Nhập họ tên khách hàng">
       </div>
       <div class="form-group">
-        <label for="phone">Số điện thoại</label>
+        <label for="phone"><i class="fa-solid fa-phone"></i> Số điện thoại</label>
         <input type="tel" id="phone" required pattern="0[0-9]{9,10}" placeholder="Nhập số điện thoại">
       </div>
       <div class="form-group">
-        <label for="email">Email</label>
+        <label for="email"><i class="fa-solid fa-envelope"></i> Email</label>
         <input type="email" id="email" required placeholder="Nhập email">
       </div>
       <div class="form-group">
-        <label for="checkin">Ngày nhận phòng</label>
+        <label for="checkin"><i class="fa-solid fa-calendar-day"></i> Ngày nhận phòng</label>
         <input type="date" id="checkin" required>
       </div>
       <div class="form-group">
-        <label for="checkout">Ngày trả phòng</label>
+        <label for="checkout"><i class="fa-solid fa-calendar-day"></i> Ngày trả phòng</label>
         <input type="date" id="checkout" required>
       </div>
-      <button type="submit">Đặt phòng</button>
+      <button type="submit"><i class="fa-solid fa-paper-plane"></i> Đặt phòng</button>
       <div id="message"></div>
     </form>
   </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
   <script>
     // Lấy loại phòng từ localStorage (do file Tim_kiemphong truyền sang)
+    const roomCode = localStorage.getItem('selectedRoomCode') || '';
     const roomName = localStorage.getItem('selectedRoomName') || '';
-    document.getElementById('room').value = roomName;
+    if (!roomCode) {
+      alert('Bạn chưa chọn phòng! Vui lòng quay lại trang tìm kiếm phòng.');
+      window.location.href = 'Tim_kiemphong.html';
+    }
+    document.getElementById('room').value = roomName; // Hiển thị tên phòng cho người dùng
 
     document.getElementById('bookingForm').addEventListener('submit', function(e) {
       e.preventDefault();
@@ -158,13 +214,13 @@
       }
 
       // Gửi đúng tên trường cho PHP
-      const bookingData = { 
-        room, 
-        fullname, 
-        phone, 
-        email, 
-        date: checkin,    // Đổi tên trường
-        time: checkout,   // Đổi tên trường
+      const bookingData = {
+        room: roomCode, // Gửi mã phòng cho PHP
+        fullname,
+        phone,
+        email,
+        date: checkin,
+        time: checkout,
         note: ''
       };
       // Lưu lại thông tin đầy đủ cho trang thanh toán

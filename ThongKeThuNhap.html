@@ -2,175 +2,220 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>THE COW - Thống Kê Thu Nhập</title>
+  <title>Thống Kê Doanh Thu Theo Ngày - THE COW HOTEL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: none;}
+    }
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #f6f8fb;
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: linear-gradient(120deg, #f6f8fb 60%, #e9eafc 100%);
       margin: 0;
       padding: 0;
-    }
-    .topbar {
-      background: #1a2d6c;
-      color: #fff;
-      padding: 18px 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-radius: 0 0 18px 18px;
-    }
-    .topbar .logo {
-      font-size: 1.6em;
-      font-weight: bold;
-      letter-spacing: 2px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .topbar .nav {
-      display: flex;
-      gap: 18px;
-    }
-    .topbar .nav a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 1.08em;
-      padding: 8px 18px;
-      border-radius: 6px;
-      transition: background 0.2s;
-    }
-    .topbar .nav a.active, .topbar .nav a:hover {
-      background: #223b79;
+      min-height: 100vh;
     }
     .container {
-      max-width: 1200px;
-      margin: 32px auto 0 auto;
+      max-width: 980px;
+      margin: 48px auto 0 auto;
       background: #fff;
-      border-radius: 14px;
-      box-shadow: 0 4px 24px rgba(34,59,121,0.08);
-      padding: 32px 24px 24px 24px;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(34,59,121,0.13);
+      padding: 38px 32px 32px 32px;
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.7s;
     }
-    .section-title {
+    .container::before {
+      content: "";
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 220px; height: 220px;
+      background: radial-gradient(circle, #d10000 0%, #fff0 70%);
+      opacity: 0.13;
+      z-index: 0;
+    }
+    h2 {
       color: #223B79;
-      font-size: 1.5em;
-      font-weight: bold;
-      margin-bottom: 18px;
+      text-align: center;
+      margin-bottom: 32px;
+      font-size: 2.1em;
+      letter-spacing: 1px;
+      font-weight: 700;
+      position: relative;
+      z-index: 1;
     }
     .filter-bar {
       display: flex;
-      gap: 16px;
-      margin-bottom: 24px;
+      gap: 18px;
+      margin-bottom: 28px;
       align-items: center;
       flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
     }
-    .filter-bar select, .filter-bar input[type="date"] {
-      padding: 10px 12px;
-      border: 1px solid #cfd8e3;
-      border-radius: 6px;
-      font-size: 1em;
+    .filter-bar label {
+      font-weight: 600;
+      color: #223B79;
+      font-size: 1.08em;
+    }
+    .filter-bar input[type="date"] {
+      padding: 10px 14px;
+      border: 1.5px solid #cfd8e3;
+      border-radius: 7px;
+      font-size: 1.08em;
       background: #f8fafc;
+      transition: border 0.2s;
+    }
+    .filter-bar input[type="date"]:focus {
+      border-color: #1a2d6c;
+      outline: none;
     }
     .filter-bar button {
-      padding: 10px 22px;
+      padding: 10px 28px;
       border: none;
-      border-radius: 6px;
-      background: #1a2d6c;
+      border-radius: 7px;
+      background: linear-gradient(90deg, #1a2d6c 60%, #d10000 100%);
       color: #fff;
-      font-weight: 500;
-      font-size: 1em;
+      font-weight: 700;
+      font-size: 1.08em;
       cursor: pointer;
-      transition: background 0.2s;
+      box-shadow: 0 2px 8px rgba(34,59,121,0.08);
+      transition: background 0.2s, transform 0.1s;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     .filter-bar button:hover {
-      background: #d10000;
+      background: linear-gradient(90deg, #d10000 60%, #1a2d6c 100%);
+      transform: translateY(-2px) scale(1.03);
     }
     table {
       width: 100%;
-      border-collapse: collapse;
+      border-collapse: separate;
+      border-spacing: 0;
       margin-top: 18px;
       background: #fff;
-      border-radius: 10px;
+      border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 2px 12px rgba(34,59,121,0.06);
+      position: relative;
+      z-index: 1;
     }
     th, td {
-      padding: 14px 10px;
+      padding: 16px 10px;
       text-align: center;
+      font-size: 1.04em;
     }
     th {
-      background: #f1f5f9;
+      background: linear-gradient(90deg, #f1f5f9 60%, #e9eafc 100%);
       color: #223b79;
-      font-weight: 600;
-      font-size: 1.05em;
+      font-weight: 700;
+      font-size: 1.08em;
+      border-bottom: 2px solid #e5e7eb;
+      letter-spacing: 0.5px;
     }
-    tr:nth-child(even) {
-      background: #f8fafc;
-    }
-    tr:hover {
-      background: #e9f0fa;
-    }
+    tr:nth-child(even) { background: #f8fafc; }
+    tr:hover { background: #f3f6ff; }
     .total-row td {
       font-weight: bold;
       color: #d10000;
       background: #f1f5f9;
+      font-size: 1.08em;
+      border-top: 2px solid #e5e7eb;
     }
-    .report-btn {
-      margin-top: 24px;
-      padding: 12px 32px;
-      background: #1a2d6c;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 1.1em;
+    .no-data {
+      color: #888;
+      font-style: italic;
+      font-size: 1.08em;
+      padding: 30px 0;
+      background: #fff;
+    }
+    .total-revenue-bar {
+      text-align: right;
+      margin-top: 22px;
+      font-size: 1.15em;
+      font-weight: 600;
+      color: #223B79;
+      position: relative;
+      z-index: 1;
+    }
+    .total-revenue-bar .icon {
+      color: #d10000;
+      margin-right: 7px;
+      font-size: 1.2em;
+      vertical-align: -2px;
+    }
+    .total-revenue-bar .value {
+      color: #d10000;
+      font-size: 1.18em;
       font-weight: bold;
-      cursor: pointer;
-      transition: background 0.2s;
-      display: block;
-      margin-left: auto;
+      margin-left: 4px;
     }
-    .report-btn:hover {
-      background: #d10000;
+    .nav-bar {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 32px;
+      margin-top: 10px;
+      z-index: 2;
+      position: relative;
+    }
+    .nav-bar a {
+      text-decoration: none;
+      padding: 9px 22px;
+      border-radius: 7px;
+      background: linear-gradient(90deg, #1a2d6c 60%, #d10000 100%);
+      color: #fff;
+      font-weight: 600;
+      font-size: 1em;
+      box-shadow: 0 2px 8px rgba(34,59,121,0.08);
+      transition: background 0.2s, transform 0.1s;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .nav-bar a:hover, .nav-bar a.active {
+      background: linear-gradient(90deg, #d10000 60%, #1a2d6c 100%);
+      transform: translateY(-2px) scale(1.03);
+      color: #fff;
     }
     @media (max-width: 900px) {
+      .nav-bar { flex-wrap: wrap; gap: 8px; font-size: 0.97em;}
       .container { padding: 12px 2px; }
       .filter-bar { flex-direction: column; gap: 8px; }
-      .topbar { flex-direction: column; gap: 10px; padding: 12px 8px; }
+      th, td { padding: 10px 4px; font-size: 0.98em; }
+      h2 { font-size: 1.3em; }
     }
   </style>
 </head>
 <body>
-  <div class="topbar">
-    <div class="logo"><i class="fa-solid fa-cow"></i> THE COW</div>
-    <div class="nav">
-      <a href="QuanLyPhong.html"><i class="fa-solid fa-bed"></i> Quản lý phòng</a>
-      <a href="QuanLyKhachHang.html"><i class="fa-solid fa-users"></i> Quản lý khách hàng</a>
-      <a href="quanly_tk.html"><i class="fa-solid fa-user-gear"></i> Quản lý tài khoản</a>
-      <a href="LichSuDatPhong.html"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử đặt phòng</a>
-      <a href="#" class="active"><i class="fa-solid fa-chart-line"></i> Thống kê thu nhập</a>
-    </div>
+  <div class="nav-bar">
+    <a href="QuanLyKhachHang.html"><i class="fa-solid fa-users"></i> Quản lý khách hàng</a>
+    <a href="QuanLyPhong.html"><i class="fa-solid fa-bed"></i> Quản lý phòng</a>
+    <a href="quanly_tk.html"><i class="fa-solid fa-user-gear"></i> Quản lý tài khoản</a>
+    <a href="ThongKeThuNhap.html" class="active"><i class="fa-solid fa-chart-line"></i> Thống kê thu nhập</a>
   </div>
   <div class="container">
-    <div class="section-title">Thống Kê Thu Nhập</div>
+    <h2><i class="fa-solid fa-chart-line" style="color:#d10000;margin-right:10px;"></i>Thống Kê Doanh Thu Theo Ngày</h2>
     <div class="filter-bar">
-      <select id="filter-type">
-        <option>Theo ngày</option>
-        <option>Theo tháng</option>
-        <option>Theo quý</option>
-        <option>Theo năm</option>
-      </select>
+      <label for="filter-date"><i class="fa-regular fa-calendar-days"></i> Chọn ngày:</label>
       <input type="date" id="filter-date">
-      <button id="stats-btn"><i class="fa-solid fa-chart-simple"></i> Thống kê</button>
+      <button id="stats-btn"><i class="fa-solid fa-magnifying-glass-chart"></i> Xem thống kê</button>
     </div>
     <table id="income-table">
       <thead>
         <tr>
           <th>Mã phòng</th>
           <th>Tên phòng</th>
-          <th>Mã dịch vụ</th>
-          <th>Tên dịch vụ</th>
-          <th>Thời gian đặt phòng</th>
+          <th>Tên khách</th>
+          <th>Thời gian đặt</th>
           <th>Tổng tiền</th>
         </tr>
       </thead>
@@ -178,7 +223,11 @@
         <!-- Dữ liệu sẽ được render bằng JS -->
       </tbody>
     </table>
-    <button class="report-btn" id="report-btn"><i class="fa-solid fa-file-arrow-down"></i> Xuất báo cáo</button>
+    <div class="total-revenue-bar">
+      <span class="icon"><i class="fa-solid fa-coins"></i></span>
+      Tổng doanh thu ngày:
+      <span id="total-revenue" class="value">0 đ</span>
+    </div>
   </div>
   <script>
 function formatCurrency(num) {
@@ -190,39 +239,31 @@ function renderTable(data) {
   tbody.innerHTML = "";
   let total = 0;
   if (!data || data.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="6">Không có dữ liệu</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="5" class="no-data"><i class="fa-regular fa-face-frown"></i> Không có dữ liệu</td></tr>`;
   } else {
     data.forEach(row => {
       total += Number(row.total);
       tbody.innerHTML += `
         <tr>
           <td>${row.roomId}</td>
-          <td>${row.roomName}</td>
-          <td>${row.serviceId || '-'}</td>
-          <td>${row.serviceName || '-'}</td>
+          <td>${row.roomName || '-'}</td>
+          <td>${row.customerName}</td>
           <td>${row.date ? row.date.split('-').reverse().join('-') : ''}</td>
-          <td>${formatCurrency(row.total)}</td>
+          <td style="color:#d10000;font-weight:600;">${formatCurrency(row.total)}</td>
         </tr>
       `;
     });
   }
-  tbody.innerHTML += `
-    <tr class="total-row">
-      <td colspan="5" style="text-align:right;">Tổng doanh thu:</td>
-      <td id="total-revenue">${formatCurrency(total)}</td>
-    </tr>
-  `;
+  document.getElementById('total-revenue').textContent = formatCurrency(total);
 }
 
 async function fetchIncome() {
-  const filterType = document.getElementById('filter-type').value;
   const filterDate = document.getElementById('filter-date').value;
   if (!filterDate) {
     renderTable([]);
     return;
   }
-  // Thêm tham số t để tránh cache
-  const res = await fetch(`PHP/get_income.php?type=${encodeURIComponent(filterType)}&date=${encodeURIComponent(filterDate)}&t=${Date.now()}`);
+  const res = await fetch(`PHP/get_income.php?type=Theo ngày&date=${encodeURIComponent(filterDate)}&t=${Date.now()}`);
   const data = await res.json();
   renderTable(data);
 }
@@ -233,10 +274,6 @@ window.addEventListener('DOMContentLoaded', () => {
   const today = new Date().toISOString().slice(0, 10);
   document.getElementById('filter-date').value = today;
   fetchIncome();
-});
-
-document.getElementById('report-btn').addEventListener('click', function() {
-  window.print();
 });
   </script>
 </body>

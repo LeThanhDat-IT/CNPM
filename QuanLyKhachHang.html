@@ -9,27 +9,71 @@
   <style>
     body {
       font-family: 'Montserrat', Arial, sans-serif;
-      background: linear-gradient(120deg, #e0f7fa 0%, #f8f9fa 100%);
+      background: linear-gradient(120deg, #f6f8fb 60%, #e9eafc 100%);
       margin: 0;
+      min-height: 100vh;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: none;}
     }
     .container {
       max-width: 1150px;
-      margin: 40px auto 0 auto;
+      margin: 48px auto 0 auto;
       background: #fff;
       border-radius: 20px;
       box-shadow: 0 8px 32px rgba(34,59,121,0.13);
       padding: 38px 28px 28px 28px;
       animation: fadeIn 0.7s;
+      position: relative;
+      overflow: hidden;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px);}
-      to { opacity: 1; transform: none;}
+    .container::before {
+      content: "";
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 220px; height: 220px;
+      background: radial-gradient(circle, #d10000 0%, #fff0 70%);
+      opacity: 0.13;
+      z-index: 0;
+    }
+    .nav-bar {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 32px;
+      margin-top: 10px;
+      z-index: 2;
+      position: relative;
+    }
+    .nav-bar a {
+      text-decoration: none;
+      padding: 9px 22px;
+      border-radius: 7px;
+      background: linear-gradient(90deg, #1a2d6c 60%, #d10000 100%);
+      color: #fff;
+      font-weight: 600;
+      font-size: 1em;
+      box-shadow: 0 2px 8px rgba(34,59,121,0.08);
+      transition: background 0.2s, transform 0.1s;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .nav-bar a:hover, .nav-bar a.active {
+      background: linear-gradient(90deg, #d10000 60%, #1a2d6c 100%);
+      transform: translateY(-2px) scale(1.03);
+      color: #fff;
     }
     .header {
       display: flex;
       align-items: center;
       gap: 18px;
       margin-bottom: 28px;
+      z-index: 1;
+      position: relative;
     }
     .header img {
       height: 52px;
@@ -44,34 +88,13 @@
       letter-spacing: 1px;
       font-weight: 800;
     }
-    .nav {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-    .nav button {
-      padding: 10px 22px;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 1em;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .nav button i {
-      min-width: 20px;
-    }
-    .nav button:hover {
-      transform: translateY(-2px) scale(1.03);
-    }
     .form-row {
       display: flex;
       flex-wrap: wrap;
       gap: 18px;
       margin-bottom: 18px;
+      z-index: 1;
+      position: relative;
     }
     .form-group {
       flex: 1 1 220px;
@@ -103,6 +126,8 @@
       gap: 14px;
       margin-bottom: 10px;
       justify-content: center;
+      z-index: 1;
+      position: relative;
     }
     .form-actions button {
       padding: 12px 26px;
@@ -131,6 +156,8 @@
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 2px 12px rgba(34,59,121,0.08);
+      z-index: 1;
+      position: relative;
     }
     th, td {
       padding: 16px 10px;
@@ -162,28 +189,21 @@
       .container { padding: 10px 2px; }
       .form-row { flex-direction: column; gap: 8px; }
       th, td { font-size: 0.95em; }
+      .nav-bar { flex-wrap: wrap; gap: 8px; font-size: 0.97em;}
     }
   </style>
 </head>
 <body>
+  <div class="nav-bar">
+    <a href="QuanLyKhachHang.html" class="active"><i class="fa-solid fa-users"></i> Quản lý khách hàng</a>
+    <a href="QuanLyPhong.html"><i class="fa-solid fa-bed"></i> Quản lý phòng</a>
+    <a href="quanly_tk.html"><i class="fa-solid fa-user-gear"></i> Quản lý tài khoản</a>
+    <a href="ThongKeThuNhap.html"><i class="fa-solid fa-chart-line"></i> Thống kê thu nhập</a>
+  </div>
   <div class="container">
     <div class="header">
       <img src="images/a3.jpg" alt="Logo" onclick="window.location.href='HomePage.html'">
       <h1><i class="fa-solid fa-users"></i> Quản Lý Khách Hàng</h1>
-    </div>
-    <div class="nav" style="display:flex; gap:12px; margin-bottom:24px;">
-      <button type="button" onclick="window.location.href='QuanLyPhong.html'" style="background:linear-gradient(90deg,#1a2d6c 60%,#223b79 100%);color:#fff;padding:10px 22px;border:none;border-radius:8px;font-weight:600;font-size:1em;cursor:pointer;display:flex;align-items:center;gap:8px;">
-        <i class="fa-solid fa-bed"></i> Quản lý phòng
-      </button>
-      <button type="button" onclick="window.location.href='QuanLyKhachHang.html'" style="background:#ffd700;color:#223b79;padding:10px 22px;border:none;border-radius:8px;font-weight:600;font-size:1em;cursor:pointer;display:flex;align-items:center;gap:8px;">
-        <i class="fa-solid fa-users"></i> Quản lý khách hàng
-      </button>
-      <button type="button" onclick="window.location.href='quanly_tk.html'" style="background:linear-gradient(90deg,#1a2d6c 60%,#223b79 100%);color:#fff;padding:10px 22px;border:none;border-radius:8px;font-weight:600;font-size:1em;cursor:pointer;display:flex;align-items:center;gap:8px;">
-        <i class="fa-solid fa-user-gear"></i> Quản lý tài khoản
-      </button>
-      <button type="button" onclick="window.location.href='#'" style="background:linear-gradient(90deg,#1a2d6c 60%,#223b79 100%);color:#fff;padding:10px 22px;border:none;border-radius:8px;font-weight:600;font-size:1em;cursor:pointer;display:flex;align-items:center;gap:8px;">
-        <i class="fa-solid fa-chart-line"></i> Thống kê thu nhập
-      </button>
     </div>
     <form id="khachhang-form" autocomplete="off">
       <div class="form-row">

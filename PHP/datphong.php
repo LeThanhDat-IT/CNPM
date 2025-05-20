@@ -14,6 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $time = trim($_POST['time'] ?? '');
     $note = trim($_POST['note'] ?? '');
 
+    // Ghi lại thông tin nhận được từ form vào file log.txt
+    file_put_contents('log.txt', print_r($_POST, true), FILE_APPEND);
+
     // Kiểm tra dữ liệu đầu vào
     if (empty($room) || empty($fullname) || empty($phone) || empty($email) || empty($date) || empty($time)) {
         echo json_encode(['error' => 'Vui lòng điền đầy đủ thông tin.']);
@@ -33,6 +36,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt2->bind_param("si", $bookingCode, $last_id);
         $stmt2->execute();
         $stmt2->close();
+
+        // Lấy giá phòng từ bảng quanlyphong
+        $stmt3 = $conn->prepare("SELECT giaPhong FROM quanlyphong WHERE maPhong = ?");
+        $stmt3->bind_param("s", $room); // $room là mã phòng
+        $stmt3->execute();
+        $stmt3->bind_result($giaPhong);
+        $stmt3->fetch();
+        $stmt3->close();
+
+        // Tính số ngày ở
+        $ngay_vao = new DateTime($date);
+        $ngay_ra = new DateTime($time);
+        $so_ngay = $ngay_vao->diff($ngay_ra)->days;
+        if ($so_ngay == 0) $so_ngay = 1; // ít nhất 1 ngày
+
+        $tong_tien = $giaPhong * $so_ngay;
+
+        // Cập nhật total cho booking vừa tạo
+        $stmt4 = $conn->prepare("UPDATE bookings SET total = ? WHERE id = ?");
+        $stmt4->bind_param("ii", $tong_tien, $last_id);
+        $stmt4->execute();
+        $stmt4->close();
 
         echo json_encode(['success' => true, 'message' => 'Đặt phòng thành công!', 'bookingCode' => $bookingCode]);
     } else {

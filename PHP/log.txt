@@ -2,3 +2,43 @@ Array
 (
     [maKH] => A008
 )
+Array
+(
+    [room] => 
+    [fullname] => h
+    [phone] => 0258741951
+    [email] => j@gmail.com
+    [date] => 2025-05-21
+    [time] => 2025-05-22
+    [note] => 
+)
+Array
+(
+    [room] => undefined
+    [fullname] => h
+    [phone] => 0258741852
+    [email] => f@gmail.com
+    [date] => 2025-05-21
+    [time] => 2025-05-22
+    [note] => 
+)
+Array
+(
+    [room] => undefined
+    [fullname] => dat
+    [phone] => 0123456789
+    [email] => dat@gmail.com
+    [date] => 2025-05-21
+    [time] => 2025-05-23
+    [note] => 
+)
+Array
+(
+    [room] => R001
+    [fullname] => d
+    [phone] => 0123456789
+    [email] => d@gmail.com
+    [date] => 2025-05-21
+    [time] => 2025-05-23
+    [note] => 
+)

@@ -458,6 +458,28 @@
             color: #CD202B;
             transform: scale(1.2) rotate(10deg);
         }
+
+        .room-modal-btn {
+            background: linear-gradient(90deg, #223B79 60%, #CD202B 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 28px;
+            font-weight: bold;
+            font-size: 1.08em;
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+            box-shadow: 0 2px 12px #223b7922;
+            margin-top: 8px;
+        }
+
+        .room-modal-btn:hover {
+            background: #fff;
+            color: #CD202B;
+            box-shadow: 0 6px 24px #223b7922;
+            transform: scale(1.07);
+            border: 1.5px solid #CD202B;
+        }
     </style>
     <script>
         const banners = [{
@@ -679,46 +701,8 @@
         </div>
 
         <div class="rooms-section" id="rooms">
-            <div class="rooms-list">
-                <div class="room-card">
-                    <img src="images/family-suite-la-gi.webp" alt="Phòng Gia Đình">
-                    <div class="room-info">
-                        <h3>Phòng Gia Đình</h3>
-                        <ul>
-                            <li>Giường Queen size</li>
-                            <li>Cửa cách âm</li>
-                            <li>Điều hoà hai chiều</li>
-                        </ul>
-                        <div class="price">360,000 đ/đêm</div>
-                        <button onclick="showRoomDetail('Phòng Gia Đình')">Read More</button>
-                    </div>
-                </div>
-                <div class="room-card">
-                    <img src="images/phong_doi.webp" alt="Phòng Đôi">
-                    <div class="room-info">
-                        <h3>Phòng Đôi</h3>
-                        <ul>
-                            <li>1 Giường Queen size</li>
-                            <li>Cửa cách âm</li>
-                            <li>Điều hoà hai chiều</li>
-                        </ul>
-                        <div class="price">280,000 đ/đêm</div>
-                        <button onclick="showRoomDetail('Phòng Đôi')">Read More</button>
-                    </div>
-                </div>
-                <div class="room-card">
-                    <img src="images/phong_caocap.webp" alt="Phòng Cao Cấp">
-                    <div class="room-info">
-                        <h3>Phòng Cao Cấp</h3>
-                        <ul>
-                            <li>1 giường King</li>
-                            <li>Cửa cách âm</li>
-                            <li>Điều hoà hai chiều</li>
-                        </ul>
-                        <div class="price">500,000 đ/đêm</div>
-                        <button onclick="showRoomDetail('Phòng Cao Cấp')">Read More</button>
-                    </div>
-                </div>
+            <div class="rooms-list" id="home-rooms-list">
+                <!-- Danh sách phòng sẽ được render ở đây -->
             </div>
         </div>
 
@@ -762,64 +746,99 @@
     </div>
 
     <script>
-        const roomDetails = {
-            "Phòng Gia Đình": {
-                img: "images/family-suite-la-gi.webp",
-                name: "Phòng Gia Đình",
-                desc: "Phòng rộng rãi cho gia đình, giường Queen size, cửa cách âm, điều hoà hai chiều, phòng tắm riêng, wifi miễn phí, TV màn hình phẳng.",
-                price: "360,000 đ/đêm"
-            },
-            "Phòng Đôi": {
-                img: "images/phong_doi.webp",
-                name: "Phòng Đôi",
-                desc: "Phòng đôi tiện nghi, 1 giường Queen size, cửa cách âm, điều hoà hai chiều, phòng tắm riêng, wifi miễn phí, TV màn hình phẳng.",
-                price: "280,000 đ/đêm"
-            },
-            "Phòng Cao Cấp": {
-                img: "images/phong_caocap.webp",
-                name: "Phòng Cao Cấp",
-                desc: "Phòng cao cấp sang trọng, 1 giường King, cửa cách âm, điều hoà hai chiều, phòng tắm riêng, minibar, wifi miễn phí, TV màn hình lớn.",
-                price: "500,000 đ/đêm"
+        async function fetchHomeRooms() {
+            try {
+                const res = await fetch('PHP/get_phong.php');
+                const data = await res.json();
+                renderHomeRooms(data);
+                window._homeRoomsData = data; // Lưu lại để dùng khi show chi tiết
+            } catch (e) {
+                document.getElementById('home-rooms-list').innerHTML = '<p style="color:#d10000;">Không thể tải danh sách phòng!</p>';
             }
-        };
-
-        function showRoomDetail(roomName) {
-            const modal = document.getElementById('roomModal');
-            const content = document.getElementById('roomModalContent');
-            const detail = document.getElementById('roomDetail');
-            const info = roomDetails[roomName];
-            if (!info) return;
-            detail.innerHTML = `
-                <img src="${info.img}" alt="${info.name}" style="width:100%; border-radius:8px; margin-bottom:14px;">
-                <h2 style="color:#223B79; margin:0 0 10px 0;">${info.name}</h2>
-                <div style="color:#444; font-size:16px; margin-bottom:10px;">${info.desc}</div>
-                <div style="color:#CD202B; font-weight:bold; font-size:1.1em;">${info.price}</div>
-                <button onclick="bookRoom('${info.name}')" style="margin-top:18px; background:#223B79; color:#fff; border:none; border-radius:4px; padding:10px 22px; font-weight:bold; cursor:pointer;">Đặt phòng</button>
-            `;
-            modal.style.display = 'flex';
-            // Reset animation
-            content.style.animation = 'none';
-            void content.offsetWidth;
-            content.style.animation = 'fadeInModal 0.4s';
         }
 
-        // Đóng modal khi click ra ngoài hoặc click nút đóng
-        document.addEventListener('DOMContentLoaded', function () {
-            const modal = document.getElementById('roomModal');
-            const content = document.getElementById('roomModalContent');
-            document.getElementById('closeModal').onclick = closeRoomModal;
-            modal.onclick = function (e) {
-                if (e.target === modal) closeRoomModal();
-            };
-            function closeRoomModal() {
-                content.style.animation = 'fadeOutModal 0.3s';
-                setTimeout(() => { modal.style.display = 'none'; }, 280);
+        function renderHomeRooms(rooms) {
+            const container = document.getElementById('home-rooms-list');
+            container.innerHTML = '';
+            if (!rooms || rooms.length === 0) {
+                container.innerHTML = '<p style="color:#d10000;">Không có phòng nào.</p>';
+                return;
             }
+            rooms.slice(0, 3).forEach(room => {
+                const img = room.hinhAnh && room.hinhAnh.trim() !== '' ? room.hinhAnh : 'images/default-room.jpg';
+                const bedType = room.loaiGiuong || 'Chưa cập nhật';
+                const area = room.dienTich || 'Chưa cập nhật';
+                const price = Number(room.giaPhong).toLocaleString() + ' đ/đêm';
+                const name = room.tenPhong;
+                const code = room.maPhong;
+                const amenities = room.tienNghi || 'Chưa cập nhật';
+                const status = room.tinhTrang == 1 ? 'Còn trống' : (room.tinhTrang == 0 ? 'Đã thuê' : 'Bảo trì');
+                container.innerHTML += `
+                    <div class="room-card" data-room-id="${code}" style="cursor:pointer;">
+                        <img src="${img}" alt="${name}">
+                        <div class="room-info">
+                            <h3>${name}</h3>
+                            <ul>
+                                <li>Loại giường: ${bedType}</li>
+                                <li>Diện tích: ${area}</li>
+                            </ul>
+                            <div class="price">${price}</div>
+                            <button onclick="event.stopPropagation();bookRoomHome('${code}', '${name.replace(/'/g,"\\'")}')">Đặt phòng</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Thêm sự kiện click cho từng room-card để mở modal chi tiết
+            document.querySelectorAll('.room-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const roomId = this.getAttribute('data-room-id');
+                    showRoomDetail(roomId);
+                });
+            });
+        }
+
+        // Hiển thị modal chi tiết phòng
+        function showRoomDetail(roomId) {
+            const rooms = window._homeRoomsData || [];
+            const room = rooms.find(r => r.maPhong == roomId);
+            if (!room) return;
+            const img = room.hinhAnh && room.hinhAnh.trim() !== '' ? room.hinhAnh : 'images/default-room.jpg';
+            const bedType = room.loaiGiuong || 'Chưa cập nhật';
+            const area = room.dienTich || 'Chưa cập nhật';
+            const price = Number(room.giaPhong).toLocaleString() + ' đ/đêm';
+            const name = room.tenPhong;
+            const amenities = room.tienNghi || 'Chưa cập nhật';
+            const status = room.tinhTrang == 1 ? 'Còn trống' : (room.tinhTrang == 0 ? 'Đã thuê' : 'Bảo trì');
+            document.getElementById('roomDetail').innerHTML = `
+                <img src="${img}" alt="${name}" style="width:100%;border-radius:10px;box-shadow:0 2px 12px #223b7922;margin-bottom:14px;">
+                <h2 style="color:#223B79;margin:0 0 8px 0;font-size:1.3em;">${name}</h2>
+                <div style="margin-bottom:8px;"><b>Giá:</b> <span style="color:#CD202B;font-weight:bold;">${price}</span></div>
+                <div style="margin-bottom:8px;"><b>Loại giường:</b> ${bedType}</div>
+                <div style="margin-bottom:8px;"><b>Diện tích:</b> ${area}</div>
+                <div style="margin-bottom:8px;"><b>Tiện nghi:</b> ${amenities}</div>
+                <div style="margin-bottom:8px;"><b>Tình trạng:</b> ${status}</div>
+                <button class="room-modal-btn" onclick="bookRoomHome('${room.maPhong}', '${name.replace(/'/g,"\\'")}')" style="margin-top:10px;">Đặt phòng</button>
+            `;
+            document.getElementById('roomModal').style.display = 'flex';
+        }
+
+        // Đóng modal khi bấm nút đóng
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('closeModal').onclick = function() {
+                document.getElementById('roomModal').style.display = 'none';
+            };
+            // Đóng modal khi click ra ngoài
+            document.getElementById('roomModal').onclick = function(e) {
+                if (e.target === this) this.style.display = 'none';
+            };
+            fetchHomeRooms();
         });
 
-        // Ghi đè hàm bookRoom để show modal thay vì chuyển trang
-        function bookRoom(roomName) {
-            localStorage.setItem('selectedRoomName', roomName);
+        // Hàm đặt phòng từ trang chủ
+        function bookRoomHome(code, name) {
+            localStorage.setItem('selectedRoomCode', code);
+            localStorage.setItem('selectedRoomName', name);
             window.location.href = 'DatPhong.html';
         }
     </script>

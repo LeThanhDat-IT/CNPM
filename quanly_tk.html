@@ -11,15 +11,15 @@
             font-family: 'Montserrat', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(120deg, #e0f7fa 0%, #f8f9fa 100%);
+            background: linear-gradient(120deg, #f6f8fb 60%, #e9eafc 100%);
         }
         .container {
-            max-width: 1100px;
+            max-width: 1300px; /* tăng chiều rộng */
             margin: 48px auto 0 auto;
             background: #fff;
-            border-radius: 20px;
+            border-radius: 18px;
             box-shadow: 0 8px 32px rgba(34,59,121,0.13);
-            padding: 38px 28px 28px 28px;
+            padding: 38px 32px 32px 32px;
             animation: fadeIn 0.7s;
         }
         @keyframes fadeIn {
@@ -47,79 +47,193 @@
         }
         .nav {
             display: flex;
-            gap: 12px;
-            margin-bottom: 30px;
+            gap: 16px;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 32px;
+            margin-top: 10px;
+            z-index: 2;
+            position: relative;
         }
         .nav a {
-            color: #fff;
-            background: linear-gradient(90deg, #1a2d6c 60%, #223b79 100%);
-            padding: 12px 24px;
-            border-radius: 8px;
             text-decoration: none;
+            padding: 9px 22px;
+            border-radius: 7px;
+            background: linear-gradient(90deg, #1a2d6c 60%, #d10000 100%);
+            color: #fff;
             font-weight: 600;
+            font-size: 1em;
+            box-shadow: 0 2px 8px rgba(34,59,121,0.08);
+            transition: background 0.2s, transform 0.1s;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .nav a:hover, .nav a.active {
+            background: linear-gradient(90deg, #d10000 60%, #1a2d6c 100%);
+            transform: translateY(-2px) scale(1.03);
+            color: #fff;
+        }
+        table {
+          width: 100%;
+          border-collapse: separate;
+          border-spacing: 0;
+          table-layout: auto; /* các cột đều nhau */
+          background: #fff;
+          border-radius: 16px;
+          overflow: hidden;
+          box-shadow: 0 2px 12px rgba(34,59,121,0.08);
+        }
+        th, td {
+  padding: 18px 10px; /* tăng padding cho thoáng */
+  text-align: center;
+  font-size: 1.08em;
+  word-break: break-word;
+}
+        .account-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 32px;
+            background: #f8fafc;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(34,59,121,0.08);
+        }
+        .account-table th, .account-table td {
+            padding: 14px 10px;
+            text-align: center;
+            font-size: 1.04em;
+        }
+        .account-table th {
+            background: linear-gradient(90deg, #f1f5f9 60%, #e9eafc 100%);
+            color: #223b79;
+            font-weight: 700;
             font-size: 1.08em;
-            transition: background 0.2s, color 0.2s;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .account-table tr:nth-child(even) { background: #f8fafc; }
+        .account-table tr:hover { background: #e3f2fd; }
+        .action-btn {
+            padding: 8px 18px;
+            border: none;
+            border-radius: 7px;
+            background: linear-gradient(90deg, #1a2d6c 60%, #d10000 100%);
+            color: #fff;
+            font-weight: 600;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 0 4px;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .action-btn:hover {
+            background: linear-gradient(90deg, #d10000 60%, #1a2d6c 100%);
+            transform: scale(1.04);
+        }
+        .action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* tạo khoảng cách giữa các nút */
+  align-items: center;
+}
+.action-buttons button {
+  width: 90px; /* hoặc auto, miễn là đều nhau */
+  margin-bottom: 0;
+}
+        .add-btn {
+            margin-bottom: 18px;
+            background: linear-gradient(90deg, #1a2d6c 60%, #43e97b 100%);
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.08em;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 28px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 2px 8px rgba(34,59,121,0.08);
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        .nav a.active, .nav a:hover {
-            background: #ffd700;
-            color: #223b79;
+        .add-btn:hover {
+            background: linear-gradient(90deg, #43e97b 60%, #1a2d6c 100%);
+            transform: translateY(-2px) scale(1.03);
         }
-        .card {
-            background: #f8fafc;
+        .modal-bg {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.25);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-bg.active { display: flex; }
+        .modal-content {
+            background: #fff;
             border-radius: 18px;
-            box-shadow: 0 2px 12px rgba(34,59,121,0.08);
-            padding: 32px 24px 24px 24px;
-            margin-bottom: 24px;
+            max-width: 250px; /* Giảm nữa */
+            width: 98vw;
+            padding: 10px 4px 8px 4px; /* Giảm padding */
+            box-shadow: 0 8px 32px rgba(34,59,121,0.18);
+            position: relative;
+            animation: popupShow 0.2s;
         }
-        .section-title {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #223b79;
-            margin-bottom: 18px;
+        @keyframes popupShow {
+            from { transform: translateY(40px) scale(0.98); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        .modal-content h2 {
+            margin-top: 0;
+            color: #223B79;
+            font-size: 1.25em;
+            font-weight: 700;
             letter-spacing: 0.5px;
         }
-        label {
+        .modal-content form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .modal-content label {
             font-weight: 600;
             color: #223b79;
-            margin-bottom: 6px;
-            display: block;
+            margin-bottom: 2px;
+            margin-top: 1px;
+            font-size: 0.97em; /* Giảm font */
         }
-        input[type="text"], input[type="email"], input[type="password"], input[type="tel"], input[type="date"], select {
+        .modal-content input,
+        .modal-content select {
             width: 100%;
-            padding: 12px 14px;
-            border: 1.5px solid #cfd8e3;
-            border-radius: 8px;
-            font-size: 1em;
-            background: #fff;
-            margin-bottom: 14px;
+            padding: 5px 7px; /* Giảm padding */
+            border: 1.2px solid #cfd8e3;
+            border-radius: 7px;
+            font-size: 0.95em; /* Giảm font */
+            background: #f8fafc;
+            margin-bottom: 0;
             transition: border 0.2s;
+            box-sizing: border-box;
         }
-        input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="tel"]:focus, input[type="date"]:focus, select:focus {
+        .modal-content input:focus,
+        .modal-content select:focus {
             border: 2px solid #1a2d6c;
             outline: none;
             background: #e3f2fd;
         }
-        .gender-row {
+        .form-group {
             display: flex;
-            align-items: center;
-            gap: 18px;
-            margin-bottom: 14px;
+            flex-direction: column;
+            margin-bottom: 8px;
         }
-        .gender-row label {
-            margin-bottom: 0;
-            font-weight: 500;
-        }
-        .form-actions {
+        .modal-content .form-actions {
             display: flex;
             gap: 14px;
-            margin-bottom: 10px;
+            margin-top: 10px;
             justify-content: flex-end;
         }
-        .form-actions button, .danger-btn {
-            padding: 12px 26px;
+        .modal-content .form-actions button {
+            padding: 10px 22px;
             border: none;
             border-radius: 8px;
             background: linear-gradient(90deg, #1a2d6c 60%, #223b79 100%);
@@ -129,39 +243,39 @@
             cursor: pointer;
             transition: background 0.2s, transform 0.15s;
             box-shadow: 0 2px 8px rgba(34,59,121,0.06);
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
-        .form-actions button:hover, .danger-btn:hover {
+        .modal-content .form-actions button:hover {
             background: linear-gradient(90deg, #d10000 60%, #223b79 100%);
             transform: translateY(-2px) scale(1.03);
         }
-        .danger-btn {
-            background: #ff4444;
-            color: #fff;
-            margin-top: 10px;
-            width: 100%;
-            justify-content: center;
-        }
-        .danger-btn:hover {
-            background: #b71c1c;
-        }
-        .select-account-row {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            margin-bottom: 18px;
-        }
-        .select-account-row select {
-            flex: 1;
+        .close-btn {
+            position: absolute;
+            top: 12px; right: 18px;
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: #223B79;
+            cursor: pointer;
         }
         @media (max-width: 900px) {
             .container { padding: 10px 2px; }
-            .card { padding: 14px 4px; }
-            .nav { flex-direction: column; gap: 6px; }
+            .account-table th, .account-table td { padding: 8px 2px; font-size: 0.98em; }
             header h1 { font-size: 1.2em; }
         }
+        @media (max-width: 600px) {
+            .modal-content {
+                padding: 12px 4px 8px 4px;
+            }
+            .modal-content input,
+            .modal-content select {
+                font-size: 0.98em;
+                padding: 8px 8px;
+            }
+        }
+        th:nth-child(5), td:nth-child(5) {
+    min-width: 180px; /* hoặc 200px nếu cần rộng hơn */
+    word-break: break-all;
+}
     </style>
 </head>
 <body>
@@ -174,247 +288,225 @@
             <a href="QuanLyPhong.html"><i class="fa-solid fa-bed"></i> Quản lý phòng</a>
             <a href="QuanLyKhachHang.html"><i class="fa-solid fa-users"></i> Quản lý khách hàng</a>
             <a href="quanly_tk.html" class="active"><i class="fa-solid fa-user-gear"></i> Quản lý tài khoản</a>
-            <a href="LichSuDatPhong.html"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử đặt phòng</a>
-            <a href="#"><i class="fa-solid fa-chart-line"></i> Thống kê thu nhập</a>
+            <a href="ThongKeThuNhap.html"><i class="fa-solid fa-chart-line"></i> Thống kê thu nhập</a>
         </div>
-        <div class="card">
-            <div class="section-title"><i class="fa-solid fa-user"></i> Chọn tài khoản</div>
-            <div class="select-account-row">
-                <label for="account-select" style="margin-bottom:0;">Tài khoản</label>
-                <select id="account-select" onchange="loadAccountDetails()">
-                    <option value="">-- Chọn tài khoản --</option>
-                </select>
-            </div>
-        </div>
-        <div class="card" id="profile-section" style="display: none;">
-            <div class="section-title"><i class="fa-solid fa-address-card"></i> Thông tin cá nhân</div>
-            <label for="name">Họ và Tên</label>
-            <input type="text" id="name" placeholder="Nhập họ và tên">
-
-            <label for="phone">Số Điện Thoại</label>
-            <input type="tel" id="phone" placeholder="Nhập số điện thoại">
-
-            <label for="email">Email</label>
-            <input type="email" id="email" placeholder="Nhập email">
-
-            <div class="gender-row">
-                <span>Giới tính:</span>
-                <label><input type="radio" name="gender" value="Nam"> Nam</label>
-                <label><input type="radio" name="gender" value="Nữ"> Nữ</label>
-            </div>
-
-            <label for="dob">Ngày sinh</label>
-            <input type="date" id="dob">
-
-            <label for="address">Địa chỉ</label>
-            <input type="text" id="address" placeholder="Nhập địa chỉ">
-
-            <div class="form-actions">
-                <button onclick="updateProfile()"><i class="fa-solid fa-floppy-disk"></i> Cập nhật</button>
-            </div>
-        </div>
-        <div class="card" id="password-section" style="display: none;">
-            <div class="section-title"><i class="fa-solid fa-key"></i> Đổi mật khẩu</div>
-            <label for="current-password">Mật khẩu hiện tại</label>
-            <input type="password" id="current-password" placeholder="Nhập mật khẩu hiện tại">
-
-            <label for="new-password">Mật khẩu mới</label>
-            <input type="password" id="new-password" placeholder="Nhập mật khẩu mới">
-
-            <label for="confirm-password">Nhập lại mật khẩu mới</label>
-            <input type="password" id="confirm-password" placeholder="Nhập lại mật khẩu mới">
-
-            <div class="form-actions">
-                <button onclick="changePassword()"><i class="fa-solid fa-key"></i> Đổi mật khẩu</button>
-            </div>
-        </div>
-        <div class="card" id="settings-section" style="display: none;">
-            <div class="section-title"><i class="fa-solid fa-gear"></i> Cài đặt tài khoản</div>
-            <label for="language">Ngôn ngữ</label>
-            <select id="language">
-                <option value="vi">Tiếng Việt</option>
-                <option value="en">Tiếng Anh</option>
-            </select>
-            <div style="margin: 12px 0;">
-                <input type="checkbox" id="notifications">
-                <label for="notifications" style="display:inline;font-weight:500;">Nhận thông báo qua email</label>
-            </div>
-            <button class="danger-btn" onclick="deleteAccount()"><i class="fa-solid fa-trash"></i> Xóa tài khoản</button>
+        <button class="add-btn" onclick="openModal('add')"><i class="fa-solid fa-user-plus"></i> Thêm tài khoản</button>
+        <table class="account-table">
+            <thead>
+                <tr>
+                    <th>Loại</th>
+                    <th>Tên đăng nhập</th>
+                    <th>Họ tên</th>
+                    <th>Email</th>
+                    <th>Điện thoại</th>
+                    <th>Giới tính</th>
+                    <th>Ngày sinh</th>
+                    <th>Địa chỉ</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody id="account-tbody">
+                <!-- Dữ liệu tài khoản sẽ được render ở đây -->
+            </tbody>
+        </table>
+    </div>
+    <!-- Modal thêm/sửa tài khoản -->
+    <div class="modal-bg" id="accountModal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h2 id="modalTitle">Thêm tài khoản</h2>
+            <form id="accountForm" autocomplete="off">
+                <div class="form-group">
+                    <label for="type">Loại tài khoản</label>
+                    <select id="type" required>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="username">Tên đăng nhập</label>
+                    <input type="text" id="username" required placeholder="Nhập tên đăng nhập">
+                </div>
+                <div class="form-group">
+                    <label for="password">Mật khẩu</label>
+                    <input type="password" id="password" required placeholder="Nhập mật khẩu">
+                </div>
+                <div class="form-group">
+                    <label for="name">Họ và tên</label>
+                    <input type="text" id="name" placeholder="Nhập họ và tên">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Nhập email">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Điện thoại</label>
+                    <input type="tel" id="phone" placeholder="Nhập số điện thoại">
+                </div>
+                <div class="form-group">
+                    <label for="gender">Giới tính</label>
+                    <select id="gender">
+                        <option value="">-- Chọn --</option>
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="dob">Ngày sinh</label>
+                    <input type="date" id="dob">
+                </div>
+                <div class="form-group">
+                    <label for="address">Địa chỉ</label>
+                    <input type="text" id="address" placeholder="Nhập địa chỉ">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="saveBtn"><i class="fa-solid fa-floppy-disk"></i> Lưu</button>
+                    <button type="button" onclick="closeModal()"><i class="fa-solid fa-xmark"></i> Hủy</button>
+                </div>
+            </form>
         </div>
     </div>
     <script>
-        // Load accounts from localStorage
-        const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
-        const adminAccounts = JSON.parse(localStorage.getItem('adminAccounts')) || [];
+        // Thay thế toàn bộ phần lấy dữ liệu từ localStorage bằng fetch từ database
+        let accounts = [];
 
-        // Populate account dropdown
-        function populateAccountSelect() {
-            const select = document.getElementById('account-select');
-            select.innerHTML = '<option value="">-- Chọn tài khoản --</option>';
-            accounts.forEach(account => {
-                const option = document.createElement('option');
-                option.value = account.username;
-                option.textContent = `User: ${account.name} (${account.username})`;
-                select.appendChild(option);
-            });
-            adminAccounts.forEach(account => {
-                const option = document.createElement('option');
-                option.value = account.username;
-                option.textContent = `Admin: ${account.username}`;
-                select.appendChild(option);
+        function renderAccounts() {
+            const tbody = document.getElementById('account-tbody');
+            tbody.innerHTML = '';
+            accounts.forEach((acc, idx) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><span style="color:${acc.role === 'admin' ? '#d10000' : '#1a2d6c'};font-weight:600;">${acc.role === 'admin' ? 'Admin' : 'User'}</span></td>
+                        <td>${acc.username}</td>
+                        <td>${acc.name || ''}</td>
+                        <td>${acc.email || ''}</td>
+                        <td>${acc.phone || ''}</td>
+                        <td>${acc.gender || ''}</td>
+                        <td>${acc.dob || ''}</td>
+                        <td>${acc.address || ''}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn" onclick="editAccount(${idx})"><i class="fa-solid fa-pen"></i> Sửa</button>
+                                <button class="action-btn" onclick="deleteAccount(${idx})"><i class="fa-solid fa-trash"></i> Xóa</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
             });
         }
 
-        // Load selected account details
-        function loadAccountDetails() {
-            const username = document.getElementById('account-select').value;
-            const account = accounts.find(acc => acc.username === username) || adminAccounts.find(acc => acc.username === username);
-            const profileSection = document.getElementById('profile-section');
-            const passwordSection = document.getElementById('password-section');
-            const settingsSection = document.getElementById('settings-section');
+        async function fetchAccounts() {
+            const res = await fetch('PHP/get_users.php');
+            accounts = await res.json();
+            renderAccounts();
+        }
 
-            if (account) {
-                profileSection.style.display = 'block';
-                passwordSection.style.display = 'block';
-                settingsSection.style.display = 'block';
+        fetchAccounts();
 
-                document.getElementById('name').value = account.name || '';
-                document.getElementById('phone').value = account.phone || '';
-                document.getElementById('email').value = account.email || '';
-                document.getElementById('dob').value = account.dob || '';
-                document.getElementById('address').value = account.address || '';
-                document.getElementById('language').value = account.language || 'vi';
-                document.getElementById('notifications').checked = account.notifications || false;
-
-                const genderInputs = document.getElementsByName('gender');
-                genderInputs.forEach(input => {
-                    input.checked = input.value === account.gender;
-                });
+        function openModal(mode, type = 'user', idx = null) {
+            document.getElementById('accountModal').classList.add('active');
+            document.getElementById('accountForm').reset();
+            document.getElementById('modalTitle').textContent = mode === 'add' ? 'Thêm tài khoản' : 'Sửa tài khoản';
+            document.getElementById('type').disabled = mode === 'edit';
+            editingIndex = idx;
+            if (mode === 'edit' && idx !== null) {
+                const acc = accounts[idx];
+                document.getElementById('type').value = acc.role || 'user';
+                document.getElementById('username').value = acc.username;
+                document.getElementById('username').disabled = true;
+                document.getElementById('password').value = ''; // Không show password cũ
+                document.getElementById('name').value = acc.name || '';
+                document.getElementById('email').value = acc.email || '';
+                document.getElementById('phone').value = acc.phone || '';
+                document.getElementById('gender').value = acc.gender || '';
+                document.getElementById('dob').value = acc.dob || '';
+                document.getElementById('address').value = acc.address || '';
             } else {
-                profileSection.style.display = 'none';
-                passwordSection.style.display = 'none';
-                settingsSection.style.display = 'none';
+                document.getElementById('type').value = 'user';
+                document.getElementById('username').value = '';
+                document.getElementById('username').disabled = false;
+                document.getElementById('password').value = '';
+                document.getElementById('name').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('phone').value = '';
+                document.getElementById('gender').value = '';
+                document.getElementById('dob').value = '';
+                document.getElementById('address').value = '';
             }
         }
 
-        // Update profile
-        function updateProfile() {
-            const username = document.getElementById('account-select').value;
-            const account = accounts.find(acc => acc.username === username) || adminAccounts.find(acc => acc.username === username);
-
-            if (account) {
-                const nameValue    = document.getElementById('name').value;
-                const phoneValue   = document.getElementById('phone').value;
-                const emailValue   = document.getElementById('email').value;
-                const dobValue     = document.getElementById('dob').value;
-                const addressValue = document.getElementById('address').value;
-                const genderInputs = document.getElementsByName('gender');
-                const selectedGender = Array.from(genderInputs).find(input => input.checked)?.value || account.gender;
-                // Kiểm tra định dạng email
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(emailValue)) {
-                    alert("Email không đúng định dạng!");
-                    return;
-                }
-                // Kiểm tra số điện thoại: đủ 10 số và bắt đầu bằng số 0
-                const phoneRegex = /^0\d{9}$/;
-                if (!phoneRegex.test(phoneValue)) {
-                    alert("Số điện thoại phải bắt đầu bằng số 0 và đủ 10 chữ số!");
-                    return;
-                }
-                account.name    = nameValue;
-                account.phone   = phoneValue;
-                account.email   = emailValue;
-                account.dob     = dobValue;
-                account.address = addressValue;
-                account.gender  = selectedGender;
-
-                if (accounts.includes(account)) {
-                    localStorage.setItem('accounts', JSON.stringify(accounts));
-                } else if (adminAccounts.includes(account)) {
-                    localStorage.setItem('adminAccounts', JSON.stringify(adminAccounts));
-                }
-
-                alert("Thông tin cá nhân đã được cập nhật!");
-                populateAccountSelect();
-                document.getElementById('account-select').value = username;
-            }
+        function closeModal() {
+            document.getElementById('accountModal').classList.remove('active');
         }
 
-        // Change password
-        function changePassword() {
-            const username = document.getElementById('account-select').value;
-            const account = accounts.find(acc => acc.username === username) || adminAccounts.find(acc => acc.username === username);
-            const currentPassword = document.getElementById('current-password').value;
-            const newPassword = document.getElementById('new-password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
+        document.getElementById('accountForm').onsubmit = function(e) {
+            e.preventDefault();
+            const type = document.getElementById('type').value;
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const gender = document.getElementById('gender').value;
+            const dob = document.getElementById('dob').value;
+            const address = document.getElementById('address').value.trim();
 
-            if (account) {
-                if (currentPassword !== account.password) {
-                    alert("Mật khẩu hiện tại không đúng!");
-                    return;
-                }
-                if (newPassword !== confirmPassword) {
-                    alert("Mật khẩu mới và xác nhận mật khẩu không khớp!");
-                    return;
-                }
-                account.password = newPassword;
-                if (accounts.includes(account)) {
-                    localStorage.setItem('accounts', JSON.stringify(accounts));
+            // Validate
+            if (!username || !password) {
+                alert('Vui lòng nhập tên đăng nhập và mật khẩu!');
+                return;
+            }
+            if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                alert('Email không đúng định dạng!');
+                return;
+            }
+            if (phone && !/^0\d{9,10}$/.test(phone)) {
+                alert('Số điện thoại phải bắt đầu bằng số 0 và đủ 10-11 chữ số!');
+                return;
+            }
+
+            const accObj = { username, password, name, email, phone, gender, dob, address };
+
+            if (editingIndex !== null) {
+                // Edit
+                if (type === 'user') {
+                    accounts[editingIndex] = accObj;
                 } else {
-                    localStorage.setItem('adminAccounts', JSON.stringify(adminAccounts));
+                    adminAccounts[editingIndex] = accObj;
                 }
-                alert("Mật khẩu đã được thay đổi!");
-                document.getElementById('current-password').value = '';
-                document.getElementById('new-password').value = '';
-                document.getElementById('confirm-password').value = '';
-            }
-        }
-
-        // Save settings
-        function saveSettings() {
-            const username = document.getElementById('account-select').value;
-            const account = accounts.find(acc => acc.username === username) || adminAccounts.find(acc => acc.username === username);
-            if (account) {
-                account.language = document.getElementById('language').value;
-                account.notifications = document.getElementById('notifications').checked;
-                if (accounts.includes(account)) {
-                    localStorage.setItem('accounts', JSON.stringify(accounts));
-                } else {
-                    localStorage.setItem('adminAccounts', JSON.stringify(adminAccounts));
-                }
-                alert("Cài đặt đã được lưu!");
-            }
-        }
-
-        // Delete account
-        function deleteAccount() {
-            const username = document.getElementById('account-select').value;
-            const account = accounts.find(acc => acc.username === username) || adminAccounts.find(acc => acc.username === username);
-            if (account)
-            if (confirm("Bạn có chắc chắn muốn xóa tài khoản này? Hành động này không thể hoàn tác.")) {
-                const index = accounts.findIndex(acc => acc.username === username);
-                if (index !== -1) {
-                    accounts.splice(index, 1);
-                    localStorage.setItem('accounts', JSON.stringify(accounts));
-                    alert("Tài khoản đã được xóa!");
-                    populateAccountSelect();
-                    loadAccountDetails();
-                } else {
-                    const adminIndex = adminAccounts.findIndex(acc => acc.username === username);
-                    if (adminIndex !== -1) {
-                        adminAccounts.splice(adminIndex, 1);
-                        localStorage.setItem('adminAccounts', JSON.stringify(adminAccounts));
-                        alert("Tài khoản đã được xóa!");
-                        populateAccountSelect();
-                        loadAccountDetails();
+            } else {
+                // Add
+                if (type === 'user') {
+                    if (accounts.some(acc => acc.username === username)) {
+                        alert('Tên đăng nhập đã tồn tại!');
+                        return;
                     }
+                    accounts.push(accObj);
+                } else {
+                    if (adminAccounts.some(acc => acc.username === username)) {
+                        alert('Tên đăng nhập admin đã tồn tại!');
+                        return;
+                    }
+                    adminAccounts.push(accObj);
                 }
             }
+            localStorage.setItem('accounts', JSON.stringify(accounts));
+            localStorage.setItem('adminAccounts', JSON.stringify(adminAccounts));
+            closeModal();
+            renderAccounts();
+        };
+
+        function editAccount(idx) {
+            openModal('edit', null, idx);
         }
 
-        // Initialize
-        populateAccountSelect();
+        function deleteAccount(idx) {
+            if (confirm("Bạn có chắc chắn muốn xóa tài khoản này? Hành động này không thể hoàn tác.")) {
+                accounts.splice(idx, 1);
+                localStorage.setItem('accounts', JSON.stringify(accounts));
+                renderAccounts();
+            }
+        }
     </script>
 </body>
 </html>

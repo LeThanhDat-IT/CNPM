@@ -38,8 +38,16 @@ if ($type === "Theo ngày") {
     $types .= "s";
 }
 
-$sql = "SELECT room AS roomId, fullname AS roomName, '' AS serviceId, '' AS serviceName, checkin AS date, total AS total
-        FROM bookings $where ORDER BY checkin DESC";
+$sql = "SELECT 
+            b.room AS roomId, 
+            q.tenPhong AS roomName, 
+            b.fullname AS customerName, 
+            b.checkin AS date, 
+            b.total AS total
+        FROM bookings b
+        LEFT JOIN quanlyphong q ON b.room = q.maPhong
+        $where
+        ORDER BY b.checkin DESC";
 
 $stmt = $conn->prepare($sql);
 if ($params) $stmt->bind_param($types, ...$params);
