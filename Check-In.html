@@ -161,6 +161,7 @@
 
     function getTotalAmount(booking) {
       if (!booking) return 0;
+      if (booking.total) return Number(booking.total); // Ưu tiên lấy từ DB
       const price = roomPrices[booking.room] || 0;
       const checkin = new Date(booking.checkin);
       const checkout = new Date(booking.checkout);

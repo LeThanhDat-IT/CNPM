@@ -44,6 +44,7 @@ if (isset($booking['TrangThaiThanhToan'])) {
 }
 
 echo json_encode(['success' => true, 'booking' => $booking]);
+file_put_contents('debug_checkin.txt', print_r($booking, true));
 $stmt->close();
 $conn->close();
 exit;

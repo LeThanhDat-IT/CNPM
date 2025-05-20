@@ -1,0 +1,15 @@
+Array
+(
+    [id] => 51
+    [room] => R001
+    [fullname] => Nguyễn Trung Hiếu
+    [phone] => 0222555444
+    [email] => trunghieu@gmail.com
+    [checkin] => 2025-05-20
+    [total] => 8000000
+    [checkout] => 2025-05-24
+    [time] => 2025-05-20 19:22:47
+    [bookingCode] => TCH20250520051
+    [TrangThaiThanhToan] => 1
+    [TrangThaiTraPhong] => 1
+)

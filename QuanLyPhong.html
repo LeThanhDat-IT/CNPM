@@ -349,9 +349,9 @@
             }
             row.onclick = () => {
                 document.getElementById('room-name').value = room.name;
-                document.getElementById('room-type').value = room.type;
+                document.getElementById('room-type').value = String(room.type);
                 document.getElementById('room-price').value = room.price;
-                document.getElementById('room-status').value = room.status;
+                document.getElementById('room-status').value = String(room.status); // Ép kiểu về chuỗi
             };
             tbody.appendChild(row);
         });

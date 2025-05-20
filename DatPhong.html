@@ -223,9 +223,15 @@
         time: checkout,
         note: ''
       };
-      // Lưu lại thông tin đầy đủ cho trang thanh toán
+      // Giả sử bạn lấy giá phòng từ localStorage (hoặc nguồn khác)
+      const price = Number(localStorage.getItem('selectedRoomPrice')) || 0;
+
+      // Lưu trước khi gửi request (có thể giữ lại, nhưng nên đồng bộ với sau khi đặt thành công)
       localStorage.setItem('lastBooking', JSON.stringify({
-        room, fullname, phone, email, checkin, checkout
+        roomCode,           // mã phòng
+        roomName: room,     // tên phòng
+        fullname, phone, email, checkin, checkout,
+        price
       }));
 
       fetch('PHP/datphong.php', {
@@ -236,11 +242,16 @@
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          // Lưu lại thông tin đầy đủ cho trang thanh toán, bao gồm bookingCode
           localStorage.setItem('lastBooking', JSON.stringify({
-            room, fullname, phone, email, checkin, checkout,
-            bookingCode: data.bookingCode // lấy từ response của API
+            roomCode,
+            roomName: room,
+            fullname, phone, email, checkin, checkout,
+            bookingCode: data.bookingCode,
+            price,
+            total: data.total // nếu API trả về
           }));
+          // Sau khi đặt phòng thành công
+          localStorage.setItem('user_email', email); // email là biến chứa email vừa nhập khi đặt phòng
           window.location.href = 'ThanhToan.html';
         } else {
           messageDiv.textContent = data.message || 'Đặt phòng thất bại!';

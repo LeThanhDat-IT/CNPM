@@ -111,22 +111,10 @@
   </div>
 
   <script>
-    // Giá phòng mẫu (đồng bộ với các trang khác)
-    const roomPrices = {
-      'Phòng Gia Đình': 360000,
-      'Phòng Đôi Cao Cấp': 1200000,
-      'Phòng Mini': 200000,
-      'Phòng Tình Nhân': 560000
-    };
-
     function getTotalAmount(booking) {
       if (!booking) return 0;
-      const price = roomPrices[booking.room] || 0;
-      const checkin = new Date(booking.checkin);
-      const checkout = new Date(booking.checkout);
-      let nights = Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24));
-      if (nights < 1) nights = 1;
-      return price * nights;
+      if (booking.total) return Number(booking.total); // Chỉ lấy từ DB
+      return 0; // Không có total thì trả về 0
     }
 
     // Lấy email user từ localStorage (sau đăng nhập), nếu chưa có thì yêu cầu nhập
@@ -157,15 +145,6 @@
 
     // Lấy booking mới nhất từ server, fallback sang localStorage nếu không có
     window.onload = function() {
-      // Ưu tiên lấy từ localStorage
-      const lastBooking = localStorage.getItem('lastBooking');
-      if (lastBooking) {
-        renderBooking(JSON.parse(lastBooking));
-        // Xóa localStorage sau khi đã render xong
-        setTimeout(() => localStorage.removeItem('lastBooking'), 500);
-        return;
-      }
-      // Nếu không có thì mới lấy từ server
       const email = getUserEmail();
       if (!email) {
         renderBooking(null);
@@ -216,6 +195,23 @@
     function reportIssue() {
       alert('Báo lỗi hoàn tiền đã được gửi!');
     }
+
+    // Sau khi fetch đặt phòng thành công:
+    // Ví dụ fetch đặt phòng (bạn cần truyền đúng dữ liệu vào body):
+    /*
+    fetch('PHP/dat_phong.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'email=' + encodeURIComponent(email) + '&otherData=...'
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.booking) {
+          localStorage.setItem('lastBooking', JSON.stringify(data.booking)); // booking đã có total
+          window.location.href = 'ThanhToanThanhCong.html';
+        }
+      });
+    */
   </script>
 </body>
 </html>

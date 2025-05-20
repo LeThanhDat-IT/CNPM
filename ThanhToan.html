@@ -182,26 +182,14 @@
   <script>
     // Lấy email user từ localStorage (sau đăng nhập), nếu chưa có thì yêu cầu nhập
     function getUserEmail() {
-      let email = localStorage.getItem('user_email');
-      if (!email) {
-        email = prompt('Vui lòng nhập email đã dùng để đặt phòng:');
-        if (email) localStorage.setItem('user_email', email);
-      }
-      return email;
+      return localStorage.getItem('user_email') || '';
     }
-
-    // Danh sách phòng và giá (nên đồng bộ với file tìm kiếm phòng)
-    const roomPrices = {
-      'Phòng Gia Đình': 360000,
-      'Phòng Đôi Cao Cấp': 1200000,
-      'Phòng Mini': 200000,
-      'Phòng Tình Nhân': 560000
-    };
 
     // Tính tổng tiền
     function getTotalAmount(booking) {
       if (!booking) return 0;
-      const price = roomPrices[booking.room] || 0;
+      if (booking.total) return Number(booking.total);
+      const price = booking.price || 0;
       const checkin = new Date(booking.checkin);
       const checkout = new Date(booking.checkout);
       let nights = Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24));
@@ -221,7 +209,7 @@
         return;
       }
       infoDiv.innerHTML = `
-        <div class="info"><label><i class="fa-solid fa-bed"></i> Phòng:</label> ${booking.room}</div>
+        <div class="info"><label><i class="fa-solid fa-bed"></i> Phòng:</label> ${booking.roomName || booking.room}</div>
         <div class="info"><label><i class="fa-solid fa-user"></i> Khách:</label> ${booking.fullname}</div>
         <div class="info"><label><i class="fa-solid fa-phone"></i> Điện thoại:</label> ${booking.phone}</div>
         <div class="info"><label><i class="fa-solid fa-envelope"></i> Email:</label> ${booking.email}</div>
@@ -265,18 +253,7 @@
     // Lấy booking mới nhất từ server
     let currentBooking = null;
     window.onload = function() {
-      // Ưu tiên lấy từ localStorage
-      const lastBooking = localStorage.getItem('lastBooking');
-      if (lastBooking) {
-        currentBooking = JSON.parse(lastBooking);
-        renderBooking(currentBooking);
-        renderPayMethod();
-        document.querySelectorAll('input[name="paymethod"]').forEach(radio => {
-          radio.onchange = renderPayMethod;
-        });
-        return;
-      }
-      // Nếu không có thì mới lấy từ server
+      // Lấy booking mới nhất từ server trước
       const email = getUserEmail();
       if (!email) {
         renderBooking(null);
@@ -297,7 +274,15 @@
             radio.onchange = renderPayMethod;
           });
         } else {
-          renderBooking(null);
+          // fallback sang localStorage nếu không có trên server
+          const lastBooking = localStorage.getItem('lastBooking');
+          if (lastBooking) {
+            currentBooking = JSON.parse(lastBooking);
+            renderBooking(currentBooking);
+            renderPayMethod();
+          } else {
+            renderBooking(null);
+          }
         }
       })
       .catch(() => {

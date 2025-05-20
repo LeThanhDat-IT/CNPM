@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Lịch sử đặt phòng</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f6f8fa; }
+    .container { max-width: 800px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 24px #223b7922; padding: 32px; }
+    h2 { color: #223B79; }
+    table { width: 100%; border-collapse: collapse; margin-top: 18px; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+    th { background: #f0f4fa; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Lịch sử đặt phòng của bạn</h2>
+    <div id="history"></div>
+  </div>
+  <script>
+    function getUserEmail() {
+      return localStorage.getItem('user_email') || '';
+    }
+    function renderHistory(bookings) {
+      if (!bookings || bookings.length === 0) {
+        document.getElementById('history').innerHTML = '<p>Bạn chưa có đặt phòng nào.</p>';
+        return;
+      }
+      let html = `<table>
+        <tr>
+          <th>Mã đặt</th>
+          <th>Phòng</th>
+          <th>Ngày nhận</th>
+          <th>Ngày trả</th>
+          <th>Tổng tiền</th>
+          <th>Trạng thái</th>
+        </tr>`;
+      bookings.forEach(b => {
+        html += `<tr>
+          <td>${b.bookingCode || b.code}</td>
+          <td>${b.room}</td>
+          <td>${b.checkin}</td>
+          <td>${b.checkout}</td>
+          <td>${b.total ? Number(b.total).toLocaleString() + ' đ' : ''}</td>
+          <td>${b.TrangThaiThanhToan == 1 ? 'Đã thanh toán' : 'Chưa thanh toán'}</td>
+        </tr>`;
+      });
+      html += '</table>';
+      document.getElementById('history').innerHTML = html;
+    }
+    window.onload = function() {
+      const email = getUserEmail();
+      if (!email) {
+        document.getElementById('history').innerHTML = '<p>Không tìm thấy email người dùng.</p>';
+        return;
+      }
+      fetch('PHP/get_bookings.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'email=' + encodeURIComponent(email)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.bookings) renderHistory(data.bookings);
+        else document.getElementById('history').innerHTML = '<p>Không có dữ liệu đặt phòng.</p>';
+      })
+      .catch(() => {
+        document.getElementById('history').innerHTML = '<p>Lỗi khi tải dữ liệu.</p>';
+      });
+    };
+  </script>
+</body>
+</html>

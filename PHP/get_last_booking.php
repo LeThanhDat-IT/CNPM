@@ -18,7 +18,17 @@ $stmt->bind_param('s', $email);
 $stmt->execute();
 $result = $stmt->get_result();
 if ($row = $result->fetch_assoc()) {
-    echo json_encode(['success' => true, 'booking' => $row]);
+    $booking = [
+        "room" => $row["room"],
+        "fullname" => $row["fullname"],
+        "phone" => $row["phone"],
+        "email" => $row["email"],
+        "checkin" => $row["checkin"],    // hoặc "date"
+        "checkout" => $row["checkout"],  // hoặc "time"
+        "bookingCode" => $row["bookingCode"],
+        "total" => (int)$row["total"]    // ĐẢM BẢO ĐÚNG TÊN VÀ KIỂU SỐ
+    ];
+    echo json_encode(["success" => true, "booking" => $booking]);
 } else {
     echo json_encode(['success' => false, 'message' => 'Không tìm thấy đặt phòng']);
 }
