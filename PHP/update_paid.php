@@ -23,10 +23,10 @@ $payMethod = $_POST['payMethod'] ?? '';
 
 if ($stmt->affected_rows > 0) {
     // Lấy thông tin booking để gửi mail
-    $stmt2 = $conn->prepare("SELECT room, fullname, phone, email, checkin, checkout, total FROM bookings WHERE bookingCode = ?");
+    $stmt2 = $conn->prepare("SELECT room, roomName, fullname, phone, email, checkin, checkout, total FROM bookings WHERE bookingCode = ?");
     $stmt2->bind_param('s', $bookingCode);
     $stmt2->execute();
-    $stmt2->bind_result($room, $fullname, $phone, $email, $checkin, $checkout, $total);
+    $stmt2->bind_result($room, $roomName, $fullname, $phone, $email, $checkin, $checkout, $total);
     if ($stmt2->fetch()) {
         $mail = new PHPMailer(true);
         try {
@@ -42,60 +42,77 @@ if ($stmt->affected_rows > 0) {
             $mail->addAddress($email, $fullname);
 
             $mail->isHTML(true);
-            if ($payMethod === 'pay_at_hotel') {
-                $mail->Subject = 'Xác nhận đặt phòng tại THE COW HOTEL';
-                $mail->Body = "
-                    <div style='font-family:Arial,sans-serif;max-width:500px;margin:auto;border:1px solid #eee;padding:24px;background:#fafbfc'>
-                        <h2 style='color:#1a8f3c;text-align:center;margin-bottom:16px'>
-                            <span style='color:#d10000;'>THE COW HOTEL</span> - Xác nhận đặt phòng
-                        </h2>
-                        <p>Kính chào <b>$fullname</b>,<br>
-                        Cảm ơn bạn đã đặt phòng tại <b>THE COW HOTEL</b>.</p>
-                        <table style='width:100%;border-collapse:collapse;margin:16px 0'>
-                            <tr><td style='padding:6px 0'>Phòng:</td><td><b>$room</b></td></tr>
-                            <tr><td style='padding:6px 0'>Mã đặt phòng:</td><td><span style='color:#d10000;font-weight:bold;font-size:1.1em'>$bookingCode</span></td></tr>
-                            <tr><td style='padding:6px 0'>Nhận phòng:</td><td>$checkin</td></tr>
-                            <tr><td style='padding:6px 0'>Trả phòng:</td><td>$checkout</td></tr>
-                            <tr><td style='padding:6px 0'>Tổng cộng:</td><td><b style='color:#1a8f3c'>" . number_format($total, 0, ',', '.') . " VND</b></td></tr>
-                            <tr><td style='padding:6px 0'>Hình thức thanh toán:</td><td><b>Thanh toán tại khách sạn</b></td></tr>
-                        </table>
-                        <div style='margin:12px 0 18px 0;color:#d10000'>
-                            <b>Vui lòng lưu lại mã đặt phòng để xuất trình khi đến khách sạn check-in.</b>
-                        </div>
-                        <div style='font-size:12px;color:#888;text-align:center'>
-                            Đây là email tự động, vui lòng không trả lời.
-                        </div>
+            // Lấy tên phòng từ bookings
+            $tenPhong = $roomName ?: $room;
+
+            $mail->Subject = ($payMethod === 'pay_at_hotel')
+                ? 'Xác nhận đặt phòng tại THE COW HOTEL'
+                : 'Xác nhận thanh toán tại THE COW HOTEL';
+
+            $mail->Body = "
+                <div style='font-family:Montserrat,Arial,sans-serif;max-width:540px;margin:auto;background:#fff;border-radius:18px;box-shadow:0 6px 32px #0002;padding:36px 36px 28px 36px;border:1px solid #e0e0e0;'>
+                    <div style='text-align:center;margin-bottom:22px'>
+                        <img src='http://localhost/CNPM_Project/images/Logo.png' alt='THE COW HOTEL' style='height:60px;margin-bottom:10px'>
+                        <h1 style='color:#1a8f3c;margin:0;font-size:2.2em;letter-spacing:2px;font-weight:900;'>THE COW HOTEL</h1>
                     </div>
-                ";
-            } else {
-                $mail->Subject = 'Xác nhận thanh toán tại THE COW HOTEL';
-                $mail->Body = "
-                    <div style='font-family:Arial,sans-serif;max-width:500px;margin:auto;border:1px solid #eee;padding:24px;background:#fafbfc'>
-                        <h2 style='color:#1a8f3c;text-align:center;margin-bottom:16px'>
-                            <span style='color:#d10000;'>THE COW HOTEL</span> - Thanh toán thành công
-                        </h2>
-                        <p>Kính chào <b>$fullname</b>,<br>
-                        Bạn đã <b>thanh toán thành công</b> tại <b>THE COW HOTEL</b>.</p>
-                        <table style='width:100%;border-collapse:collapse;margin:16px 0'>
-                            <tr><td style='padding:6px 0'>Phòng:</td><td><b>$room</b></td></tr>
-                            <tr><td style='padding:6px 0'>Mã đặt phòng:</td><td><span style='color:#d10000;font-weight:bold;font-size:1.1em'>$bookingCode</span></td></tr>
-                            <tr><td style='padding:6px 0'>Nhận phòng:</td><td>$checkin</td></tr>
-                            <tr><td style='padding:6px 0'>Trả phòng:</td><td>$checkout</td></tr>
-                            <tr><td style='padding:6px 0'>Tổng cộng:</td><td><b style='color:#1a8f3c'>" . number_format($total, 0, ',', '.') . " VND</b></td></tr>
-                            <tr><td style='padding:6px 0'>Hình thức thanh toán:</td><td><b>Chuyển khoản/Thẻ</b></td></tr>
-                        </table>
-                        <div style='margin:12px 0 18px 0;color:#d10000'>
-                            <b>Vui lòng lưu lại mã đặt phòng để xuất trình khi đến khách sạn check-in.</b>
-                        </div>
-                        <div style='font-size:12px;color:#888;text-align:center'>
-                            Đây là email tự động, vui lòng không trả lời.
-                        </div>
+                    <h2 style='color:#223B79;text-align:center;margin-bottom:26px;font-size:1.35em;letter-spacing:1px;text-shadow:0 2px 8px #0001'>
+                        ".($payMethod === 'pay_at_hotel' ? "XÁC NHẬN ĐẶT PHÒNG" : "THANH TOÁN THÀNH CÔNG")."
+                    </h2>
+                    <div style='font-size:1.13em;margin-bottom:20px;line-height:1.7;color:#222;text-align:center'>
+                        <span style='font-size:1.1em'>👋</span> Kính chào <b style='color:#223B79'>$fullname</b>,<br>
+                        ".($payMethod === 'pay_at_hotel'
+                            ? "Cảm ơn bạn đã đặt phòng tại <b>THE COW HOTEL</b>.<br>Thông tin đặt phòng của bạn:"
+                            : "Bạn đã <b style='color:#1a8f3c'>thanh toán thành công</b> tại <b>THE COW HOTEL</b>.<br>Thông tin đặt phòng của bạn:")."
                     </div>
-                ";
-            }
+                    <table style='width:100%;font-size:1.07em;margin-bottom:22px;border-radius:10px;overflow:hidden;box-shadow:0 2px 10px #0001;background:#f8fafc'>
+                        <tr>
+                            <td style='padding:10px 0 10px 14px;color:#223B79;width:44%'><b>Tên phòng:</b></td>
+                            <td style='padding:10px 14px 10px 0'><b style='color:#1a8f3c;font-size:1.13em;'>$tenPhong</b></td>
+                        </tr>
+                        <tr>
+                            <td style='padding:8px 0 8px 14px;color:#223B79'><b>Mã phòng:</b></td>
+                            <td style='padding:8px 14px 8px 0'>$room</td>
+                        </tr>
+                        <tr>
+                            <td style='padding:8px 0 8px 14px;color:#223B79'><b>Mã đặt phòng:</b></td>
+                            <td style='padding:8px 14px 8px 0'><span style='color:#d10000;font-weight:bold;font-size:1.13em'>$bookingCode</span></td>
+                        </tr>
+                        <tr>
+                            <td style='padding:8px 0 8px 14px;color:#223B79'><b>Nhận phòng:</b></td>
+                            <td style='padding:8px 14px 8px 0'>$checkin</td>
+                        </tr>
+                        <tr>
+                            <td style='padding:8px 0 8px 14px;color:#223B79'><b>Trả phòng:</b></td>
+                            <td style='padding:8px 14px 8px 0'>$checkout</td>
+                        </tr>
+                        <tr>
+                            <td style='padding:8px 0 8px 14px;color:#223B79'><b>Tổng cộng:</b></td>
+                            <td style='padding:8px 14px 8px 0'><b style='color:#d10000;font-size:1.13em'>" . number_format($total, 0, ',', '.') . " VND</b></td>
+                        </tr>
+                        <tr>
+                            <td style='padding:8px 0 8px 14px;color:#223B79'><b>Hình thức thanh toán:</b></td>
+                            <td style='padding:8px 14px 8px 0'><b>".($payMethod === 'pay_at_hotel' ? "Thanh toán tại khách sạn" : "Chuyển khoản/Thẻ")."</b></td>
+                        </tr>
+                    </table>
+                    <div style='color:#d10000;text-align:center;margin:20px 0 10px 0;font-weight:bold;font-size:1.09em'>
+                        <span style='font-size:1.2em'>⚠️</span> Vui lòng lưu lại mã đặt phòng để xuất trình khi đến khách sạn check-in.
+                    </div>
+                    <div style='font-size:13px;color:#888;text-align:center;margin-bottom:10px'>
+                        Đây là email tự động, vui lòng không trả lời.<br>
+                        Mọi thắc mắc xin liên hệ: <a href='mailto:thecowhotel@gmail.com' style='color:#1a8f3c;text-decoration:none'>thecowhotel@gmail.com</a> hoặc hotline <b>0123 456 789</b>.
+                    </div>
+                    <div style='text-align:center;margin-top:16px;font-size:1.13em;color:#1a8f3c;font-weight:bold'>
+                        Hẹn gặp lại bạn tại THE COW HOTEL! <span style='font-size:1.1em'>🌿</span>
+                    </div>
+                </div>
+            ";
             $mail->send();
         } catch (Exception $e) {
-            // Ghi log nếu cần
+            echo json_encode(['success' => false, 'message' => 'Lỗi gửi mail: ' . $mail->ErrorInfo]);
+            $stmt2->close();
+            $stmt->close();
+            $conn->close();
+            exit;
         }
     }
     $stmt2->close();

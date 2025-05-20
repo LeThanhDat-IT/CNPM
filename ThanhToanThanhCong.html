@@ -5,40 +5,84 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thanh toán Thành Công</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
     body {
-      font-family: system-ui, sans-serif;
+      font-family: 'Montserrat', system-ui, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f9f9f9;
+      background: linear-gradient(135deg, #e0f7fa 0%, #f9fbe7 100%);
+      min-height: 100vh;
       text-align: center;
     }
     .container {
-      max-width: 600px;
-      margin: 50px auto;
-      padding: 24px 20px;
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      max-width: 480px;
+      margin: 48px auto 0 auto;
+      padding: 36px 28px 32px 28px;
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 8px 32px #0001, 0 1.5px 8px #1a8f3c22;
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.8s cubic-bezier(.4,2,.6,1);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px);}
+      to { opacity: 1; transform: none;}
+    }
+    .success-icon {
+      width: 78px;
+      height: 78px;
+      background: linear-gradient(135deg, #1a8f3c 60%, #43e97b 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px auto; /* Sửa lại margin để icon nằm hoàn toàn trong box */
+      box-shadow: 0 4px 24px #1a8f3c33, 0 0 0 8px #e0f7fa55;
+      animation: popIn 0.7s cubic-bezier(.4,2,.6,1);
+      position: relative;
+      top: 0; /* Đặt lại vị trí của icon */
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0;}
+      80% { transform: scale(1.1);}
+      100% { transform: scale(1); opacity: 1;}
+    }
+    .success-icon svg {
+      width: 44px;
+      height: 44px;
+      color: #fff;
     }
     h1 {
       color: #1a8f3c;
-      font-size: 32px;
-      margin-bottom: 18px;
+      font-size: 2.1em;
+      margin-bottom: 10px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-shadow: 0 2px 8px #1a8f3c11;
     }
     .info {
       text-align: left;
-      margin-bottom: 20px;
-      font-size: 18px;
+      margin-bottom: 22px;
+      font-size: 1.13em;
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 22px 18px 14px 18px;
+      box-shadow: 0 2px 10px #0001;
+      border: 1px solid #e0e0e0;
     }
     .info p {
-      margin: 6px 0;
+      margin: 7px 0;
+      line-height: 1.6;
     }
     .info strong {
       color: #223B79;
+      font-weight: 700;
     }
     .label-red {
       color: #d10000;
       font-weight: bold;
+      letter-spacing: 1px;
     }
     .label-green {
       color: #1a8f3c;
@@ -46,40 +90,70 @@
     }
     .buttons {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
-      gap: 18px;
-      margin-top: 24px;
+      gap: 16px;
+      margin-top: 28px;
     }
     .buttons button {
-      background-color: #223B79;
+      background: linear-gradient(90deg, #223B79 60%, #1a8f3c 100%);
       color: white;
-      font-size: 17px;
-      padding: 10px 22px;
+      font-size: 1.08em;
+      padding: 11px 28px;
       border: none;
-      border-radius: 6px;
+      border-radius: 7px;
       cursor: pointer;
-      transition: background 0.2s;
+      font-weight: 700;
+      box-shadow: 0 2px 8px #223b7922;
+      transition: background 0.2s, transform 0.15s;
+      outline: none;
+      letter-spacing: 0.5px;
     }
-    .buttons button:hover {
-      background-color: #d10000;
+    .buttons button:hover, .buttons button:focus {
+      background: linear-gradient(90deg, #d10000 60%, #1a8f3c 100%);
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 4px 16px #d1000033;
+    }
+    .buttons button:last-child {
+      background: linear-gradient(90deg, #1a8f3c 60%, #43e97b 100%);
+      color: #fff;
+    }
+    .buttons button:last-child:hover {
+      background: linear-gradient(90deg, #223B79 60%, #43e97b 100%);
     }
     header {
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 30px;
+      gap: 12px;
     }
     header img {
-      height: 40px;
+      height: 44px;
       cursor: pointer;
-      margin-right: 18px;
+      margin-right: 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #223b7922;
+      transition: box-shadow 0.2s;
+    }
+    header img:hover {
+      box-shadow: 0 4px 16px #1a8f3c33;
     }
     header h1 {
       display: inline;
       margin: 0;
-      font-size: 28px;
+      font-size: 1.7em;
       color: #223B79;
       letter-spacing: 2px;
+      font-weight: 900;
+      text-shadow: 0 2px 8px #223b7911;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 18px 4vw 18px 4vw; }
+      .info { font-size: 1em; padding: 14px 7px 10px 7px;}
+      h1 { font-size: 1.3em;}
+      .buttons button { font-size: 1em; padding: 10px 12px;}
+      header img { height: 32px;}
     }
   </style>
 </head>
@@ -90,25 +164,28 @@
   </header>
 
   <div class="container">
-    <h1>THANH TOÁN THÀNH CÔNG</h1>
-    <div class="info" id="bookingInfo">
-      <p><strong>Thông tin khách hàng:</strong></p>
-      <p><strong>Phòng:</strong> <span id="room-number">...</span></p>
-      <p><strong>Mã đặt phòng:</strong> <span class="label-red" id="booking-code">...</span></p>
-      <p><strong>Tên khách:</strong> <span id="customer-name">...</span></p>
-      <p><strong>Email:</strong> <span id="customer-email">...</span></p>
-      <p><strong>Điện thoại:</strong> <span id="customer-phone">...</span></p>
-      <p><strong>Nhận phòng:</strong> <span id="checkin-date">...</span></p>
-      <p><strong>Trả phòng:</strong> <span id="checkout-date">...</span></p>
-      <p><strong>Tổng cộng:</strong> <span class="label-red" id="total-amount">0 VND</span></p>
-      <p class="label-green" style="margin-top:14px;">Vui lòng lưu lại mã đặt phòng để xuất trình khi đến khách sạn check-in.</p>
+    <div class="success-icon">
+        <svg viewBox="0 0 52 52" fill="none"><circle cx="26" cy="26" r="25" stroke="white" stroke-width="2"/><path d="M16 27.5L23 34.5L36 19.5" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h1>THANH TOÁN THÀNH CÔNG</h1>
+      <div class="info" id="bookingInfo">
+        <p><strong>Thông tin khách hàng:</strong></p>
+        <p><strong>Phòng:</strong> <span id="room-number">...</span></p>
+        <p><strong>Mã đặt phòng:</strong> <span class="label-red" id="booking-code">...</span></p>
+        <p><strong>Tên khách:</strong> <span id="customer-name">...</span></p>
+        <p><strong>Email:</strong> <span id="customer-email">...</span></p>
+        <p><strong>Điện thoại:</strong> <span id="customer-phone">...</span></p>
+        <p><strong>Nhận phòng:</strong> <span id="checkin-date">...</span></p>
+        <p><strong>Trả phòng:</strong> <span id="checkout-date">...</span></p>
+        <p><strong>Tổng cộng:</strong> <span class="label-red" id="total-amount">0 VND</span></p>
+        <p class="label-green" style="margin-top:14px;">Vui lòng lưu lại mã đặt phòng để xuất trình khi đến khách sạn check-in.</p>
+      </div>
+      <div class="buttons">
+        <button onclick="printInvoice()">In hóa đơn</button>
+        <button onclick="reportIssue()">Báo lỗi hoàn tiền</button>
+        <button onclick="window.location.href='HomePage.html'">Về trang chủ</button>
+      </div>
     </div>
-    <div class="buttons">
-      <button onclick="printInvoice()">In hóa đơn</button>
-      <button onclick="reportIssue()">Báo lỗi hoàn tiền</button>
-      <button onclick="window.location.href='HomePage.html'" style="background:#1a8f3c;">Về trang chủ</button>
-    </div>
-  </div>
 
   <script>
     function getTotalAmount(booking) {
@@ -129,7 +206,11 @@
 
     // Hiển thị thông tin đặt phòng
     function renderBooking(booking) {
-      document.getElementById('room-number').textContent = booking?.room || '...';
+      // Hiển thị tên phòng nếu có, kèm mã phòng
+      const roomDisplay = booking?.roomName
+        ? `${booking.roomName} (${booking.room})`
+        : (booking?.room || '...');
+      document.getElementById('room-number').textContent = roomDisplay;
       document.getElementById('booking-code').textContent = booking?.bookingCode || booking?.code || '...';
       document.getElementById('customer-name').textContent = booking?.fullname || '...';
       document.getElementById('customer-email').textContent = booking?.email || '...';
@@ -138,7 +219,6 @@
       document.getElementById('checkout-date').textContent = booking?.checkout || '...';
       const total = getTotalAmount(booking);
       document.getElementById('total-amount').textContent = total ? total.toLocaleString() + ' VND' : '0 VND';
-      // Lưu lại để in hóa đơn
       window._currentBooking = booking;
       window._currentTotal = total;
     }
@@ -175,16 +255,66 @@
         alert('Không có thông tin hóa đơn để in!');
         return;
       }
+      const roomDisplay = booking.roomName
+        ? `<span style="font-weight:bold;color:#223B79">${booking.roomName}</span> <span style="color:#888;font-size:0.95em;">(${booking.room})</span>`
+        : (booking.room || '');
       const printContent = `
-        <h1>Hóa Đơn Thanh Toán</h1>
-        <p><strong>Phòng:</strong> ${booking.room || ''}</p>
-        <p><strong>Mã đặt phòng:</strong> ${booking.bookingCode || booking.code || ''}</p>
-        <p><strong>Tên khách:</strong> ${booking.fullname || ''}</p>
-        <p><strong>Email:</strong> ${booking.email || ''}</p>
-        <p><strong>Điện thoại:</strong> ${booking.phone || ''}</p>
-        <p><strong>Nhận phòng:</strong> ${booking.checkin || ''}</p>
-        <p><strong>Trả phòng:</strong> ${booking.checkout || ''}</p>
-        <p><strong>Tổng cộng:</strong> ${total ? total.toLocaleString() + ' VND' : '0 VND'}</p>
+        <div style="font-family:Montserrat,Arial,sans-serif;max-width:600px;margin:32px auto;background:#fff;border-radius:18px;box-shadow:0 6px 32px #0002;padding:40px 40px 32px 40px;border:1px solid #e0e0e0;">
+          <div style="text-align:center;margin-bottom:24px">
+            <img src="images/a3.jpg" alt="THE COW HOTEL" style="height:64px;margin-bottom:12px;border-radius:12px;box-shadow:0 2px 8px #0002;">
+            <h1 style="color:#1a8f3c;margin:0;font-size:2.3em;letter-spacing:2px;font-weight:900;text-shadow:0 2px 8px #0001;">THE COW HOTEL</h1>
+            <div style="color:#888;font-size:1.08em;margin-top:2px;letter-spacing:1px;">HÓA ĐƠN THANH TOÁN</div>
+          </div>
+          <div style="background:#f8fafc;border-radius:10px;padding:24px 18px 18px 18px;box-shadow:0 2px 10px #0001;margin-bottom:18px;">
+            <table style="width:100%;font-size:1.08em;">
+              <tr>
+                <td style="padding:8px 0;color:#223B79;width:44%"><b>Phòng:</b></td>
+                <td style="padding:8px 0">${roomDisplay}</td>
+              </tr>
+              <tr>
+                <td style="padding:8px 0;color:#223B79"><b>Mã đặt phòng:</b></td>
+                <td style="padding:8px 0"><span style="color:#d10000;font-weight:bold;font-size:1.13em">${booking.bookingCode || booking.code || ''}</span></td>
+              </tr>
+              <tr>
+                <td style="padding:8px 0;color:#223B79"><b>Tên khách:</b></td>
+                <td style="padding:8px 0">${booking.fullname || ''}</td>
+              </tr>
+              <tr>
+                <td style="padding:8px 0;color:#223B79"><b>Email:</b></td>
+                <td style="padding:8px 0">${booking.email || ''}</td>
+              </tr>
+              <tr>
+                <td style="padding:8px 0;color:#223B79"><b>Điện thoại:</b></td>
+                <td style="padding:8px 0">${booking.phone || ''}</td>
+              </tr>
+              <tr>
+                <td style="padding:8px 0;color:#223B79"><b>Nhận phòng:</b></td>
+                <td style="padding:8px 0">${booking.checkin || ''}</td>
+              </tr>
+              <tr>
+                <td style="padding:8px 0;color:#223B79"><b>Trả phòng:</b></td>
+                <td style="padding:8px 0">${booking.checkout || ''}</td>
+              </tr>
+              <tr>
+                <td style="padding:8px 0;color:#223B79"><b>Tổng cộng:</b></td>
+                <td style="padding:8px 0"><b style="color:#d10000;font-size:1.13em">${total ? total.toLocaleString() + ' VND' : '0 VND'}</b></td>
+              </tr>
+            </table>
+          </div>
+          <div style="color:#d10000;text-align:center;margin:18px 0 10px 0;font-weight:bold;font-size:1.09em">
+            <span style="font-size:1.2em">⚠️</span> Vui lòng lưu lại mã đặt phòng để xuất trình khi đến khách sạn check-in.
+          </div>
+          <div style="font-size:13px;color:#888;text-align:center;margin-bottom:10px">
+            Đây là hóa đơn điện tử, không cần ký tên.<br>
+            Mọi thắc mắc xin liên hệ: <a href="mailto:thecowhotel@gmail.com" style="color:#1a8f3c;text-decoration:none">thecowhotel@gmail.com</a> hoặc hotline <b>0123 456 789</b>.
+          </div>
+          <div style="text-align:center;margin-top:16px;font-size:1.13em;color:#1a8f3c;font-weight:bold">
+            Cảm ơn quý khách đã sử dụng dịch vụ của THE COW HOTEL! <span style="font-size:1.1em">🌿</span>
+          </div>
+          <div style="border-top:1px dashed #e0e0e0;margin-top:28px;padding-top:10px;text-align:center;color:#888;font-size:12px">
+            Địa chỉ: 123 Đường ABC, Quận XYZ, TP.HCM &nbsp;|&nbsp; Website: <a href="https://thecowhotel.vn" style="color:#1a8f3c;text-decoration:none">thecowhotel.vn</a>
+          </div>
+        </div>
       `;
       const printWindow = window.open('', '_blank');
       printWindow.document.write(printContent);

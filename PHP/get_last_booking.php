@@ -20,13 +20,14 @@ $result = $stmt->get_result();
 if ($row = $result->fetch_assoc()) {
     $booking = [
         "room" => $row["room"],
+        "roomName" => $row["roomName"], // Thêm dòng này
         "fullname" => $row["fullname"],
         "phone" => $row["phone"],
         "email" => $row["email"],
-        "checkin" => $row["checkin"],    // hoặc "date"
-        "checkout" => $row["checkout"],  // hoặc "time"
+        "checkin" => $row["checkin"],
+        "checkout" => $row["checkout"],
         "bookingCode" => $row["bookingCode"],
-        "total" => (int)$row["total"]    // ĐẢM BẢO ĐÚNG TÊN VÀ KIỂU SỐ
+        "total" => (int)$row["total"]
     ];
     echo json_encode(["success" => true, "booking" => $booking]);
 } else {

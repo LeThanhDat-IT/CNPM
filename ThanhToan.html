@@ -152,9 +152,119 @@
       font-weight: 800;
       letter-spacing: 1px;
     }
+    /* Thêm vào <style> trong file c:\wamp64\www\CNPM_Project\ThanhToan.html */
+    .result-success {
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 8px 32px #0001, 0 1.5px 8px #1a8f3c22;
+      padding: 38px 32px 32px 32px;
+      max-width: 480px;
+      margin: 0 auto;
+      animation: fadeIn 0.8s cubic-bezier(.4,2,.6,1);
+      position: relative;
+    }
+    .result-success .success-icon {
+       width: 82px;
+      height: 82px;
+      background: linear-gradient(135deg, #1a8f3c 60%, #43e97b 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px auto; /* Đặt icon nằm giữa và cách dưới 18px */
+      box-shadow: 0 4px 24px #1a8f3c33, 0 0 0 8px #e0f7fa55;
+      animation: popIn 0.7s cubic-bezier(.4,2,.6,1);
+      position: static; /* Không dùng absolute nữa */
+      transform: none;
+      top: unset;
+      left: unset;
+      z-index: 2; /* Đặt z-index để nằm trên các phần khác */
+    }
+    .result-success .success-icon svg {
+      width: 48px;
+      height: 48px;
+      color: #fff;
+    }
+    .result-success h2 {
+      color: #1a8f3c;
+      text-align: center;
+      font-size: 2.1em;
+      margin-top: 32px;
+      margin-bottom: 18px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-shadow: 0 2px 8px #1a8f3c11;
+    }
+    .result-success .info-list {
+      margin: 0 0 18px 0;
+      padding: 0;
+      list-style: none;
+    }
+    .result-success .info-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.13em;
+      margin-bottom: 7px;
+    }
+    .result-success .info-list .label {
+      color: #223B79;
+      font-weight: 700;
+      min-width: 120px;
+      display: inline-block;
+    }
+    .result-success .total {
+      font-size: 1.22em;
+      color: #d10000;
+      font-weight: bold;
+      margin: 18px 0 8px 0;
+      text-align: left;
+      letter-spacing: 1px;
+    }
+    .result-success .booking-code {
+      color: #d10000;
+      font-weight: bold;
+      font-size: 1.13em;
+      margin-bottom: 8px;
+    }
+    .result-success .note {
+      color: #1a8f3c;
+      background: #e8fbe9;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin: 14px 0 18px 0;
+      font-weight: 600;
+      font-size: 1.08em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .result-success .back-btn {
+      background: linear-gradient(90deg, #223B79 60%, #1a8f3c 100%);
+      color: #fff;
+      width: 100%;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 1.13em;
+      font-weight: bold;
+      margin-top: 10px;
+      cursor: pointer;
+      border: none;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 8px #223b7922;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .result-success .back-btn:hover {
+      background: linear-gradient(90deg, #1a8f3c 60%, #223B79 100%);
+      transform: translateY(-2px) scale(1.03);
+    }
     @media (max-width: 600px) {
       .container { max-width: 98vw; padding: 18px 4vw; }
       .info label { min-width: 80px; }
+      .result-success { padding: 18px 4vw 18px 4vw; }
+      .result-success h2 { font-size: 1.3em;}
+      .result-success .info-list .label { min-width: 80px; }
+      .result-success .back-btn { font-size: 1em; padding: 12px;}
     }
   </style>
 </head>
@@ -292,19 +402,27 @@
 
     function showResultPage(booking, total, method) {
       const bookingCode = booking.bookingCode || booking.code || '';
+      const roomName = booking.roomName || booking.room; // Ưu tiên tên phòng, fallback mã phòng
       document.getElementById('mainContainer').innerHTML = `
-        <h2><i class="fa-solid fa-circle-check" style="color:#1a8f3c"></i> Đặt Phòng Thành Công</h2>
-        <div class="info"><label><i class="fa-solid fa-bed"></i> Phòng:</label> ${booking.room}</div>
-        <div class="info"><label><i class="fa-solid fa-user"></i> Khách:</label> ${booking.fullname}</div>
-        <div class="info"><label><i class="fa-solid fa-phone"></i> Điện thoại:</label> ${booking.phone}</div>
-        <div class="info"><label><i class="fa-solid fa-envelope"></i> Email:</label> ${booking.email}</div>
-        <div class="info"><label><i class="fa-solid fa-calendar-check"></i> Nhận phòng:</label> ${booking.checkin}</div>
-        <div class="info"><label><i class="fa-solid fa-calendar-xmark"></i> Trả phòng:</label> ${booking.checkout}</div>
-        <div class="total">Tổng số tiền: ${total.toLocaleString()} đ</div>
-        <div class="info"><label>Phương thức thanh toán:</label> ${method}</div>
-        <div class="info"><label style="color:#d10000;">Mã đặt phòng của bạn:</label> <span style="font-size:1.2em;font-weight:bold;">${bookingCode}</span></div>
-        <div class="success"><i class="fa-solid fa-circle-info"></i> Vui lòng lưu lại mã đặt phòng để xuất trình khi đến khách sạn check-in.</div>
-        <button class="back-btn" onclick="window.location.href='TIm_kiemphong.html'"><i class="fa-solid fa-arrow-left"></i> Quay lại trang tìm phòng</button>
+        <div class="result-success">
+          <div class="success-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 2C6.48 2 2 6.48 2 12c0 5.52 4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm-1 17.93c-.29 0-.58-.03-.86-.08-.26-.05-.51-.13-.75-.23-.24-.1-.47-.23-.69-.37-.22-.14-.43-.29-.62-.46-.19-.17-.36-.35-.52-.54-.16-.19-.31-.39-.43-.61-.12-.22-.22-.45-.29-.69-.07-.24-.11-.49-.11-.74 0-.25.04-.5.11-.74.07-.24.17-.47.29-.69.12-.22.27-.42.43-.61.16-.19.33-.37.52-.54.19-.14.42-.27.69-.37.24-.1.49-.18.75-.23.28-.05.57-.08.86-.08s58 .03 86 .08c.26.05.51.13.75.23.24.1.47.23.69.37.22.17.43.35.62.54.19.19.36.39.52.61.12.22.22.45.29.69.07.24.11.49.11.74 0 .25-.04.5-.11.74-.07.24-.17.47-.29.69-.12.22-.27.42-.43.61-.16.19-.33.37-.52.54-.19.14-.42.27-.69.37-.24.1-.49.18-.75.23-.28.05-.57.08-.86.08z" fill="currentColor"/></svg>
+          </div>
+          <h2>Đặt Phòng Thành Công</h2>
+          <ul class="info-list">
+            <li><span class="label">Phòng:</span> ${roomName} <span style="color:#888;font-size:0.95em;">(${booking.room})</span></li>
+            <li><span class="label">Khách:</span> ${booking.fullname}</li>
+            <li><span class="label">Điện thoại:</span> ${booking.phone}</li>
+            <li><span class="label">Email:</span> ${booking.email}</li>
+            <li><span class="label">Nhận phòng:</span> ${booking.checkin}</li>
+            <li><span class="label">Trả phòng:</span> ${booking.checkout}</li>
+            <li class="total">Tổng số tiền: ${total.toLocaleString()} đ</li>
+            <li><span class="label">Phương thức thanh toán:</span> ${method}</li>
+            <li><span class="label" style="color:#d10000;">Mã đặt phòng của bạn:</span> <span style="font-size:1.2em;font-weight:bold;">${bookingCode}</span></li>
+          </ul>
+          <div class="note"><i class="fa-solid fa-circle-info"></i> Vui lòng lưu lại mã đặt phòng để xuất trình khi đến khách sạn check-in.</div>
+          <button class="back-btn" onclick="window.location.href='TIm_kiemphong.html'"><i class="fa-solid fa-arrow-left"></i> Quay lại trang tìm phòng</button>
+        </div>
       `;
     }
 

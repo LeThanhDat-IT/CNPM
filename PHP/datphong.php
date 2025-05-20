@@ -65,6 +65,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt4->execute();
         $stmt4->close();
 
+        // Sau khi lấy $room và $last_id
+        $stmtTenPhong = $conn->prepare("SELECT tenPhong FROM quanlyphong WHERE maPhong = ?");
+        $stmtTenPhong->bind_param("s", $room);
+        $stmtTenPhong->execute();
+        $stmtTenPhong->bind_result($tenPhong);
+        $stmtTenPhong->fetch();
+        $stmtTenPhong->close();
+
+        $stmtUpdateRoomName = $conn->prepare("UPDATE bookings SET roomName = ? WHERE id = ?");
+        $stmtUpdateRoomName->bind_param("si", $tenPhong, $last_id);
+        $stmtUpdateRoomName->execute();
+        $stmtUpdateRoomName->close();
+
         // --- Bỏ phần gửi email xác nhận đặt phòng ở đây ---
 
         echo json_encode(['success' => true, 'message' => 'Đặt phòng thành công!', 'bookingCode' => $bookingCode]);
