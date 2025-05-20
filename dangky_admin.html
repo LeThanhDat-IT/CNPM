@@ -6,115 +6,169 @@
 	<title>ĐĂNG KÍ</title>
 	<style>
 		body {
-			font-family: system-ui;
+			font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
 			margin: 0;
 			padding: 0;
-			background-color: #D8F7F2;
+			background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+			min-height: 100vh;
 			display: flex;
 			justify-content: center;
 			align-items: flex-start;
-			height: 100vh;
 		}
 
 		.container {
-			background-color: #FFFFFF;
-			padding: 40px;
-			border-radius: 10px;
-			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-			width: 800px;
-			max-width: 80%;
-			margin: 50px auto;
+			background: rgba(255,255,255,0.85);
+			padding: 38px 36px 32px 36px;
+			border-radius: 24px;
+			box-shadow: 0 8px 32px #223b7922, 0 0 0 4px #fff;
+			backdrop-filter: blur(8px);
+			width: 420px;
+			max-width: 96vw;
+			margin: auto ;
+			animation: fadeIn 1s;
 		}
 
 		h2 {
 			text-align: center;
-			color: #223B79;
-			margin-bottom: 30px;
+			color: #CD202B;
+			margin-bottom: 28px;
+			font-size: 2em;
+			font-weight: 900;
+			letter-spacing: 1px;
+			text-shadow: 0 2px 12px #223b7922;
 		}
 
 		label {
 			display: block;
-			margin-top: 20px;
-			font-weight: bold;
-			color: #312E49;
+			margin: 0 0 6px 2px;
+			font-weight: 600;
+			color: #223B79;
+			font-size: 15px;
 		}
 
 		input, select {
 			width: 100%;
-			padding: 12px;
-			margin-top: 8px;
-			border: 1px solid #A2A2A6;
-			border-radius: 5px;
-			background-color: #FFFFFF;
+			height: 44px;
+			padding: 0 14px;
+			margin-bottom: 18px;
+			border: 1.5px solid #c3cfe2;
+			border-radius: 10px;
+			font-size: 15px;
+			background: rgba(255,255,255,0.92);
+			transition: border 0.2s, box-shadow 0.2s;
+			box-sizing: border-box;
+			box-shadow: 0 2px 8px #223b7911;
+			display: block;
+		}
+
+		input:focus, select:focus {
+			border: 1.5px solid #CD202B;
+			outline: none;
+			box-shadow: 0 4px 16px #223b7922;
 		}
 
 		button {
 			width: 100%;
-			padding: 15px;
-			margin-top: 30px;
-			background-color: #223B79;
-			color: #FFFFFF;
+			padding: 13px 0;
+			background: linear-gradient(90deg, #223B79 60%, #CD202B 100%);
+			color: white;
+			border: none;
+			border-radius: 12px;
 			font-size: 18px;
 			font-weight: bold;
-			border: none;
-			border-radius: 5px;
 			cursor: pointer;
+			box-shadow: 0 4px 18px #223b7922;
+			transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+			margin-top: 8px;
+			letter-spacing: 1px;
 		}
 
 		button:hover {
-			background-color: #1A2F5D;
+			background: #fff;
+			color: #CD202B;
+			box-shadow: 0 8px 32px #223b7922;
+			border: 1.5px solid #CD202B;
+			transform: scale(1.04);
 		}
 
 		.note {
 			text-align: center;
-			margin-top: 20px;
-			font-size: 16px;
-			color: #666666;
+			margin-top: 18px;
+			font-size: 15px;
+			color: #8692A6;
 		}
 
 		.checkbox-container {
 			display: flex;
 			align-items: center;
-			margin-top: 20px;
-			justify-content: flex-start;
+			gap: 10px;
+			margin-bottom: 10px;
+			margin-top: 0;
 		}
 
 		.checkbox-container label {
 			text-align: left;
-			font-size: 16px;
-			color: #312E49;
+			font-size: 15px;
+			color: #223B79;
+			font-weight: 400;
+			margin: 0;
 		}
 
-		.checkbox-container input {
-			margin-right: 10px;
+		.checkbox-container input[type="checkbox"] {
+			width: 18px;
+			height: 18px;
+			accent-color: #223B79;
+			margin: 0;
 		}
 
 		header {
 			text-align: center;
-			margin-bottom: 40px;
+			margin-bottom: 28px;
+			margin-top: 32px;
 		}
 
 		header img {
-			height: 40px;
+			height: 44px;
 			cursor: pointer;
 			vertical-align: middle;
 			margin-right: 18px;
+			border-radius: 12px;
+			box-shadow: 0 2px 8px #223b7922;
+			background: #fff;
+			padding: 4px;
 		}
 
 		header h1 {
 			display: inline;
 			vertical-align: middle;
 			color: #223B79;
-			font-size: 36px;
+			font-size: 32px;
+			font-weight: 900;
 			margin: 0;
+			letter-spacing: 2px;
+			text-shadow: 0 2px 12px #223b7922;
+		}
+
+		@media (max-width: 600px) {
+			.container {
+				padding: 18px 6vw;
+				max-width: 98vw;
+			}
+			header h1 {
+				font-size: 22px;
+			}
+			h2 {
+				font-size: 1.2em;
+			}
+		}
+
+		@keyframes fadeIn {
+			from { opacity: 0; transform: translateY(30px);}
+			to { opacity: 1; transform: translateY(0);}
 		}
 	</style>
 </head>
 <body>
-	<header>
-		<img src="images/a3.jpg" alt="Logo" onclick="window.location.href='HomePage.html'">
-		<h1>THE COW</h1>
-	</header>
 	<div class="container">
 		<h2>Đăng Ký Admin</h2>
 		<form>

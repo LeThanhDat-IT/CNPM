@@ -5,39 +5,58 @@
     <meta charset="UTF-8">
     <title>THE COW HOTEL</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #f5f5f5;
+            font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
         }
 
         .topbar {
-            background: #fff;
-            border-bottom: 1px solid #eee;
+            background: rgba(255, 255, 255, 0.92);
+            border-bottom: 1.5px solid #c3cfe2;
+            box-shadow: 0 4px 18px #223b7922;
+            backdrop-filter: blur(8px);
+            border-radius: 0 0 18px 18px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: fadeIn 1s;
+            padding: 0;
+            min-height: unset;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1250px;
             margin: 0 auto;
+            padding: 0 18px;
         }
 
         header {
-            background: #fff;
+            background: transparent;
         }
 
         .logo {
             float: left;
-            padding: 24px 0 18px 0;
+            padding: 14px 0 10px 0;
             font-size: 2em;
-            font-weight: bold;
+            font-weight: 900;
             color: #223B79;
             letter-spacing: 2px;
+            text-shadow: 0 2px 8px #223b7944, 0 1px 0 #fff;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(90deg, #223B79 60%, #CD202B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         nav {
             float: right;
-            margin-top: 32px;
+            margin-top: 16px;
         }
 
         nav ul {
@@ -54,17 +73,23 @@
         nav ul li a {
             text-decoration: none;
             color: #223B79;
-            font-weight: 500;
+            font-weight: 700;
             font-size: 17px;
-            transition: color 0.2s;
-            padding: 10px 16px;
-            border-radius: 8px;
-            margin-right: 6px;
+            transition: color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.2s;
+            padding: 8px 16px;
+            border-radius: 12px;
+            margin-right: 4px;
+            box-shadow: 0 1px 6px #223b7911;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1.5px solid transparent;
         }
 
         nav ul li a:hover {
-            color: #CD202B;
-            background: #f1f5f9;
+            color: #fff;
+            background: linear-gradient(90deg, #223B79 60%, #CD202B 100%);
+            box-shadow: 0 6px 24px #223b7922;
+            border: 1.5px solid #CD202B;
+            transform: translateY(-2px) scale(1.06);
         }
 
         .clearfix::after {
@@ -74,143 +99,225 @@
         }
 
         .slider {
-            background: #fff;
-            margin-top: 18px;
-            border-radius: 8px;
-            box-shadow: 0 2px 12px #223b7911;
-            padding: 18px;
+            background: rgba(255, 255, 255, 0.82);
+            margin-top: 32px;
+            border-radius: 32px;
+            box-shadow: 0 12px 48px #223b7922, 0 0 0 4px #fff;
+            padding: 32px 32px 18px 32px;
             position: relative;
+            overflow: hidden;
+            min-height: 420px;
+            animation: fadeIn 1.2s;
         }
 
         .slider-img {
             width: 100%;
-            max-height: 340px;
+            max-height: 370px;
             object-fit: cover;
-            border-radius: 6px;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px #223b7922;
+            transition: transform 0.7s cubic-bezier(.4, 2, .6, 1), opacity 0.7s;
+            border: 3px solid #fff;
         }
 
         .slider-caption {
             text-align: center;
-            margin-top: 18px;
+            margin-top: 22px;
+            animation: fadeIn 1s;
         }
 
         .slider-caption h2 {
             color: #CD202B;
-            font-size: 1.7em;
-            margin-bottom: 8px;
+            font-size: 2.3em;
+            margin-bottom: 10px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 12px #223b7922;
         }
 
         .slider-caption p {
-            color: #444;
-            font-size: 1.1em;
+            color: #223B79;
+            font-size: 1.25em;
+            font-weight: 600;
+            text-shadow: 0 1px 0 #fff;
         }
 
         .slider-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: none;
+            background: linear-gradient(135deg, #223B79 60%, #CD202B 100%);
             color: #fff;
             border: none;
-            font-size: 2em;
-            padding: 0 16px;
+            font-size: 2.3em;
+            padding: 0 22px;
             border-radius: 50%;
             cursor: pointer;
             z-index: 2;
-            transition: background 0.2s;
+            box-shadow: 0 4px 18px #223b7922;
+            transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+            border: 2px solid #fff;
         }
 
         .slider-btn.left {
-            left: 10px;
+            left: 18px;
         }
 
         .slider-btn.right {
-            right: 10px;
+            right: 18px;
         }
 
         .slider-btn:hover {
-            background: #CD202B;
+            background: #fff;
+            color: #CD202B;
+            box-shadow: 0 8px 32px #223b7922;
+            transform: scale(1.13);
+        }
+
+        .slider-dot {
+            box-shadow: 0 2px 8px #223b7922;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        #sliderDots span.slider-dot {
+            border: 2px solid #223B79;
+            background: #fff;
+            width: 16px;
+            height: 16px;
+            margin: 0 7px;
+            display: inline-block;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s, border 0.3s, transform 0.2s;
+        }
+
+        #sliderDots span.slider-dot[data-idx].active,
+        #sliderDots span.slider-dot[data-idx]:hover {
+            background: linear-gradient(90deg, #223B79 60%, #CD202B 100%);
+            border: 2px solid #CD202B;
+            transform: scale(1.2);
         }
 
         .rooms-section {
-            background: #fff;
-            margin: 32px 0 0 0;
-            border-radius: 8px;
-            box-shadow: 0 2px 12px #223b7911;
-            padding: 28px 18px;
+            background: rgba(255, 255, 255, 0.92);
+            margin: 48px 0 0 0;
+            border-radius: 32px;
+            box-shadow: 0 12px 48px #223b7922;
+            padding: 48px 22px;
+            animation: fadeIn 1.2s;
         }
 
         .rooms-list {
             display: flex;
-            gap: 24px;
+            gap: 38px;
             justify-content: center;
             flex-wrap: wrap;
         }
 
         .room-card {
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px #223b7911;
-            width: 320px;
+            background: rgba(255, 255, 255, 0.82);
+            border-radius: 22px;
+            box-shadow: 0 8px 32px #223b7922;
+            width: 360px;
             overflow: hidden;
+            transition: transform 0.25s, box-shadow 0.25s;
+            backdrop-filter: blur(4px);
+            border: 2px solid #e0e7ef;
+            position: relative;
+        }
+
+        .room-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 22px;
+            pointer-events: none;
+            background: linear-gradient(120deg, #223B79 0%, #CD202B 100%);
+            opacity: 0.08;
+            z-index: 0;
+        }
+
+        .room-card:hover {
+            transform: translateY(-12px) scale(1.04);
+            box-shadow: 0 18px 48px #223b7944;
+            border: 2.5px solid #CD202B;
         }
 
         .room-card img {
             width: 100%;
-            height: 180px;
+            height: 210px;
             object-fit: cover;
+            border-radius: 22px 22px 0 0;
+            box-shadow: 0 4px 16px #223b7922;
         }
 
         .room-info {
-            padding: 16px 14px 12px 14px;
+            padding: 22px 18px 18px 18px;
+            position: relative;
+            z-index: 1;
         }
 
         .room-info h3 {
-            margin: 0 0 8px 0;
+            margin: 0 0 10px 0;
             color: #223B79;
+            font-weight: 900;
+            font-size: 1.3em;
         }
 
         .room-info ul {
             padding-left: 18px;
-            margin: 0 0 10px 0;
+            margin: 0 0 12px 0;
             color: #444;
-            font-size: 15px;
+            font-size: 16px;
         }
 
         .room-info .price {
             color: #CD202B;
             font-weight: bold;
-            font-size: 1.1em;
+            font-size: 1.18em;
             margin-bottom: 10px;
+            letter-spacing: 1px;
         }
 
         .room-info button {
-            background: #223B79;
+            background: linear-gradient(90deg, #223B79 60%, #CD202B 100%);
             color: #fff;
             border: none;
-            border-radius: 4px;
-            padding: 8px 18px;
+            border-radius: 8px;
+            padding: 12px 28px;
             font-weight: bold;
+            font-size: 1.08em;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+            box-shadow: 0 2px 12px #223b7922;
+            margin-top: 8px;
         }
 
         .room-info button:hover {
-            background: #CD202B;
+            background: #fff;
+            color: #CD202B;
+            box-shadow: 0 6px 24px #223b7922;
+            transform: scale(1.07);
+            border: 1.5px solid #CD202B;
         }
 
         .main-content {
             display: flex;
-            gap: 24px;
-            margin: 32px 0;
+            gap: 38px;
+            margin: 48px 0;
         }
 
         .welcome,
         .special-offer {
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px #223b7911;
-            padding: 22px 18px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 22px;
+            box-shadow: 0 8px 32px #223b7922;
+            padding: 38px 28px;
+            backdrop-filter: blur(4px);
+            animation: fadeIn 1.3s;
         }
 
         .welcome {
@@ -223,38 +330,51 @@
 
         .welcome img {
             width: 100%;
-            border-radius: 6px;
-            margin-bottom: 14px;
+            border-radius: 14px;
+            margin-bottom: 22px;
+            box-shadow: 0 4px 18px #223b7922;
         }
 
         .welcome h2 {
             color: #223B79;
-            margin-bottom: 10px;
+            margin-bottom: 16px;
+            font-weight: 900;
+            font-size: 2em;
+            letter-spacing: 1px;
         }
 
         .special-offer h3 {
             color: #CD202B;
-            margin-bottom: 10px;
+            margin-bottom: 18px;
+            font-weight: 900;
+            font-size: 1.3em;
         }
 
         .special-offer .offer-box {
-            background: #f9f9f9;
-            border-radius: 6px;
-            padding: 10px 12px;
-            margin-bottom: 12px;
-            font-size: 15px;
+            background: rgba(205, 32, 43, 0.09);
+            border-radius: 12px;
+            padding: 18px 18px;
+            margin-bottom: 18px;
+            font-size: 16.5px;
+            box-shadow: 0 2px 12px #223b7911;
+            border-left: 4px solid #CD202B;
+            font-weight: 600;
         }
 
         footer {
-            background: #223B79;
+            background: linear-gradient(90deg, #223B79 60%, #CD202B 100%);
             color: #fff;
             text-align: center;
-            padding: 18px 0 10px 0;
-            font-size: 16px;
-            margin-top: 30px;
+            padding: 28px 0 16px 0;
+            font-size: 19px;
+            margin-top: 48px;
+            border-radius: 28px 28px 0 0;
+            box-shadow: 0 -4px 24px #223b7922;
+            letter-spacing: 1px;
+            font-weight: 600;
         }
 
-        @media (max-width: 1000px) {
+        @media (max-width: 1100px) {
             .container {
                 max-width: 98vw;
             }
@@ -307,6 +427,37 @@
                 transform: translateY(40px);
             }
         }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Glassmorphism for modal */
+        #roomModalContent {
+            background: rgba(255, 255, 255, 0.92) !important;
+            box-shadow: 0 12px 48px #223b7933;
+            backdrop-filter: blur(12px);
+            border: 2.5px solid #e0e7ef;
+            border-radius: 18px;
+        }
+
+        #closeModal {
+            transition: color 0.2s, transform 0.2s;
+            font-weight: bold;
+        }
+
+        #closeModal:hover {
+            color: #CD202B;
+            transform: scale(1.2) rotate(10deg);
+        }
     </style>
     <script>
         const banners = [{
@@ -334,12 +485,12 @@
             if (!sliderDots) return;
             let html = '';
             for (let i = 0; i < banners.length; i++) {
-                html += `<span class="slider-dot" data-idx="${i}" style="display:inline-block; width:14px; height:14px; margin:0 5px; border-radius:50%; background:${i===current?'#223B79':'#bbb'}; cursor:pointer; transition:background 0.2s;"></span>`;
+                html += `<span class="slider-dot" data-idx="${i}" style="display:inline-block; width:14px; height:14px; margin:0 5px; border-radius:50%; background:${i === current ? '#223B79' : '#bbb'}; cursor:pointer; transition:background 0.2s;"></span>`;
             }
             sliderDots.innerHTML = html;
             // Gán sự kiện click cho từng dot
             Array.from(sliderDots.children).forEach(dot => {
-                dot.onclick = function() {
+                dot.onclick = function () {
                     current = parseInt(this.getAttribute('data-idx'));
                     showBanner(current);
                     resetSliderInterval();
@@ -392,7 +543,7 @@
     </script>
     <script>
         // Hiển thị tài khoản trên menu nếu đã đăng nhập
-        window.addEventListener('DOMContentLoaded', function() {
+        window.addEventListener('DOMContentLoaded', function () {
             const username = localStorage.getItem('username');
             const adminUsername = localStorage.getItem('adminUsername');
             const loginMenu = document.getElementById('loginMenu');
@@ -410,10 +561,10 @@
                 if (welcomeUser) {
                     welcomeUser.style.display = 'none';
                 }
-                setTimeout(function() {
+                setTimeout(function () {
                     const logoutBtn = document.getElementById('logoutBtn');
                     if (logoutBtn) {
-                        logoutBtn.onclick = function(e) {
+                        logoutBtn.onclick = function (e) {
                             e.preventDefault();
                             localStorage.removeItem('adminUsername');
                             location.reload();
@@ -431,10 +582,10 @@
                 if (welcomeUser) {
                     welcomeUser.style.display = 'none';
                 }
-                setTimeout(function() {
+                setTimeout(function () {
                     const logoutBtn = document.getElementById('logoutBtn');
                     if (logoutBtn) {
-                        logoutBtn.onclick = function(e) {
+                        logoutBtn.onclick = function (e) {
                             e.preventDefault();
                             localStorage.removeItem('username');
                             location.reload();
@@ -456,39 +607,39 @@
         });
     </script>
     <script>
-// Ẩn/hiện menu theo quyền
-document.addEventListener('DOMContentLoaded', function() {
-    // Lấy quyền từ localStorage
-    const isAdmin = !!localStorage.getItem('adminUsername');
-    // Các mục menu
-    const menuItems = {
-        quanLyPhong: document.querySelector('a[href="QuanLyPhong.html"]')?.parentElement,
-        quanLyKhachHang: document.querySelector('a[href="QuanLyKhachHang.html"]')?.parentElement,
-        quanLyTaiKhoan: document.querySelector('a[href="quanly_tk.html"]')?.parentElement,
-        thongKeThuNhap: document.querySelector('a[href="ThongKeThuNhap.html"]')?.parentElement,
-        lichSuDatPhong: document.querySelector('a[href="LichSuDatPhong.html"]')?.parentElement,
-        datPhong: document.querySelector('a[href="TIm_kiemphong.html"]')?.parentElement,
-    };
+        // Ẩn/hiện menu theo quyền
+        document.addEventListener('DOMContentLoaded', function () {
+            // Lấy quyền từ localStorage
+            const isAdmin = !!localStorage.getItem('adminUsername');
+            // Các mục menu
+            const menuItems = {
+                quanLyPhong: document.querySelector('a[href="QuanLyPhong.html"]')?.parentElement,
+                quanLyKhachHang: document.querySelector('a[href="QuanLyKhachHang.html"]')?.parentElement,
+                quanLyTaiKhoan: document.querySelector('a[href="quanly_tk.html"]')?.parentElement,
+                thongKeThuNhap: document.querySelector('a[href="ThongKeThuNhap.html"]')?.parentElement,
+                lichSuDatPhong: document.querySelector('a[href="LichSuDatPhong.html"]')?.parentElement,
+                datPhong: document.querySelector('a[href="TIm_kiemphong.html"]')?.parentElement,
+            };
 
-    if (isAdmin) {
-        // Admin: hiện các mục quản lý, ẩn đặt phòng & lịch sử đặt phòng
-        if (menuItems.quanLyPhong) menuItems.quanLyPhong.style.display = '';
-        if (menuItems.quanLyKhachHang) menuItems.quanLyKhachHang.style.display = '';
-        if (menuItems.quanLyTaiKhoan) menuItems.quanLyTaiKhoan.style.display = '';
-        if (menuItems.thongKeThuNhap) menuItems.thongKeThuNhap.style.display = '';
-        if (menuItems.lichSuDatPhong) menuItems.lichSuDatPhong.style.display = 'none';
-        if (menuItems.datPhong) menuItems.datPhong.style.display = 'none';
-    } else {
-        // User: ẩn các mục quản lý, hiện đặt phòng & lịch sử đặt phòng
-        if (menuItems.quanLyPhong) menuItems.quanLyPhong.style.display = 'none';
-        if (menuItems.quanLyKhachHang) menuItems.quanLyKhachHang.style.display = 'none';
-        if (menuItems.quanLyTaiKhoan) menuItems.quanLyTaiKhoan.style.display = 'none';
-        if (menuItems.thongKeThuNhap) menuItems.thongKeThuNhap.style.display = 'none';
-        if (menuItems.lichSuDatPhong) menuItems.lichSuDatPhong.style.display = '';
-        if (menuItems.datPhong) menuItems.datPhong.style.display = '';
-    }
-});
-</script>
+            if (isAdmin) {
+                // Admin: hiện các mục quản lý, ẩn đặt phòng & lịch sử đặt phòng
+                if (menuItems.quanLyPhong) menuItems.quanLyPhong.style.display = '';
+                if (menuItems.quanLyKhachHang) menuItems.quanLyKhachHang.style.display = '';
+                if (menuItems.quanLyTaiKhoan) menuItems.quanLyTaiKhoan.style.display = '';
+                if (menuItems.thongKeThuNhap) menuItems.thongKeThuNhap.style.display = '';
+                if (menuItems.lichSuDatPhong) menuItems.lichSuDatPhong.style.display = 'none';
+                if (menuItems.datPhong) menuItems.datPhong.style.display = 'none';
+            } else {
+                // User: ẩn các mục quản lý, hiện đặt phòng & lịch sử đặt phòng
+                if (menuItems.quanLyPhong) menuItems.quanLyPhong.style.display = 'none';
+                if (menuItems.quanLyKhachHang) menuItems.quanLyKhachHang.style.display = 'none';
+                if (menuItems.quanLyTaiKhoan) menuItems.quanLyTaiKhoan.style.display = 'none';
+                if (menuItems.thongKeThuNhap) menuItems.thongKeThuNhap.style.display = 'none';
+                if (menuItems.lichSuDatPhong) menuItems.lichSuDatPhong.style.display = '';
+                if (menuItems.datPhong) menuItems.datPhong.style.display = '';
+            }
+        });
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
@@ -653,11 +804,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Đóng modal khi click ra ngoài hoặc click nút đóng
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const modal = document.getElementById('roomModal');
             const content = document.getElementById('roomModalContent');
             document.getElementById('closeModal').onclick = closeRoomModal;
-            modal.onclick = function(e) {
+            modal.onclick = function (e) {
                 if (e.target === modal) closeRoomModal();
             };
             function closeRoomModal() {

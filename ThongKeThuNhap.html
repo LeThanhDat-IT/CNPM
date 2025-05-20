@@ -160,7 +160,7 @@
         <option>Theo quý</option>
         <option>Theo năm</option>
       </select>
-      <input type="date" id="filter-date" value="2025-05-16">
+      <input type="date" id="filter-date">
       <button id="stats-btn"><i class="fa-solid fa-chart-simple"></i> Thống kê</button>
     </div>
     <table id="income-table">
@@ -175,47 +175,69 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>R001</td>
-          <td>Phòng gia đình</td>
-          <td>DV011</td>
-          <td>Đưa đón sân bay bằng xe máy</td>
-          <td>16-05-2025</td>
-          <td>650,000</td>
-        </tr>
-        <tr>
-          <td>R002</td>
-          <td>Phòng đôi cao cấp</td>
-          <td>DV002</td>
-          <td>Bữa sáng buffet</td>
-          <td>16-05-2025</td>
-          <td>1,200,000</td>
-        </tr>
-        <tr>
-          <td>R003</td>
-          <td>Phòng mini</td>
-          <td>DV005</td>
-          <td>Giặt là</td>
-          <td>16-05-2025</td>
-          <td>200,000</td>
-        </tr>
-        <tr class="total-row">
-          <td colspan="5" style="text-align:right;">Tổng doanh thu:</td>
-          <td id="total-revenue">2,050,000 đ</td>
-        </tr>
+        <!-- Dữ liệu sẽ được render bằng JS -->
       </tbody>
     </table>
     <button class="report-btn" id="report-btn"><i class="fa-solid fa-file-arrow-down"></i> Xuất báo cáo</button>
   </div>
   <script>
-    document.getElementById('stats-btn').addEventListener('click', function() {
-      const filterType = document.getElementById('filter-type').value;
-      const filterDate = document.getElementById('filter-date').value;
-      alert(`Thống kê theo ${filterType} cho ngày ${filterDate}`);
+function formatCurrency(num) {
+  return Number(num).toLocaleString('vi-VN') + ' đ';
+}
+
+function renderTable(data) {
+  const tbody = document.querySelector("#income-table tbody");
+  tbody.innerHTML = "";
+  let total = 0;
+  if (!data || data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6">Không có dữ liệu</td></tr>`;
+  } else {
+    data.forEach(row => {
+      total += Number(row.total);
+      tbody.innerHTML += `
+        <tr>
+          <td>${row.roomId}</td>
+          <td>${row.roomName}</td>
+          <td>${row.serviceId || '-'}</td>
+          <td>${row.serviceName || '-'}</td>
+          <td>${row.date ? row.date.split('-').reverse().join('-') : ''}</td>
+          <td>${formatCurrency(row.total)}</td>
+        </tr>
+      `;
     });
-    document.getElementById('report-btn').addEventListener('click', function() {
-      alert('Xuất báo cáo thành công!');
-    });
+  }
+  tbody.innerHTML += `
+    <tr class="total-row">
+      <td colspan="5" style="text-align:right;">Tổng doanh thu:</td>
+      <td id="total-revenue">${formatCurrency(total)}</td>
+    </tr>
+  `;
+}
+
+async function fetchIncome() {
+  const filterType = document.getElementById('filter-type').value;
+  const filterDate = document.getElementById('filter-date').value;
+  if (!filterDate) {
+    renderTable([]);
+    return;
+  }
+  // Thêm tham số t để tránh cache
+  const res = await fetch(`PHP/get_income.php?type=${encodeURIComponent(filterType)}&date=${encodeURIComponent(filterDate)}&t=${Date.now()}`);
+  const data = await res.json();
+  renderTable(data);
+}
+
+document.getElementById('stats-btn').addEventListener('click', fetchIncome);
+window.addEventListener('DOMContentLoaded', () => {
+  // Đặt mặc định ngày hôm nay cho input date
+  const today = new Date().toISOString().slice(0, 10);
+  document.getElementById('filter-date').value = today;
+  fetchIncome();
+});
+
+document.getElementById('report-btn').addEventListener('click', function() {
+  window.print();
+});
   </script>
 </body>
 </html>

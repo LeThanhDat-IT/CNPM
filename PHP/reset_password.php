@@ -1,45 +1,45 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
-header('Content-Type: application/json');
 require_once 'connect.php';
 
-$token = $_POST['token'] ?? '';
-$password = $_POST['password'] ?? '';
-$confirm = $_POST['confirm_password'] ?? '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $code = trim($_POST['code'] ?? '');
+    $password = $_POST['password'] ?? '';
+    $confirm_password = $_POST['confirm_password'] ?? '';
 
-if (!$token || !$password || !$confirm) {
-    echo json_encode(['success' => false, 'message' => 'Thiếu thông tin.']);
-    exit;
-}
+    if (!$code || !$password || !$confirm_password) {
+        die('Vui lòng nhập đầy đủ thông tin.');
+    }
+    if ($password !== $confirm_password) {
+        die('Mật khẩu nhập lại không khớp.');
+    }
+    if (strlen($password) < 6) {
+        die('Mật khẩu phải có ít nhất 6 ký tự.');
+    }
 
-if ($password !== $confirm) {
-    echo json_encode(['success' => false, 'message' => 'Mật khẩu xác nhận không khớp.']);
-    exit;
-}
+    // Tìm user theo mã xác nhận
+    $stmt = $conn->prepare("SELECT email FROM users WHERE reset_code = ?");
+    $stmt->bind_param("s", $code);
+    $stmt->execute();
+    $stmt->store_result();
 
-// Kiểm tra token còn hạn không
-$stmt = $conn->prepare("SELECT id FROM users WHERE reset_token = ? AND reset_expires > NOW()");
-$stmt->bind_param("s", $token);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result->num_rows === 0) {
-    echo json_encode(['success' => false, 'message' => 'Liên kết không hợp lệ hoặc đã hết hạn.']);
-    exit;
-}
-
-$user = $result->fetch_assoc();
-$userId = $user['id'];
-$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-// Cập nhật mật khẩu mới và xoá token
-$stmt = $conn->prepare("UPDATE users SET password = ?, reset_token = NULL, reset_expires = NULL WHERE id = ?");
-$stmt->bind_param("si", $hashedPassword, $userId);
-if ($stmt->execute()) {
-    echo json_encode(['success' => true, 'message' => 'Mật khẩu đã được cập nhật thành công.']);
+    if ($stmt->num_rows === 1) {
+        $stmt->bind_result($email);
+        $stmt->fetch();
+        $hashed = password_hash($password, PASSWORD_BCRYPT);
+        $update = $conn->prepare("UPDATE users SET password = ?, reset_code = NULL WHERE reset_code = ?");
+        $update->bind_param("ss", $hashed, $code);
+        if ($update->execute()) {
+            echo "Đặt lại mật khẩu thành công! <a href='../dangnhap.html'>Đăng nhập</a>";
+        } else {
+            echo "Có lỗi xảy ra khi cập nhật mật khẩu.";
+        }
+        $update->close();
+    } else {
+        echo "Mã xác nhận không đúng hoặc đã hết hạn.";
+    }
+    $stmt->close();
+    $conn->close();
 } else {
-    echo json_encode(['success' => false, 'message' => 'Có lỗi xảy ra khi đặt mật khẩu mới.']);
+    echo "Phương thức không hợp lệ.";
 }
 ?>
