@@ -311,13 +311,13 @@
     function payNow() {
       if (!currentBooking) return;
       const methodRadio = document.querySelector('input[name="paymethod"]:checked');
-      const method = methodRadio ? methodRadio.nextSibling.textContent.trim() : '';
+      const method = methodRadio ? methodRadio.value : '';
       const total = getTotalAmount(currentBooking);
       showResultPage(currentBooking, total, method);
       fetch('PHP/update_paid.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'bookingCode=' + encodeURIComponent(currentBooking.bookingCode)
+        body: 'bookingCode=' + encodeURIComponent(currentBooking.bookingCode) + '&payMethod=' + encodeURIComponent(method)
       });
       setTimeout(() => {
         window.location.href = 'ThanhToanThanhCong.html';
@@ -327,6 +327,15 @@
       if (!currentBooking) return;
       const total = getTotalAmount(currentBooking);
       showResultPage(currentBooking, total, 'Thanh toán tại khách sạn');
+      // Gửi thông tin phương thức thanh toán lên server (nếu cần lưu)
+      fetch('PHP/update_paid.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'bookingCode=' + encodeURIComponent(currentBooking.bookingCode) + '&payMethod=pay_at_hotel'
+      });
+      setTimeout(() => {
+        //window.location.href = 'ThanhToanThanhCong.html';
+      }, 1000);
     }
 
     const roomCode = currentBooking.room; // mã phòng

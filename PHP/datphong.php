@@ -2,6 +2,12 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 require_once 'connect.php';
+require_once '../PHPMailer/src/Exception.php';
+require_once '../PHPMailer/src/PHPMailer.php';
+require_once '../PHPMailer/src/SMTP.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 header('Content-Type: application/json');
 
@@ -58,6 +64,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt4->bind_param("ii", $tong_tien, $last_id);
         $stmt4->execute();
         $stmt4->close();
+
+        // --- Bỏ phần gửi email xác nhận đặt phòng ở đây ---
 
         echo json_encode(['success' => true, 'message' => 'Đặt phòng thành công!', 'bookingCode' => $bookingCode]);
     } else {
