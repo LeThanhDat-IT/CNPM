@@ -212,6 +212,120 @@
             table { font-size: 0.95em; }
             th, td { padding: 12px 6px; }
         }
+        .custom-file-label {
+    display: inline-block;
+    background: #e4a11b;
+    color: #fff;
+    padding: 10px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+    margin-top: 2px;
+    margin-bottom: 4px;
+    box-shadow: 0 2px 8px #0001;
+}
+.custom-file-label:hover {
+    background: #c98f0b;
+}
+.custom-file-label input[type="file"] {
+    display: none;
+}
+.custom-file-mini {
+    display: inline-flex;
+    align-items: center;
+    background: #f5f5f5;
+    color: #e4a11b;
+    border: 1.5px solid #e4a11b;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    font-size: 1.2em;
+    margin-right: 10px;
+    box-shadow: 0 2px 8px #0001;
+    position: relative;
+}
+.custom-file-mini:hover {
+    background: #fffbe6;
+    color: #c98f0b;
+    border-color: #c98f0b;
+}
+.custom-file-mini input[type="file"] {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0; top: 0;
+    cursor: pointer;
+}
+#fileLabelText {
+    pointer-events: none;
+}
+.file-name-text {
+    font-size: 0.98em;
+    color: #223b79;
+    margin-left: 2px;
+    font-style: italic;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+}
+.form-group.capacity-group {
+    max-width: 110px;
+    min-width: 90px;
+    flex: 0 0 110px;
+    margin-right: 0;
+}
+#capacity {
+    width: 100%;
+    min-width: 0;
+    padding: 8px 8px;
+    border-radius: 8px;
+    border: 1.5px solid #e4a11b;
+    background: #fffbe6;
+    font-size: 1em;
+    text-align: center;
+    transition: border 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 4px #e4a11b22;
+}
+#capacity:focus {
+    border: 2px solid #c98f0b;
+    outline: none;
+    background: #fffde6;
+}
+.form-group.capacity-group label {
+    margin-bottom: 4px;
+    font-size: 0.98em;
+    color: #223b79;
+    font-weight: 600;
+    text-align: center;
+    display: block;
+}
+.form-row > div[style*="display: flex"] .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+.form-row > div[style*="display: flex"] label {
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #223b79;
+    width: 100%;
+    text-align: center;
+}
+.form-row > div[style*="display: flex"] input[type="text"],
+.form-row > div[style*="display: flex"] input[type="number"] {
+    width: 100%;
+    min-width: 0;
+    text-align: center;
+}
     </style>
 </head>
 <body>
@@ -268,23 +382,29 @@
                 <label for="bed-type">Loại giường</label>
                 <input type="text" id="bed-type" placeholder="VD: 1 giường đôi">
             </div>
-            <div class="form-group">
+            <div class="form-group" style="flex:2;">
                 <label for="amenities">Tiện nghi</label>
                 <input type="text" id="amenities" placeholder="VD: Wifi, TV, Điều hòa">
             </div>
-            <div class="form-group">
-                <label for="area">Diện tích</label>
-                <input type="text" id="area" placeholder="VD: 25m²">
-            </div>
-            <div class="form-group">
-                <label for="hinhAnh">Chọn ảnh</label>
-                <input type="file" id="hinhAnhFile" accept="image/*">
-                <input type="hidden" id="hinhAnh" name="hinhAnh">
-                <img id="previewImage" src="" alt="Preview" style="display:none;max-width:120px;margin-top:8px;border-radius:8px;">
-            </div>
-            <div class="form-group">
-                <label for="capacity">Sức chứa</label>
-                <input type="number" id="capacity" min="1" placeholder="VD: 2">
+            <div style="display: flex; gap: 16px; flex:3;">
+                <div class="form-group" style="flex:1; min-width:120px;">
+                    <label for="area" style="text-align:center; width:100%;">Diện tích</label>
+                    <input type="text" id="area" placeholder="VD: 25m²" style="text-align:center;">
+                </div>
+                <div class="form-group" style="flex:1; min-width:90px; max-width:110px; align-items:center;">
+                    <label for="hinhAnh" style="text-align:center; width:100%;">Chọn ảnh</label>
+                    <label class="custom-file-mini" style="margin:auto;">
+                        <input type="file" id="hinhAnhFile" accept="image/*">
+                        <span id="fileLabelText"><i class="fa fa-image"></i></span>
+                    </label>
+                    <span id="fileNameText" class="file-name-text"></span>
+                    <input type="hidden" id="hinhAnh" name="hinhAnh">
+                    <img id="previewImage" src="" alt="Preview" style="display:none;max-width:90px;margin:8px auto 0 auto;border-radius:8px;">
+                </div>
+                <div class="form-group capacity-group" style="flex:1; min-width:120px;">
+                    <label for="capacity" style="text-align:center; width:100%;">Sức chứa</label>
+                    <input type="number" id="capacity" min="1" placeholder="VD: 2" style="text-align:center;">
+                </div>
             </div>
         </div>
         <div class="form-actions">
@@ -348,7 +468,7 @@
         tbody.innerHTML = '';
         list.forEach(room => {
             const row = document.createElement('tr');
-            const capacity = room.sucChua ? `${room.sucChua} người` : 'Chưa cập nhật'; // Sửa lại dòng này
+            const capacity = room.sucChua ? `${room.sucChua} người` : 'Chưa cập nhật';
             row.innerHTML = `
                 <td>${room.maPhong}</td>
                 <td>${room.tenPhong}</td>
@@ -359,7 +479,7 @@
                 <td>${room.tienNghi || ''}</td>
                 <td>${room.dienTich || ''}</td>
                 <td>${room.hinhAnh ? `<img src="${room.hinhAnh}" alt="" style="width:48px;height:32px;object-fit:cover;border-radius:6px;">` : ''}</td>
-                <td>${capacity}</td> <!-- Cập nhật cột Sức chứa -->
+                <td>${capacity}</td>
             `;
             row.onclick = () => {
                 document.getElementById('maPhong').value = room.maPhong;
@@ -372,6 +492,19 @@
                 document.getElementById('area').value = room.dienTich || '';
                 document.getElementById('hinhAnh').value = room.hinhAnh || '';
                 document.getElementById('capacity').value = room.sucChua || '';
+
+                // Hiện ảnh preview nếu có
+                const preview = document.getElementById('previewImage');
+                if (room.hinhAnh) {
+                    preview.src = room.hinhAnh;
+                    preview.style.display = 'block';
+                } else {
+                    preview.src = '';
+                    preview.style.display = 'none';
+                }
+
+                // Reset tên file về "No file chosen"
+                document.getElementById('fileNameText').textContent = 'No file chosen';
             };
             tbody.appendChild(row);
         });
@@ -531,7 +664,9 @@
     document.getElementById('hinhAnhFile').addEventListener('change', async function() {
     const file = this.files[0];
     const preview = document.getElementById('previewImage');
+    const fileNameText = document.getElementById('fileNameText');
     if (file) {
+        fileNameText.textContent = file.name;
         // Hiển thị ảnh preview
         const reader = new FileReader();
         reader.onload = function(e) {
@@ -540,6 +675,7 @@
         };
         reader.readAsDataURL(file);
     } else {
+        fileNameText.textContent = 'No file chosen';
         preview.src = '';
         preview.style.display = 'none';
     }
