@@ -2,29 +2,7 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
-DROP TABLE IF EXISTS `bookings`;
-CREATE TABLE IF NOT EXISTS `bookings` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `room` varchar(100) NOT NULL,
-  `fullname` varchar(100) NOT NULL,
-  `phone` varchar(20) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `checkin` date NOT NULL,
-  `total` int DEFAULT 0,
-  `checkout` date NOT NULL,
-  `time` datetime NOT NULL,
-  `bookingCode` varchar(20) UNIQUE,
-  `TrangThaiThanhToan` tinyint(1) DEFAULT 0,
-  `TrangThaiTraPhong` tinyint DEFAULT 0,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
---
--- Cấu trúc bảng cho bảng `users`
---
-
+-- Bảng người dùng
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -42,11 +20,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
--- --------------------------------------------------------
---
--- Cấu trúc bảng cho bảng QuanLyKhachhang
---
 
+-- Bảng khách hàng
 DROP TABLE IF EXISTS `QuanLyKhachhang`;
 CREATE TABLE IF NOT EXISTS `QuanLyKhachhang` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -61,13 +36,7 @@ CREATE TABLE IF NOT EXISTS `QuanLyKhachhang` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Đang đổ dữ liệu cho bảng QuanLyKhachhang
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng QuanLyPhong
---
-
+-- Bảng phòng
 DROP TABLE IF EXISTS `QuanLyPhong`;
 CREATE TABLE IF NOT EXISTS `QuanLyPhong` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -76,19 +45,42 @@ CREATE TABLE IF NOT EXISTS `QuanLyPhong` (
   `kieuPhong` varchar(10) NOT NULL,
   `giaPhong` int NOT NULL,
   `tinhTrang` varchar(10) NOT NULL,
-  `hinhAnh` varchar(255) DEFAULT NULL,
   `loaiGiuong` varchar(100) DEFAULT NULL,
   `tienNghi` text DEFAULT NULL,
   `dienTich` varchar(50) DEFAULT NULL,
+  `hinhAnh` varchar(255) DEFAULT NULL,
+  `sucChua` int DEFAULT 1,
   PRIMARY KEY (`id`),
   UNIQUE KEY `maPhong` (`maPhong`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Đang đổ dữ liệu cho bảng QuanLyPhong
--- --------------------------------------------------------
---
--- Cấu trúc bảng cho bảng password_resets
---
+-- Bảng đặt phòng
+DROP TABLE IF EXISTS `bookings`;
+CREATE TABLE IF NOT EXISTS `bookings` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `room` varchar(100) NOT NULL,
+  `fullname` varchar(100) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `checkin` date NOT NULL,
+  `checkout` date NOT NULL,
+  `total` int DEFAULT 0,
+  `time` datetime NOT NULL,
+  `bookingCode` varchar(20) UNIQUE,
+  `TrangThaiThanhToan` tinyint(1) DEFAULT 0,
+  `TrangThaiTraPhong` tinyint DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Bảng reset mật khẩu (nếu cần)
+DROP TABLE IF EXISTS `password_resets`;
+CREATE TABLE IF NOT EXISTS `password_resets` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 COMMIT;
 
