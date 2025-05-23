@@ -11,6 +11,8 @@ $hinhAnh = isset($data['hinhAnh']) ? $data['hinhAnh'] : null;
 $bedType = isset($data['bedType']) ? $data['bedType'] : null;
 $amenities = isset($data['amenities']) ? $data['amenities'] : null;
 $area = isset($data['area']) ? $data['area'] : null;
+// Lấy thêm trường sức chứa
+$sucChua = isset($data['sucChua']) ? intval($data['sucChua']) : 2;
 
 // Lấy mã phòng lớn nhất hiện tại
 $sql = "SELECT maPhong FROM quanlyphong ORDER BY maPhong DESC LIMIT 1";
@@ -25,8 +27,10 @@ if ($result && $row = $result->fetch_assoc()) {
 }
 
 // Thêm phòng mới với đầy đủ thông tin
-$stmt = $conn->prepare("INSERT INTO quanlyphong (maPhong, tenPhong, kieuPhong, giaPhong, tinhTrang, hinhAnh, loaiGiuong, tienNghi, dienTich) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("sssdissss", $newCode, $name, $type, $price, $status, $hinhAnh, $bedType, $amenities, $area);
+$sql = "INSERT INTO quanlyphong (maPhong, tenPhong, kieuPhong, giaPhong, tinhTrang, hinhAnh, loaiGiuong, tienNghi, dienTich, sucChua)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("sssdissssi", $newCode, $name, $type, $price, $status, $hinhAnh, $bedType, $amenities, $area, $sucChua);
 $ok = $stmt->execute();
 $stmt->close();
 $conn->close();

@@ -2,846 +2,465 @@
 <html lang="vi">
 
 <head>
-    <meta charset="UTF-8">
-    <title>THE COW HOTEL</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        .topbar {
-            background: rgba(255, 255, 255, 0.92);
-            border-bottom: 1.5px solid #c3cfe2;
-            box-shadow: 0 4px 18px #223b7922;
-            backdrop-filter: blur(8px);
-            border-radius: 0 0 18px 18px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            animation: fadeIn 1s;
-            padding: 0;
-            min-height: unset;
-        }
-
-        .container {
-            max-width: 1250px;
-            margin: 0 auto;
-            padding: 0 18px;
-        }
-
-        header {
-            background: transparent;
-        }
-
-        .logo {
-            float: left;
-            padding: 14px 0 10px 0;
-            font-size: 2em;
-            font-weight: 900;
-            color: #223B79;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 8px #223b7944, 0 1px 0 #fff;
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(90deg, #223B79 60%, #CD202B 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        nav {
-            float: right;
-            margin-top: 16px;
-        }
-
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        nav ul li {
-            display: inline-block;
-            margin: 10px 18px 10px 0;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: #223B79;
-            font-weight: 700;
-            font-size: 17px;
-            transition: color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.2s;
-            padding: 8px 16px;
-            border-radius: 12px;
-            margin-right: 4px;
-            box-shadow: 0 1px 6px #223b7911;
-            background: rgba(255, 255, 255, 0.6);
-            border: 1.5px solid transparent;
-        }
-
-        nav ul li a:hover {
-            color: #fff;
-            background: linear-gradient(90deg, #223B79 60%, #CD202B 100%);
-            box-shadow: 0 6px 24px #223b7922;
-            border: 1.5px solid #CD202B;
-            transform: translateY(-2px) scale(1.06);
-        }
-
-        .clearfix::after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-
-        .slider {
-            background: rgba(255, 255, 255, 0.82);
-            margin-top: 32px;
-            border-radius: 32px;
-            box-shadow: 0 12px 48px #223b7922, 0 0 0 4px #fff;
-            padding: 32px 32px 18px 32px;
-            position: relative;
-            overflow: hidden;
-            min-height: 420px;
-            animation: fadeIn 1.2s;
-        }
-
-        .slider-img {
-            width: 100%;
-            max-height: 370px;
-            object-fit: cover;
-            border-radius: 18px;
-            box-shadow: 0 8px 32px #223b7922;
-            transition: transform 0.7s cubic-bezier(.4, 2, .6, 1), opacity 0.7s;
-            border: 3px solid #fff;
-        }
-
-        .slider-caption {
-            text-align: center;
-            margin-top: 22px;
-            animation: fadeIn 1s;
-        }
-
-        .slider-caption h2 {
-            color: #CD202B;
-            font-size: 2.3em;
-            margin-bottom: 10px;
-            font-weight: 900;
-            letter-spacing: 1.5px;
-            text-shadow: 0 2px 12px #223b7922;
-        }
-
-        .slider-caption p {
-            color: #223B79;
-            font-size: 1.25em;
-            font-weight: 600;
-            text-shadow: 0 1px 0 #fff;
-        }
-
-        .slider-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: linear-gradient(135deg, #223B79 60%, #CD202B 100%);
-            color: #fff;
-            border: none;
-            font-size: 2.3em;
-            padding: 0 22px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 2;
-            box-shadow: 0 4px 18px #223b7922;
-            transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
-            border: 2px solid #fff;
-        }
-
-        .slider-btn.left {
-            left: 18px;
-        }
-
-        .slider-btn.right {
-            right: 18px;
-        }
-
-        .slider-btn:hover {
-            background: #fff;
-            color: #CD202B;
-            box-shadow: 0 8px 32px #223b7922;
-            transform: scale(1.13);
-        }
-
-        .slider-dot {
-            box-shadow: 0 2px 8px #223b7922;
-            transition: background 0.3s, transform 0.2s;
-        }
-
-        #sliderDots span.slider-dot {
-            border: 2px solid #223B79;
-            background: #fff;
-            width: 16px;
-            height: 16px;
-            margin: 0 7px;
-            display: inline-block;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background 0.3s, border 0.3s, transform 0.2s;
-        }
-
-        #sliderDots span.slider-dot[data-idx].active,
-        #sliderDots span.slider-dot[data-idx]:hover {
-            background: linear-gradient(90deg, #223B79 60%, #CD202B 100%);
-            border: 2px solid #CD202B;
-            transform: scale(1.2);
-        }
-
-        .rooms-section {
-            background: rgba(255, 255, 255, 0.92);
-            margin: 48px 0 0 0;
-            border-radius: 32px;
-            box-shadow: 0 12px 48px #223b7922;
-            padding: 48px 22px;
-            animation: fadeIn 1.2s;
-        }
-
-        .rooms-list {
-            display: flex;
-            gap: 38px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .room-card {
-            background: rgba(255, 255, 255, 0.82);
-            border-radius: 22px;
-            box-shadow: 0 8px 32px #223b7922;
-            width: 360px;
-            overflow: hidden;
-            transition: transform 0.25s, box-shadow 0.25s;
-            backdrop-filter: blur(4px);
-            border: 2px solid #e0e7ef;
-            position: relative;
-        }
-
-        .room-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 22px;
-            pointer-events: none;
-            background: linear-gradient(120deg, #223B79 0%, #CD202B 100%);
-            opacity: 0.08;
-            z-index: 0;
-        }
-
-        .room-card:hover {
-            transform: translateY(-12px) scale(1.04);
-            box-shadow: 0 18px 48px #223b7944;
-            border: 2.5px solid #CD202B;
-        }
-
-        .room-card img {
-            width: 100%;
-            height: 210px;
-            object-fit: cover;
-            border-radius: 22px 22px 0 0;
-            box-shadow: 0 4px 16px #223b7922;
-        }
-
-        .room-info {
-            padding: 22px 18px 18px 18px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .room-info h3 {
-            margin: 0 0 10px 0;
-            color: #223B79;
-            font-weight: 900;
-            font-size: 1.3em;
-        }
-
-        .room-info ul {
-            padding-left: 18px;
-            margin: 0 0 12px 0;
-            color: #444;
-            font-size: 16px;
-        }
-
-        .room-info .price {
-            color: #CD202B;
-            font-weight: bold;
-            font-size: 1.18em;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-        }
-
-        .room-info button {
-            background: linear-gradient(90deg, #223B79 60%, #CD202B 100%);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 28px;
-            font-weight: bold;
-            font-size: 1.08em;
-            cursor: pointer;
-            transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
-            box-shadow: 0 2px 12px #223b7922;
-            margin-top: 8px;
-        }
-
-        .room-info button:hover {
-            background: #fff;
-            color: #CD202B;
-            box-shadow: 0 6px 24px #223b7922;
-            transform: scale(1.07);
-            border: 1.5px solid #CD202B;
-        }
-
-        .main-content {
-            display: flex;
-            gap: 38px;
-            margin: 48px 0;
-        }
-
-        .welcome,
-        .special-offer {
-            background: rgba(255, 255, 255, 0.85);
-            border-radius: 22px;
-            box-shadow: 0 8px 32px #223b7922;
-            padding: 38px 28px;
-            backdrop-filter: blur(4px);
-            animation: fadeIn 1.3s;
-        }
-
-        .welcome {
-            flex: 2;
-        }
-
-        .special-offer {
-            flex: 1;
-        }
-
-        .welcome img {
-            width: 100%;
-            border-radius: 14px;
-            margin-bottom: 22px;
-            box-shadow: 0 4px 18px #223b7922;
-        }
-
-        .welcome h2 {
-            color: #223B79;
-            margin-bottom: 16px;
-            font-weight: 900;
-            font-size: 2em;
-            letter-spacing: 1px;
-        }
-
-        .special-offer h3 {
-            color: #CD202B;
-            margin-bottom: 18px;
-            font-weight: 900;
-            font-size: 1.3em;
-        }
-
-        .special-offer .offer-box {
-            background: rgba(205, 32, 43, 0.09);
-            border-radius: 12px;
-            padding: 18px 18px;
-            margin-bottom: 18px;
-            font-size: 16.5px;
-            box-shadow: 0 2px 12px #223b7911;
-            border-left: 4px solid #CD202B;
-            font-weight: 600;
-        }
-
-        footer {
-            background: linear-gradient(90deg, #223B79 60%, #CD202B 100%);
-            color: #fff;
-            text-align: center;
-            padding: 28px 0 16px 0;
-            font-size: 19px;
-            margin-top: 48px;
-            border-radius: 28px 28px 0 0;
-            box-shadow: 0 -4px 24px #223b7922;
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
-
-        @media (max-width: 1100px) {
-            .container {
-                max-width: 98vw;
-            }
-
-            .rooms-list,
-            .main-content {
-                flex-direction: column;
-            }
-
-            .room-card {
-                width: 100%;
-            }
-        }
-
-        .slider-img,
-        .slider-caption {
-            transition: opacity 0.7s;
-        }
-
-        .slider.fade-out .slider-img,
-        .slider.fade-out .slider-caption {
-            opacity: 0;
-        }
-
-        .slider.fade-in .slider-img,
-        .slider.fade-in .slider-caption {
-            opacity: 1;
-        }
-
-        @keyframes fadeInModal {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeOutModal {
-            from {
-                opacity: 1;
-                transform: translateY(0);
-            }
-
-            to {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Glassmorphism for modal */
-        #roomModalContent {
-            background: rgba(255, 255, 255, 0.92) !important;
-            box-shadow: 0 12px 48px #223b7933;
-            backdrop-filter: blur(12px);
-            border: 2.5px solid #e0e7ef;
-            border-radius: 18px;
-        }
-
-        #closeModal {
-            transition: color 0.2s, transform 0.2s;
-            font-weight: bold;
-        }
-
-        #closeModal:hover {
-            color: #CD202B;
-            transform: scale(1.2) rotate(10deg);
-        }
-
-        .room-modal-btn {
-            background: linear-gradient(90deg, #223B79 60%, #CD202B 100%);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 28px;
-            font-weight: bold;
-            font-size: 1.08em;
-            cursor: pointer;
-            transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
-            box-shadow: 0 2px 12px #223b7922;
-            margin-top: 8px;
-        }
-
-        .room-modal-btn:hover {
-            background: #fff;
-            color: #CD202B;
-            box-shadow: 0 6px 24px #223b7922;
-            transform: scale(1.07);
-            border: 1.5px solid #CD202B;
-        }
-    </style>
-    <script>
-        const banners = [{
-                img: "images/phong_caocap.webp",
-                title: "Thiên Đường Thật Sự Trong Tầm Mắt",
-                desc: "Trải nghiệm nghỉ dưỡng đẳng cấp, dịch vụ tận tâm, giá cả hợp lý.<br>THE COW HOTEL - Nơi bạn luôn được chào đón như người thân trong gia đình!"
-            },
-            {
-                img: "images/phong_doi.webp",
-                title: "Không Gian Sang Trọng & Hiện Đại",
-                desc: "Phòng nghỉ tiện nghi, view đẹp, dịch vụ chuyên nghiệp.<br>Đặt phòng ngay để nhận ưu đãi hấp dẫn!"
-            },
-            {
-                img: "images/phong_don.webp",
-                title: "Ưu Đãi Đặc Biệt Mùa Hè",
-                desc: "Giảm giá lên đến 20% cho khách đặt phòng sớm.<br>Liên hệ ngay để biết thêm chi tiết!"
-            }
-        ];
-
-        let current = 0;
-        let sliderInterval;
-
-        function renderSliderDots() {
-            const sliderDots = document.getElementById('sliderDots');
-            if (!sliderDots) return;
-            let html = '';
-            for (let i = 0; i < banners.length; i++) {
-                html += `<span class="slider-dot" data-idx="${i}" style="display:inline-block; width:14px; height:14px; margin:0 5px; border-radius:50%; background:${i === current ? '#223B79' : '#bbb'}; cursor:pointer; transition:background 0.2s;"></span>`;
-            }
-            sliderDots.innerHTML = html;
-            // Gán sự kiện click cho từng dot
-            Array.from(sliderDots.children).forEach(dot => {
-                dot.onclick = function () {
-                    current = parseInt(this.getAttribute('data-idx'));
-                    showBanner(current);
-                    resetSliderInterval();
-                };
-            });
-        }
-
-        // Sửa showBanner để cập nhật dot
-        function showBanner(idx) {
-            const slider = document.getElementById('slider');
-            const img = document.getElementById('sliderImg');
-            const caption = document.getElementById('sliderCaption');
-            slider.classList.remove('fade-in');
-            slider.classList.add('fade-out');
-            setTimeout(() => {
-                img.src = banners[idx].img;
-                caption.innerHTML = `<h2>${banners[idx].title}</h2><p>${banners[idx].desc}</p>`;
-                slider.classList.remove('fade-out');
-                slider.classList.add('fade-in');
-                renderSliderDots();
-            }, 400);
-        }
-
-        function nextBanner() {
-            current = (current + 1) % banners.length;
-            showBanner(current);
-            resetSliderInterval();
-        }
-
-        function prevBanner() {
-            current = (current - 1 + banners.length) % banners.length;
-            showBanner(current);
-            resetSliderInterval();
-        }
-
-        function resetSliderInterval() {
-            clearInterval(sliderInterval);
-            sliderInterval = setInterval(() => {
-                nextBanner();
-            }, 4000);
-        }
-
-        window.onload = () => {
-            showBanner(0);
-            sliderInterval = setInterval(() => {
-                nextBanner();
-            }, 4000);
-            renderSliderDots();
-        };
-    </script>
-    <script>
-        // Hiển thị tài khoản trên menu nếu đã đăng nhập
-        window.addEventListener('DOMContentLoaded', function () {
-            const username = localStorage.getItem('username');
-            const adminUsername = localStorage.getItem('adminUsername');
-            const loginMenu = document.getElementById('loginMenu');
-            const registerMenu = document.getElementById('registerMenu');
-            const userMenu = document.getElementById('userMenu');
-            const welcomeUser = document.getElementById('welcomeUser');
-            if (adminUsername && adminUsername !== 'null' && adminUsername !== 'undefined') {
-                // Nếu là admin
-                if (loginMenu) loginMenu.style.display = 'none';
-                if (registerMenu) registerMenu.style.display = 'none';
-                if (userMenu) {
-                    userMenu.style.display = 'inline-block';
-                    userMenu.innerHTML = `<span style='color:#223B79;font-weight:500;font-size:17px;'><i class='fa fa-user-shield'></i> Admin: ${adminUsername}</span> <a href='#' id='logoutBtn' style='color:#CD202B; margin-left:10px; font-size:15px;'>Đăng xuất</a>`;
-                }
-                if (welcomeUser) {
-                    welcomeUser.style.display = 'none';
-                }
-                setTimeout(function () {
-                    const logoutBtn = document.getElementById('logoutBtn');
-                    if (logoutBtn) {
-                        logoutBtn.onclick = function (e) {
-                            e.preventDefault();
-                            localStorage.removeItem('adminUsername');
-                            location.reload();
-                        };
-                    }
-                }, 100);
-            } else if (username && username !== 'null' && username !== 'undefined') {
-                // Nếu là user thường
-                if (loginMenu) loginMenu.style.display = 'none';
-                if (registerMenu) registerMenu.style.display = 'none';
-                if (userMenu) {
-                    userMenu.style.display = 'inline-block';
-                    userMenu.innerHTML = `<span style='color:#223B79;font-weight:500;font-size:17px;'><i class='fa fa-user'></i> ${username}</span> <a href='#' id='logoutBtn' style='color:#CD202B; margin-left:10px; font-size:15px;'>Đăng xuất</a>`;
-                }
-                if (welcomeUser) {
-                    welcomeUser.style.display = 'none';
-                }
-                setTimeout(function () {
-                    const logoutBtn = document.getElementById('logoutBtn');
-                    if (logoutBtn) {
-                        logoutBtn.onclick = function (e) {
-                            e.preventDefault();
-                            localStorage.removeItem('username');
-                            location.reload();
-                        };
-                    }
-                }, 100);
-            } else {
-                if (loginMenu) loginMenu.style.display = 'inline-block';
-                if (registerMenu) registerMenu.style.display = 'inline-block';
-                if (userMenu) {
-                    userMenu.style.display = 'none';
-                    userMenu.innerHTML = '';
-                }
-                if (welcomeUser) {
-                    welcomeUser.style.display = '';
-                    welcomeUser.textContent = '';
-                }
-            }
-        });
-    </script>
-    <script>
-        // Ẩn/hiện menu theo quyền
-        document.addEventListener('DOMContentLoaded', function () {
-            // Lấy quyền từ localStorage
-            const isAdmin = !!localStorage.getItem('adminUsername');
-            // Các mục menu
-            const menuItems = {
-                quanLyPhong: document.querySelector('a[href="QuanLyPhong.html"]')?.parentElement,
-                quanLyKhachHang: document.querySelector('a[href="QuanLyKhachHang.html"]')?.parentElement,
-                quanLyTaiKhoan: document.querySelector('a[href="quanly_tk.html"]')?.parentElement,
-                thongKeThuNhap: document.querySelector('a[href="ThongKeThuNhap.html"]')?.parentElement,
-                lichSuDatPhong: document.querySelector('a[href="LichSuDatPhong.html"]')?.parentElement,
-                datPhong: document.querySelector('a[href="TIm_kiemphong.html"]')?.parentElement,
-            };
-
-            if (isAdmin) {
-                // Admin: hiện các mục quản lý, ẩn đặt phòng & lịch sử đặt phòng
-                if (menuItems.quanLyPhong) menuItems.quanLyPhong.style.display = '';
-                if (menuItems.quanLyKhachHang) menuItems.quanLyKhachHang.style.display = '';
-                if (menuItems.quanLyTaiKhoan) menuItems.quanLyTaiKhoan.style.display = '';
-                if (menuItems.thongKeThuNhap) menuItems.thongKeThuNhap.style.display = '';
-                if (menuItems.lichSuDatPhong) menuItems.lichSuDatPhong.style.display = 'none';
-                if (menuItems.datPhong) menuItems.datPhong.style.display = 'none';
-            } else {
-                // User: ẩn các mục quản lý, hiện đặt phòng & lịch sử đặt phòng
-                if (menuItems.quanLyPhong) menuItems.quanLyPhong.style.display = 'none';
-                if (menuItems.quanLyKhachHang) menuItems.quanLyKhachHang.style.display = 'none';
-                if (menuItems.quanLyTaiKhoan) menuItems.quanLyTaiKhoan.style.display = 'none';
-                if (menuItems.thongKeThuNhap) menuItems.thongKeThuNhap.style.display = 'none';
-                if (menuItems.lichSuDatPhong) menuItems.lichSuDatPhong.style.display = '';
-                if (menuItems.datPhong) menuItems.datPhong.style.display = '';
-            }
-        });
-    </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <title>THE COW HOTEL</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: #f5f5f5;
+      transition: transform 0.5s cubic-bezier(.4, 0, .2, 1), opacity 0.5s cubic-bezier(.4, 0, .2, 1);
+    }
+
+
+    .topbar {
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 40px;
+      border-bottom: 1px solid #ddd;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .topbar .logo {
+      font-size: 22px;
+      font-weight: 700;
+      color: #333;
+    }
+
+    .topbar nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .topbar nav ul li a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .topbar nav ul li a:hover {
+      color: #e4a11b;
+    }
+
+    .book-btn {
+      background-color: #e4a11b;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .book-btn:hover {
+      background-color: #c98f0b;
+    }
+
+    .hero {
+      background: url('images/phong_caocap.webp') center center/cover no-repeat;
+      height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      position: relative;
+      transition: background-image 0.8s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+    }
+
+    .hero-content h1 {
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .hero-content p {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .hero-content .book-btn {
+      font-size: 16px;
+    }
+
+    .section {
+      max-width: 1100px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
+    .section h2 {
+      text-align: center;
+      color: #333;
+      font-size: 32px;
+      margin-bottom: 30px;
+    }
+
+    .room-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: center;
+    }
+
+    .room-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      width: 320px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .room-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .room-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .room-info {
+      padding: 16px;
+    }
+
+    .room-info h3 {
+      margin: 0 0 8px;
+      color: #333;
+    }
+
+    .room-info ul {
+      padding-left: 18px;
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .room-info .price {
+      color: #e4a11b;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .room-info button {
+      background-color: #e4a11b;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .room-info button:hover {
+      background-color: #c98f0b;
+    }
+
+    .offers {
+      background-color: #fffbe6;
+      padding: 40px;
+      border-radius: 12px;
+      margin-top: 60px;
+    }
+
+    .offers .offer-box {
+      border-left: 4px solid #e4a11b;
+      padding-left: 16px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      color: #444;
+    }
+
+    #roomModal {
+      display: flex;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.4);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    #roomModal.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #roomModalContent {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 420px;
+      width: 90vw;
+      position: relative;
+      transform: translateY(-30px) scale(0.98);
+      opacity: 0;
+      transition: transform 0.35s cubic-bezier(.4, 0, .2, 1), opacity 0.35s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    #roomModal.show #roomModalContent {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 16px;
+      margin-top: 60px;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="topbar">
-        <div class="container clearfix">
-            <div class="logo">THE COW HOTEL</div>
-            <nav>
-                <ul>
-                    <li><a href="HomePage.html">Home</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#rooms">Rooms & Rates</a></li>
-                    <li><a href="#contact">Liên Hệ</a></li>
-                    <li><a href="TIm_kiemphong.html">Đặt Phòng</a></li>
-                    <li><a href="QuanLyPhong.html">Quản lý phòng</a></li>
-                    <li><a href="QuanLyKhachHang.html">Quản lý khách hàng</a></li>
-                    <li><a href="quanly_tk.html">Quản lý tài khoản</a></li>
-                    <li><a href="LichSuDatPhong.html">Lịch sử đặt phòng</a></li>
-                    <li><a href="ThongKeThuNhap.html">Thống kê thu nhập</a></li>
-                    <li id="registerMenu"><a href="dangky_visitor.html">Đăng ký</a></li> <!-- Thêm dòng này -->
-                    <li id="loginMenu"><a href="dangnhap.html">Đăng nhập</a></li>
-                    <li id="userMenu" style="display:none;"></li>
-                </ul>
-            </nav>
-        </div>
+  <div class="topbar">
+    <div class="logo">THE COW HOTEL</div>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#rooms">Rooms</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div id="user-action">
+      <!-- Sẽ được thay đổi bằng JS -->
     </div>
-    <div id="welcomeUser" style="display:none;text-align:center; font-size:20px; color:#223B79; font-weight:bold; margin:18px 0 0 0;"></div>
-    <div class="container">
-        <div class="slider" id="slider">
-            <img class="slider-img" id="sliderImg" src="images/banner1.jpg" alt="Hotel Banner">
-            <div class="slider-caption" id="sliderCaption">
-                <h2>Thiên Đường Thật Sự Trong Tầm Mắt</h2>
-                <p>Trải nghiệm nghỉ dưỡng đẳng cấp, dịch vụ tận tâm, giá cả hợp lý.<br>
-                THE COW HOTEL - Nơi bạn luôn được chào đón như người thân trong gia đình!</p>
-            </div>
-            <div id="sliderDots" style="text-align:center; margin-top:16px;"></div>
-        </div>
+  </div>
 
-        <div class="rooms-section" id="rooms">
-            <div class="rooms-list" id="home-rooms-list">
-                <!-- Danh sách phòng sẽ được render ở đây -->
-            </div>
-        </div>
-
-        <div class="main-content">
-            <div class="welcome" id="about">
-                <img src="images/a3.jpg" alt="Hotel Overview">
-                <h2>WELCOME TO THE COW HOTEL</h2>
-                <p>
-                    THE COW HOTEL là khách sạn đạt chuẩn quốc tế, tọa lạc ngay trung tâm thành phố với hơn 10 năm kinh nghiệm phục vụ khách hàng trong và ngoài nước. Chúng tôi tự hào mang đến không gian nghỉ dưỡng hiện đại, tiện nghi cùng đội ngũ nhân viên chuyên nghiệp, tận tâm.<br><br>
-                    Sứ mệnh của chúng tôi là mang lại cho quý khách trải nghiệm lưu trú tuyệt vời nhất với dịch vụ chất lượng, giá cả hợp lý và sự hài lòng tối đa. Hãy đến và cảm nhận sự khác biệt tại THE COW HOTEL – nơi bạn luôn được chào đón như người thân trong gia đình!
-                </p>
-            </div>
-            <div class="special-offer" id="offers">
-                <h3>Ưu đãi đặc biệt</h3>
-                <div class="offer-box">
-                    <b>Early Bird Booking</b><br>
-                    Đặt phòng sớm - nhận ưu đãi lên đến 20% cho kỳ nghỉ từ 1/6 đến 30/9!
-                </div>
-                <div class="offer-box">
-                    <b>Free Airport Pickup</b><br>
-                    Miễn phí đưa đón sân bay cho khách đặt phòng từ 3 đêm trở lên.
-                </div>
-                <div class="offer-box">
-                    <b>Buffet sáng miễn phí</b><br>
-                    Tận hưởng bữa sáng buffet đa dạng, hấp dẫn mỗi ngày.
-                </div>
-            </div>
-        </div>
+  <section class="hero">
+    <div class="hero-content">
+      <p>SERVING TRAVELERS ON A BUDGET</p>
+      <h1>WE PROVIDE COMFORTABLE ACCOMMODATION FOR YOU</h1>
+      <button class="book-btn" onclick="window.location.href='TIm_kiemphong.html'">BOOK NOW</button>
     </div>
-    <footer id="contact">
-        &copy; 2025 THE COW HOTEL | Địa chỉ: 180 Đường Cao Lỗ, Quận 8, TP.HCM | Hotline: 0123 456 789<br>
-        Email: info@thecowhotel.vn
-    </footer>
+  </section>
 
-    <!-- Modal hiển thị thông tin phòng -->
-    <div id="roomModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); align-items:center; justify-content:center;">
-        <div id="roomModalContent" style="background:#fff; border-radius:10px; max-width:420px; width:90vw; padding:28px 22px; box-shadow:0 8px 32px #223b7933; position:relative; animation:fadeInModal 0.4s;">
-            <span id="closeModal" style="position:absolute; top:12px; right:18px; font-size:22px; color:#223B79; cursor:pointer;">&times;</span>
-            <div id="roomDetail"></div>
-        </div>
+  <div class="section" id="rooms">
+    <h2>Our Rooms</h2>
+    <div class="room-list" id="home-rooms-list"></div>
+  </div>
+
+  <div class="section">
+    <h2>Special Offers</h2>
+    <div class="offers">
+      <div class="offer-box">
+        <strong>Early Bird Booking:</strong> Đặt phòng sớm - nhận ưu đãi lên đến 20% cho kỳ nghỉ từ 1/6 đến 30/9!
+      </div>
+      <div class="offer-box">
+        <strong>Free Airport Pickup:</strong> Miễn phí đưa đón sân bay cho khách đặt phòng từ 3 đêm trở lên.
+      </div>
+      <div class="offer-box">
+        <strong>Buffet sáng miễn phí:</strong> Tận hưởng bữa sáng buffet đa dạng, hấp dẫn mỗi ngày.
+      </div>
     </div>
+  </div>
 
-    <script>
-        async function fetchHomeRooms() {
-            try {
-                const res = await fetch('PHP/get_phong.php');
-                const data = await res.json();
-                renderHomeRooms(data);
-                window._homeRoomsData = data; // Lưu lại để dùng khi show chi tiết
-            } catch (e) {
-                document.getElementById('home-rooms-list').innerHTML = '<p style="color:#d10000;">Không thể tải danh sách phòng!</p>';
-            }
-        }
+  <footer id="contact">
+    &copy; 2025 THE COW HOTEL | Địa chỉ: 180 Đường Cao Lỗ, Quận 8, TP.HCM | Hotline: 0123 456 789<br>
+    Email: info@thecowhotel.vn
+  </footer>
 
-        function renderHomeRooms(rooms) {
-            const container = document.getElementById('home-rooms-list');
-            container.innerHTML = '';
-            if (!rooms || rooms.length === 0) {
-                container.innerHTML = '<p style="color:#d10000;">Không có phòng nào.</p>';
-                return;
-            }
-            rooms.slice(0, 3).forEach(room => {
-                const img = room.hinhAnh && room.hinhAnh.trim() !== '' ? room.hinhAnh : 'images/default-room.jpg';
-                const bedType = room.loaiGiuong || 'Chưa cập nhật';
-                const area = room.dienTich || 'Chưa cập nhật';
-                const price = Number(room.giaPhong).toLocaleString() + ' đ/đêm';
-                const name = room.tenPhong;
-                const code = room.maPhong;
-                const amenities = room.tienNghi || 'Chưa cập nhật';
-                const status = room.tinhTrang == 1 ? 'Còn trống' : (room.tinhTrang == 0 ? 'Đã thuê' : 'Bảo trì');
-                container.innerHTML += `
-                    <div class="room-card" data-room-id="${code}" style="cursor:pointer;">
-                        <img src="${img}" alt="${name}">
-                        <div class="room-info">
-                            <h3>${name}</h3>
-                            <ul>
-                                <li>Loại giường: ${bedType}</li>
-                                <li>Diện tích: ${area}</li>
-                            </ul>
-                            <div class="price">${price}</div>
-                            <button onclick="event.stopPropagation();bookRoomHome('${code}', '${name.replace(/'/g,"\\'")}')">Đặt phòng</button>
-                        </div>
-                    </div>
-                `;
-            });
+  <!-- Modal chi tiết phòng -->
+  <div id="roomModal">
+    <div id="roomModalContent">
+      <span id="closeModal">&times;</span>
+      <div id="roomDetail"></div>
+    </div>
+  </div>
 
-            // Thêm sự kiện click cho từng room-card để mở modal chi tiết
-            document.querySelectorAll('.room-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    const roomId = this.getAttribute('data-room-id');
-                    showRoomDetail(roomId);
-                });
-            });
-        }
+  <script>
+    async function fetchHomeRooms() {
+      try {
+        const res = await fetch('PHP/get_phong.php');
+        const data = await res.json();
+        renderHomeRooms(data);
+        window._homeRoomsData = data;
+      } catch (e) {
+        document.getElementById('home-rooms-list').innerHTML = '<p style="color:#d10000;">Không thể tải danh sách phòng!</p>';
+      }
+    }
 
-        // Hiển thị modal chi tiết phòng
-        function showRoomDetail(roomId) {
-            const rooms = window._homeRoomsData || [];
-            const room = rooms.find(r => r.maPhong == roomId);
-            if (!room) return;
-            const img = room.hinhAnh && room.hinhAnh.trim() !== '' ? room.hinhAnh : 'images/default-room.jpg';
-            const bedType = room.loaiGiuong || 'Chưa cập nhật';
-            const area = room.dienTich || 'Chưa cập nhật';
-            const price = Number(room.giaPhong).toLocaleString() + ' đ/đêm';
-            const name = room.tenPhong;
-            const amenities = room.tienNghi || 'Chưa cập nhật';
-            const status = room.tinhTrang == 1 ? 'Còn trống' : (room.tinhTrang == 0 ? 'Đã thuê' : 'Bảo trì');
-            document.getElementById('roomDetail').innerHTML = `
-                <img src="${img}" alt="${name}" style="width:100%;border-radius:10px;box-shadow:0 2px 12px #223b7922;margin-bottom:14px;">
-                <h2 style="color:#223B79;margin:0 0 8px 0;font-size:1.3em;">${name}</h2>
-                <div style="margin-bottom:8px;"><b>Giá:</b> <span style="color:#CD202B;font-weight:bold;">${price}</span></div>
-                <div style="margin-bottom:8px;"><b>Loại giường:</b> ${bedType}</div>
-                <div style="margin-bottom:8px;"><b>Diện tích:</b> ${area}</div>
-                <div style="margin-bottom:8px;"><b>Tiện nghi:</b> ${amenities}</div>
-                <div style="margin-bottom:8px;"><b>Tình trạng:</b> ${status}</div>
-                <button class="room-modal-btn" onclick="bookRoomHome('${room.maPhong}', '${name.replace(/'/g,"\\'")}')" style="margin-top:10px;">Đặt phòng</button>
-            `;
-            document.getElementById('roomModal').style.display = 'flex';
-        }
+    function renderHomeRooms(rooms) {
+      const container = document.getElementById('home-rooms-list');
+      container.innerHTML = '';
+      if (!rooms || rooms.length === 0) {
+        container.innerHTML = '<p style="color:#d10000;">Không có phòng nào.</p>';
+        return;
+      }
+      rooms.slice(0, 3).forEach(room => {
+        const img = room.hinhAnh && room.hinhAnh.trim() !== '' ? room.hinhAnh : 'images/default-room.jpg';
+        const bedType = room.loaiGiuong || 'Chưa cập nhật';
+        const area = room.dienTich || 'Chưa cập nhật';
+        const price = Number(room.giaPhong).toLocaleString() + ' đ/đêm';
+        const name = room.tenPhong;
+        const code = room.maPhong;
+        const capacity = room.sucChua ? `${room.sucChua} người` : 'Chưa cập nhật'; // Thêm dòng này
+        container.innerHTML += `
+          <div class="room-card" data-room-id="${code}">
+            <img src="${img}" alt="${name}">
+            <div class="room-info">
+              <h3>${name}</h3>
+              <ul>
+                <li>Loại giường: ${bedType}</li>
+                <li>Diện tích: ${area}</li>
+                <li>Sức chứa: ${capacity}</li> <!-- Thêm dòng này -->
+              </ul>
+              <div class="price">${price}</div>
+              <button onclick="event.stopPropagation();bookRoomHome('${code}', '${name.replace(/'/g,"\\'")}')">Đặt phòng</button>
+            </div>
+          </div>
+        `;
+      });
 
-        // Đóng modal khi bấm nút đóng
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('closeModal').onclick = function() {
-                document.getElementById('roomModal').style.display = 'none';
-            };
-            // Đóng modal khi click ra ngoài
-            document.getElementById('roomModal').onclick = function(e) {
-                if (e.target === this) this.style.display = 'none';
-            };
-            fetchHomeRooms();
+      document.querySelectorAll('.room-card').forEach(card => {
+        card.addEventListener('click', function () {
+          const roomId = this.getAttribute('data-room-id');
+          showRoomDetail(roomId);
         });
+      });
+    }
 
-        // Hàm đặt phòng từ trang chủ
-        function bookRoomHome(code, name) {
-            localStorage.setItem('selectedRoomCode', code);
-            localStorage.setItem('selectedRoomName', name);
-            window.location.href = 'DatPhong.html';
+    function showRoomDetail(roomId) {
+      const rooms = window._homeRoomsData || [];
+      const room = rooms.find(r => r.maPhong == roomId);
+      if (!room) return;
+      const img = room.hinhAnh && room.hinhAnh.trim() !== '' ? room.hinhAnh : 'images/default-room.jpg';
+      const bedType = room.loaiGiuong || 'Chưa cập nhật';
+      const area = room.dienTich || 'Chưa cập nhật';
+      const price = Number(room.giaPhong).toLocaleString() + ' đ/đêm';
+      const name = room.tenPhong;
+      const amenities = room.tienNghi || 'Chưa cập nhật';
+      const status = room.tinhTrang == 1 ? 'Còn trống' : (room.tinhTrang == 0 ? 'Đã thuê' : 'Bảo trì');
+      const capacity = room.sucChua ? `${room.sucChua} người` : 'Chưa cập nhật'; // Thêm dòng này
+      document.getElementById('roomDetail').innerHTML = `
+        <img src="${img}" alt="${name}" style="width:100%;border-radius:10px;margin-bottom:14px;">
+        <h2 style="color:#333;margin:0 0 8px 0;font-size:1.2em;">${name}</h2>
+        <div><b>Giá:</b> <span style="color:#e4a11b;font-weight:bold;">${price}</span></div>
+        <div><b>Loại giường:</b> ${bedType}</div>
+        <div><b>Diện tích:</b> ${area}</div>
+        <div><b>Sức chứa:</b> ${capacity}</div> <!-- Thêm dòng này -->
+        <div><b>Tiện nghi:</b> ${amenities}</div>
+        <div><b>Tình trạng:</b> ${status}</div>
+        <button class="book-btn" onclick="bookRoomHome('${room.maPhong}', '${name.replace(/'/g,"\\'")}')" style="margin-top:10px;">Đặt phòng</button>
+      `;
+      document.getElementById('roomModal').classList.add('show');
+    }
+
+    document.getElementById('closeModal').onclick = function () {
+      document.getElementById('roomModal').classList.remove('show');
+    };
+    document.getElementById('roomModal').onclick = function (e) {
+      if (e.target === this) this.classList.remove('show');
+    };
+
+    function bookRoomHome(code, name) {
+      localStorage.setItem('selectedRoomCode', code);
+      localStorage.setItem('selectedRoomName', name);
+      window.location.href = 'DatPhong.html';
+    }
+
+    fetchHomeRooms();
+  </script>
+  <script>
+    // Hero background slideshow
+    const heroImages = [
+      'images/phong_caocap.webp',
+      'images/phong_doi.webp',
+      'images/doi_2_giuong.jpg'
+    ];
+    let heroIndex = 0;
+    setInterval(() => {
+      heroIndex = (heroIndex + 1) % heroImages.length;
+      document.querySelector('.hero').style.backgroundImage = `url('${heroImages[heroIndex]}')`;
+    }, 4000);
+  </script>
+  <script>
+    function renderUserAction() {
+      const userAction = document.getElementById('user-action');
+      const username = localStorage.getItem('username');
+      const role = localStorage.getItem('role');
+      if (username) {
+        let adminLinks = '';
+        if (role === 'admin') {
+          adminLinks = `
+          <button class="book-btn" onclick="window.location.href='QuanLyKhachHang.html'" style="margin-right:8px;">Quản lý KH</button>
+          <button class="book-btn" onclick="window.location.href='QuanLyPhong.html'" style="margin-right:8px;">Quản lý Phòng</button>
+          <button class="book-btn" onclick="window.location.href='quanly_tk.html'" style="margin-right:8px;">Quản lý TK</button>
+          <button class="book-btn" onclick="window.location.href='ThongKeThuNhap.html'" style="margin-right:8px;">Thống kê</button>
+        `;
         }
-    </script>
+        userAction.innerHTML = `
+        <span style="font-weight:600;margin-right:16px;"><i class="fa fa-user"></i> ${username}</span>
+        ${adminLinks}
+        <button class="book-btn" onclick="window.location.href='TIm_kiemphong.html'">Book Now</button>
+        <button class="book-btn" onclick="logout()" style="margin-left:10px;background:#888;">Logout</button>
+      `;
+      } else {
+        userAction.innerHTML = `
+        <button class="book-btn" onclick="window.location.href='dangnhap.html'" style="margin-right:10px;">
+          <i class="fa fa-user"></i> Login
+        </button>
+        <button class="book-btn" onclick="window.location.href='TIm_kiemphong.html'">Book Now</button>
+      `;
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('username');
+      localStorage.removeItem('role');
+      localStorage.removeItem('user_email');
+      renderUserAction();
+    }
+
+    renderUserAction();
+
+
+    
+  </script>
+  
 </body>
 
 </html>
