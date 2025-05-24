@@ -2,6 +2,16 @@
 require_once 'connect.php';
 header('Content-Type: application/json; charset=utf-8');
 
+// Đồng bộ trạng thái phòng: nếu không còn booking nào đang thuê thì chuyển về "Còn trống"
+$conn->query("
+    UPDATE quanlyphong q
+    LEFT JOIN (
+        SELECT room FROM bookings WHERE TrangThaiThanhToan = 1
+    ) b ON q.maPhong = b.room
+    SET q.tinhTrang = 1
+    WHERE b.room IS NULL AND q.tinhTrang = 0
+");
+
 $sql = "SELECT maPhong, tenPhong, kieuPhong, giaPhong, tinhTrang, hinhAnh, loaiGiuong, tienNghi, dienTich, sucChua FROM quanlyphong ORDER BY maPhong ASC";
 $result = $conn->query($sql);
 

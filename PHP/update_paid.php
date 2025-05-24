@@ -9,19 +9,25 @@ require __DIR__ . '/../PHPMailer/src/PHPMailer.php';
 require __DIR__ . '/../PHPMailer/src/SMTP.php';
 
 $bookingCode = trim($_POST['bookingCode'] ?? '');
+$payMethod = $_POST['payMethod'] ?? '';
 
 if ($bookingCode === '') {
     echo json_encode(['success' => false, 'message' => 'Thiếu mã đặt phòng!']);
     exit;
 }
 
-$stmt = $conn->prepare("UPDATE bookings SET TrangThaiThanhToan = 1 WHERE bookingCode = ?");
-$stmt->bind_param('s', $bookingCode);
-$stmt->execute();
+// Nếu KHÔNG phải thanh toán tại khách sạn thì mới cập nhật đã thanh toán
+if ($payMethod !== 'pay_at_hotel') {
+    $stmt = $conn->prepare("UPDATE bookings SET TrangThaiThanhToan = 1 WHERE bookingCode = ?");
+    $stmt->bind_param('s', $bookingCode);
+    $stmt->execute();
+} else {
+    // Không cập nhật trạng thái thanh toán
+    $stmt = $conn->prepare("SELECT 1"); // Dummy query để giữ logic phía dưới không lỗi
+    $stmt->execute();
+}
 
-$payMethod = $_POST['payMethod'] ?? '';
-
-if ($stmt->affected_rows > 0) {
+if ($stmt->affected_rows > 0 || $payMethod === 'pay_at_hotel') {
     // Lấy thông tin booking để gửi mail
     $stmt2 = $conn->prepare("SELECT room, roomName, fullname, phone, email, checkin, checkout, total FROM bookings WHERE bookingCode = ?");
     $stmt2->bind_param('s', $bookingCode);

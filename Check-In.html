@@ -195,8 +195,9 @@
 
         const b = data.booking;
         msgDiv.textContent = '';
-        if (b.TrangThaiThanhToan != 1 && b.TrangThaiThanhToan != "1") {
-          // Hiển thị thông tin + nút thanh toán
+
+        // Nếu đã thanh toán
+        if (b.TrangThaiThanhToan == 1 || b.TrangThaiThanhToan == "1") {
           infoDiv.innerHTML = `
             <div class="info-row"><i class="fa-solid fa-bed"></i> <strong>Phòng:</strong> ${b.room}</div>
             <div class="info-row"><i class="fa-solid fa-user"></i> <strong>Tên khách:</strong> ${b.fullname}</div>
@@ -205,74 +206,39 @@
             <div class="info-row"><i class="fa-solid fa-calendar-check"></i> <strong>Nhận phòng:</strong> ${b.checkin}</div>
             <div class="info-row"><i class="fa-solid fa-calendar-xmark"></i> <strong>Trả phòng:</strong> ${b.checkout}</div>
             <div class="info-row"><i class="fa-solid fa-money-bill-wave"></i> <strong>Trạng thái thanh toán:</strong> 
-              <span class="unpaid">Chưa thanh toán</span>
+              <span class="paid">Đã thanh toán</span>
             </div>
-            <div style="margin:14px 0 8px 0;font-weight:600;"><i class="fa-solid fa-credit-card"></i> Chọn phương thức thanh toán:</div>
-            <div class="pay-methods" style="margin-bottom:10px;">
-              <label><input type="radio" name="paymethod" value="bank" checked> Chuyển khoản</label>
-              <label><input type="radio" name="paymethod" value="card"> Thẻ</label>
-            </div>
-            <div id="payMethodContent"></div>
-            <button id="payBtn" style="margin-top:10px;"><i class="fa-solid fa-money-check-dollar"></i> Thanh toán ngay</button>
+            <button id="checkinBtn" style="margin-top:14px;background:#2e7d32;color:#fff;font-weight:bold;padding:12px 0;border:none;border-radius:7px;width:100%;font-size:1.08em;cursor:pointer;">
+              <i class="fa-solid fa-door-open"></i> Check-in
+            </button>
+            <div id="checkinMsg" style="margin-top:10px;text-align:center;"></div>
           `;
-
-          // Hiển thị QR nếu chọn chuyển khoản
-          function renderPayMethod() {
-            const method = document.querySelector('input[name="paymethod"]:checked').value;
-            const payContent = document.getElementById('payMethodContent');
-            if (method === 'bank') {
-              const total = getTotalAmount(b);
-              const moneyStr = total.toLocaleString('vi-VN') + 'đ';
-              payContent.innerHTML = `
-                <div>
-                  <img src="https://img.vietqr.io/image/TPB-23402072004-compact2.png?amount=${total}&addInfo=THANHTOAN%20${b.bookingCode}" alt="QR chuyển khoản TPBank" style="width:180px;">
-                  <div style="margin-top:8px;">
-                    <strong>Số tiền:</strong> <span style="color:#2e7d32;font-weight:bold;">${moneyStr}</span>
-                  </div>
-                  <small>Quét mã QR để chuyển khoản<br>STK: 23402072004 - TPBank<br>Nội dung: THANHTOAN ${b.bookingCode}</small>
-                </div>
-              `;
-            } else {
-              payContent.innerHTML = `
-                <div>
-                  <input type="text" placeholder="Nhập số thẻ" style="padding:6px;width:160px;">
-                  <input type="text" placeholder="Tên chủ thẻ" style="padding:6px;width:120px;margin-left:8px;">
-                </div>
-              `;
-            }
-          }
-          renderPayMethod();
-          document.querySelectorAll('input[name="paymethod"]').forEach(radio => {
-            radio.onchange = renderPayMethod;
-          });
-
-          // Xử lý khi bấm nút thanh toán
-          document.getElementById('payBtn').onclick = function() {
-            fetch('PHP/update_payment.php', {
+          document.getElementById('checkinBtn').onclick = function() {
+            fetch('PHP/checkin_api.php', {
               method: 'POST',
               headers: {'Content-Type': 'application/json'},
-              body: JSON.stringify({ bookingCode: b.bookingCode })
+              body: JSON.stringify({ bookingCode: b.bookingCode, action: 'checkin' })
             })
             .then(res => res.json())
-            .then(result => {
-              if (result.success) {
-                msgDiv.textContent = 'Thanh toán thành công! Bạn có thể check-in.';
-                msgDiv.style.color = '#2e7d32';
-                infoDiv.innerHTML += `<div style="color:#2e7d32;font-weight:bold;margin-top:8px;text-align:center;"><i class="fa-solid fa-circle-check"></i> Bạn đã thanh toán thành công. Vui lòng làm thủ tục check-in!</div>`;
+            .then(data => {
+              if (data.success) {
+                document.getElementById('checkinMsg').innerHTML = `<span style="color:#2e7d32;font-weight:bold;"><i class="fa-solid fa-circle-check"></i> Check-in thành công!</span>`;
               } else {
-                msgDiv.textContent = result.message || 'Thanh toán thất bại!';
-                msgDiv.style.color = '#d32f2f';
+                document.getElementById('checkinMsg').innerHTML = `<span style="color:#d32f2f;font-weight:bold;">${data.message || 'Check-in thất bại!'}</span>`;
               }
             })
             .catch(() => {
-              msgDiv.textContent = 'Có lỗi khi cập nhật thanh toán!';
-              msgDiv.style.color = '#d32f2f';
+              document.getElementById('checkinMsg').innerHTML = `<span style="color:#d32f2f;font-weight:bold;">Có lỗi khi check-in!</span>`;
             });
           };
           return;
         }
 
-        // Đã thanh toán
+        // Nếu chưa thanh toán
+        const total = getTotalAmount(b);
+        const moneyStr = total.toLocaleString('vi-VN') + 'đ';
+        const qrImg = `<img src="https://img.vietqr.io/image/TPB-23402072004-compact2.png?amount=${total}&addInfo=THANHTOAN%20${b.bookingCode}" alt="QR chuyển khoản TPBank" style="width:160px; border-radius:10px; box-shadow:0 2px 8px #0001; margin-bottom:6px;">`;
+
         infoDiv.innerHTML = `
           <div class="info-row"><i class="fa-solid fa-bed"></i> <strong>Phòng:</strong> ${b.room}</div>
           <div class="info-row"><i class="fa-solid fa-user"></i> <strong>Tên khách:</strong> ${b.fullname}</div>
@@ -281,10 +247,65 @@
           <div class="info-row"><i class="fa-solid fa-calendar-check"></i> <strong>Nhận phòng:</strong> ${b.checkin}</div>
           <div class="info-row"><i class="fa-solid fa-calendar-xmark"></i> <strong>Trả phòng:</strong> ${b.checkout}</div>
           <div class="info-row"><i class="fa-solid fa-money-bill-wave"></i> <strong>Trạng thái thanh toán:</strong> 
-            <span class="paid">Đã thanh toán</span>
+            <span class="unpaid">Chưa thanh toán</span>
           </div>
-          <div style="color:#2e7d32;font-weight:bold;text-align:center;margin-top:12px;"><i class="fa-solid fa-circle-check"></i> Bạn có thể check-in!</div>
+          <div style="margin:18px 0 10px 0; text-align:center;">
+            ${qrImg}
+            <div style="margin-top:8px;">
+              <strong>Số tiền:</strong> <span style="color:#2e7d32;font-weight:bold;">${moneyStr}</span>
+            </div>
+            <small>Quét mã QR để chuyển khoản<br>STK: 23402072004 - TPBank<br>Nội dung: THANHTOAN ${b.bookingCode}</small>
+          </div>
+          <button id="payBtn" style="margin-top:14px;background:#e4a11b;color:#fff;font-weight:bold;padding:12px 0;border:none;border-radius:7px;width:100%;font-size:1.08em;cursor:pointer;">
+            <i class="fa-solid fa-money-check-dollar"></i> Thanh toán ngay
+          </button>
+          <div id="payMsg" style="margin-top:10px;text-align:center;"></div>
         `;
+
+        document.getElementById('payBtn').onclick = function() {
+          fetch('PHP/update_payment.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ bookingCode: b.bookingCode })
+          })
+          .then(res => res.json())
+          .then(result => {
+            if (result.success) {
+              document.getElementById('payMsg').innerHTML = `<span style="color:#2e7d32;font-weight:bold;"><i class="fa-solid fa-circle-check"></i> Thanh toán thành công! Vui lòng bấm Check-in.</span>`;
+              document.getElementById('payBtn').style.display = 'none';
+              infoDiv.innerHTML += `
+                <button id="checkinBtn" style="margin-top:14px;background:#2e7d32;color:#fff;font-weight:bold;padding:12px 0;border:none;border-radius:7px;width:100%;font-size:1.08em;cursor:pointer;">
+                  <i class="fa-solid fa-door-open"></i> Check-in
+                </button>
+                <div id="checkinMsg" style="margin-top:10px;text-align:center;"></div>
+              `;
+              // Gán lại sự kiện cho nút Check-in mới
+              document.getElementById('checkinBtn').onclick = function() {
+                fetch('PHP/checkin_api.php', {
+                  method: 'POST',
+                  headers: {'Content-Type': 'application/json'},
+                  body: JSON.stringify({ bookingCode: b.bookingCode, action: 'checkin' })
+                })
+                .then(res => res.json())
+                .then(data => {
+                  if (data.success) {
+                    document.getElementById('checkinMsg').innerHTML = `<span style="color:#2e7d32;font-weight:bold;"><i class="fa-solid fa-circle-check"></i> Check-in thành công!</span>`;
+                  } else {
+                    document.getElementById('checkinMsg').innerHTML = `<span style="color:#d32f2f;font-weight:bold;">${data.message || 'Check-in thất bại!'}</span>`;
+                  }
+                })
+                .catch(() => {
+                  document.getElementById('checkinMsg').innerHTML = `<span style="color:#d32f2f;font-weight:bold;">Có lỗi khi check-in!</span>`;
+                });
+              };
+            } else {
+              document.getElementById('payMsg').innerHTML = `<span style="color:#d32f2f;font-weight:bold;">${result.message || 'Thanh toán thất bại!'}</span>`;
+            }
+          })
+          .catch(() => {
+            document.getElementById('payMsg').innerHTML = `<span style="color:#d32f2f;font-weight:bold;">Có lỗi khi cập nhật thanh toán!</span>`;
+          });
+        };
       })
       .catch(() => {
         msgDiv.textContent = 'Có lỗi xảy ra, vui lòng thử lại!';

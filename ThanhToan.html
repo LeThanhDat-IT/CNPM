@@ -356,11 +356,12 @@
       if (!currentBooking) return;
       const total = getTotalAmount(currentBooking);
       showResultPage(currentBooking, total, 'Thanh toán tại khách sạn');
-      fetch('PHP/update_paid.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'bookingCode=' + encodeURIComponent(currentBooking.bookingCode) + '&payMethod=pay_at_hotel'
-      });
+      // KHÔNG gọi update_paid.php ở đây!
+      // fetch('PHP/update_paid.php', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      //   body: 'bookingCode=' + encodeURIComponent(currentBooking.bookingCode) + '&payMethod=pay_at_hotel'
+      // });
       setTimeout(() => {
         //window.location.href = 'ThanhToanThanhCong.html';
       }, 1000);

@@ -69,6 +69,7 @@ CREATE TABLE IF NOT EXISTS `bookings` (
   `bookingCode` varchar(20) UNIQUE,
   `TrangThaiThanhToan` tinyint(1) DEFAULT 0,
   `TrangThaiTraPhong` tinyint DEFAULT 0,
+  `tinhTrang` varchar(10) DEFAULT '0', -- 0=Chưa nhận phòng, 1=Đã nhận, 2=Đã trả, 3=Đã hủy
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

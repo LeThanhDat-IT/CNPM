@@ -78,6 +78,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmtUpdateRoomName->execute();
         $stmtUpdateRoomName->close();
 
+        // Cập nhật trạng thái phòng thành "đã thuê" (ví dụ: 0 hoặc 2 tùy quy ước)
+        $stmtUpdateStatus = $conn->prepare("UPDATE quanlyphong SET tinhTrang = 0 WHERE maPhong = ?");
+        $stmtUpdateStatus->bind_param("s", $room);
+        $stmtUpdateStatus->execute();
+        $stmtUpdateStatus->close();
+
         // --- Bỏ phần gửi email xác nhận đặt phòng ở đây ---
 
         echo json_encode(['success' => true, 'message' => 'Đặt phòng thành công!', 'bookingCode' => $bookingCode]);

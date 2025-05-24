@@ -2,3 +2,324 @@ Array
 (
     [maKH] => A008
 )
+Array
+(
+    [room] => R006
+    [fullname] => Le Thanh Dat
+    [phone] => 0333500764
+    [email] => ltdat.data@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-28
+    [note] => 
+)
+Array
+(
+    [room] => R006
+    [fullname] => Le Thanh Dat
+    [phone] => 0111222333
+    [email] => ltdat.data@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-29
+    [note] => 
+)
+Array
+(
+    [room] => R006
+    [fullname] => dâdaad
+    [phone] => 0111444555
+    [email] => ltdat.data@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-25
+    [note] => 
+)
+Array
+(
+    [room] => R006
+    [fullname] => ádasdsads
+    [phone] => 0111222333
+    [email] => ltdat.data@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-29
+    [note] => 
+)
+Array
+(
+    [room] => R006
+    [fullname] => dsadadsa
+    [phone] => 0111222333
+    [email] => ltdat.data@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-25
+    [note] => 
+)
+Array
+(
+    [room] => R006
+    [fullname] => Lê Thành Đạt
+    [phone] => 0111222333
+    [email] => ltdat.data@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-29
+    [note] => 
+)
+Array
+(
+    [room] => R004
+    [fullname] => Nguyễn Trung Hiếu
+    [phone] => 0111555444
+    [email] => ltdat.data@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-26
+    [note] => 
+)
+Array
+(
+    [room] => R004
+    [fullname] => ddđ
+    [phone] => 0111444555
+    [email] => ltdat.data@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-28
+    [note] => 
+)
+Array
+(
+    [room] => R004
+    [fullname] => dádasdsa
+    [phone] => 0222555444
+    [email] => ltdat.data@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-27
+    [note] => 
+)
+Array
+(
+    [room] => R003
+    [fullname] => dsadsada
+    [phone] => 0111444555
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-29
+    [note] => 
+)
+Array
+(
+    [room] => R003
+    [fullname] => ádsasdads
+    [phone] => 0122333555
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-26
+    [note] => 
+)
+Array
+(
+    [room] => R003
+    [fullname] => ddd
+    [phone] => 0111222333
+    [email] => ltdat.data@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-26
+    [note] => 
+    [payMethod] => bank
+)
+Array
+(
+    [room] => R003
+    [fullname] => dádsda
+    [phone] => 0111222333
+    [email] => ltdat.data@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-27
+    [note] => 
+)
+Array
+(
+    [room] => R004
+    [fullname] => fas
+    [phone] => 0123456789
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-27
+    [note] => 
+)
+Array
+(
+    [room] => R001
+    [fullname] => Cristiano Ronaldo
+    [phone] => 0333555666
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-27
+    [note] => 
+)
+Array
+(
+    [room] => R003
+    [fullname] => dáda
+    [phone] => 0123456889
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-28
+    [note] => 
+)
+Array
+(
+    [room] => R001
+    [fullname] => Lionel Messi
+    [phone] => 0147852456
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-27
+    [note] => 
+)
+Array
+(
+    [room] => R003
+    [fullname] => dsadsadsadsad
+    [phone] => 0111444777
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-30
+    [note] => 
+)
+Array
+(
+    [room] => R006
+    [fullname] => dádsa
+    [phone] => 0222555444
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-28
+    [note] => 
+)
+Array
+(
+    [room] => R003
+    [fullname] => dsdsđ
+    [phone] => 0222555444
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-23
+    [time] => 2025-05-30
+    [note] => 
+)
+Array
+(
+    [room] => R001
+    [fullname] => dfghj
+    [phone] => 0123456789
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-28
+    [note] => 
+)
+Array
+(
+    [room] => R003
+    [fullname] => dffff
+    [phone] => 0111444777
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-28
+    [note] => 
+)
+Array
+(
+    [room] => R003
+    [fullname] => hjk
+    [phone] => 0123456789
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-28
+    [note] => 
+)
+Array
+(
+    [room] => R003
+    [fullname] => dádas
+    [phone] => 0123456789
+    [email] => ldasds@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-27
+    [note] => 
+)
+Array
+(
+    [room] => R006
+    [fullname] => dsadsad
+    [phone] => 0222333555
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-26
+    [note] => 
+)
+Array
+(
+    [room] => R001
+    [fullname] => ghj
+    [phone] => 0178529631
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-27
+    [note] => 
+)
+Array
+(
+    [room] => R006
+    [fullname] => dfgh
+    [phone] => 0123456789
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-26
+    [note] => 
+)
+Array
+(
+    [room] => R003
+    [fullname] => dádasdasdsd
+    [phone] => 0123456789
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-29
+    [note] => 
+)
+Array
+(
+    [room] => R001
+    [fullname] => dfghj
+    [phone] => 0123456789
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-29
+    [note] => 
+)
+Array
+(
+    [room] => R003
+    [fullname] => ádsada
+    [phone] => 0123456789
+    [email] => ddd@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-29
+    [note] => 
+)
+Array
+(
+    [room] => R001
+    [fullname] => xg
+    [phone] => 0123456789
+    [email] => dfgk@gmail.com
+    [date] => 2025-05-24
+    [time] => 2025-05-27
+    [note] => 
+)
+Array
+(
+    [room] => R001
+    [fullname] => Lê Thành Đạt
+    [phone] => 0111222333
+    [email] => ltdat.it1@gmail.com
+    [date] => 2025-05-25
+    [time] => 2025-05-27
+    [note] => 
+)

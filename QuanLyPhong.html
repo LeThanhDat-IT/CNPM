@@ -326,6 +326,40 @@
     min-width: 0;
     text-align: center;
 }
+#area, #capacity {
+    width: 90px;
+    max-width: 100px;
+    min-width: 0;
+    padding: 8px 8px;
+    border-radius: 8px;
+    border: 1.5px solid #e4a11b;
+    background: #fffbe6;
+    font-size: 1em;
+    text-align: center;
+    transition: border 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 4px #e4a11b22;
+}
+#area:focus, #capacity:focus {
+    border: 2px solid #c98f0b;
+    outline: none;
+    background: #fffde6;
+}
+.form-row .mini-group-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex: 2;
+    margin-left: auto;
+    margin-right: 0;
+}
+.form-row .mini-group-row .form-group {
+    flex: 0 0 auto;
+    min-width: unset;
+    max-width: unset;
+    margin-bottom: 0;
+    align-items: center;
+}
     </style>
 </head>
 <body>
@@ -386,12 +420,12 @@
                 <label for="amenities">Tiện nghi</label>
                 <input type="text" id="amenities" placeholder="VD: Wifi, TV, Điều hòa">
             </div>
-            <div style="display: flex; gap: 16px; flex:3;">
-                <div class="form-group" style="flex:1; min-width:120px;">
+            <div class="mini-group-row">
+                <div class="form-group">
                     <label for="area" style="text-align:center; width:100%;">Diện tích</label>
                     <input type="text" id="area" placeholder="VD: 25m²" style="text-align:center;">
                 </div>
-                <div class="form-group" style="flex:1; min-width:90px; max-width:110px; align-items:center;">
+                <div class="form-group">
                     <label for="hinhAnh" style="text-align:center; width:100%;">Chọn ảnh</label>
                     <label class="custom-file-mini" style="margin:auto;">
                         <input type="file" id="hinhAnhFile" accept="image/*">
@@ -399,9 +433,9 @@
                     </label>
                     <span id="fileNameText" class="file-name-text"></span>
                     <input type="hidden" id="hinhAnh" name="hinhAnh">
-                    <img id="previewImage" src="" alt="Preview" style="display:none;max-width:90px;margin:8px auto 0 auto;border-radius:8px;">
+                    <img id="previewImage" src="" alt="Preview" style="display:none;max-width:160px;max-height: 100px;margin:8px auto 0 auto;border-radius:8px;">
                 </div>
-                <div class="form-group capacity-group" style="flex:1; min-width:120px;">
+                <div class="form-group capacity-group">
                     <label for="capacity" style="text-align:center; width:100%;">Sức chứa</label>
                     <input type="number" id="capacity" min="1" placeholder="VD: 2" style="text-align:center;">
                 </div>
@@ -574,6 +608,8 @@
     }
 
     function getFormData() {
+        let sucChua = document.getElementById('capacity').value;
+        sucChua = sucChua === '' ? null : Number(sucChua);
         return {
             name: document.getElementById('room-name').value,
             type: document.getElementById('room-type').value,
@@ -583,7 +619,7 @@
             bedType: document.getElementById('bed-type').value,
             amenities: document.getElementById('amenities').value,
             area: document.getElementById('area').value,
-            sucChua: document.getElementById('capacity').value,
+            sucChua: sucChua,
             maPhong: document.getElementById('maPhong').value
         };
     }

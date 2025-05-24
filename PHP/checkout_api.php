@@ -22,7 +22,7 @@ if (!$bookingCode) {
 }
 
 // Kiểm tra tồn tại booking
-$stmt = $conn->prepare('SELECT TrangThaiTraPhong FROM bookings WHERE UPPER(bookingCode) = ? LIMIT 1');
+$stmt = $conn->prepare('SELECT TrangThaiPhong FROM bookings WHERE UPPER(bookingCode) = ? LIMIT 1');
 $stmt->bind_param('s', $bookingCode);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -34,18 +34,34 @@ if (!$booking) {
     $conn->close();
     exit;
 }
-if (isset($booking['TrangThaiTraPhong']) && $booking['TrangThaiTraPhong'] == 1) {
+// Kiểm tra nếu đã check-out (TrangThaiPhong = 2)
+if (isset($booking['TrangThaiPhong']) && $booking['TrangThaiPhong'] == 2) {
     echo json_encode(['success' => false, 'message' => 'Phòng này đã được trả trước đó!']);
     $conn->close();
     exit;
 }
 
 // Cập nhật trạng thái trả phòng
-$stmt = $conn->prepare('UPDATE bookings SET TrangThaiTraPhong = 1 WHERE UPPER(bookingCode) = ?');
+$stmt = $conn->prepare('UPDATE bookings SET TrangThaiPhong = 2 WHERE UPPER(bookingCode) = ?');
 $stmt->bind_param('s', $bookingCode);
 $stmt->execute();
 
+// Sau khi cập nhật trạng thái trả phòng thành công
 if ($stmt->affected_rows > 0) {
+    // Lấy mã phòng từ booking
+    $stmtRoom = $conn->prepare('SELECT room FROM bookings WHERE UPPER(bookingCode) = ? LIMIT 1');
+    $stmtRoom->bind_param('s', $bookingCode);
+    $stmtRoom->execute();
+    $resultRoom = $stmtRoom->get_result();
+    if ($rowRoom = $resultRoom->fetch_assoc()) {
+        $maPhong = $rowRoom['room'];
+        // Cập nhật trạng thái phòng về "Còn trống"
+        $stmtUpdate = $conn->prepare("UPDATE quanlyphong SET tinhTrang = '1' WHERE maPhong = ?");
+        $stmtUpdate->bind_param("s", $maPhong);
+        $stmtUpdate->execute();
+        $stmtUpdate->close();
+    }
+    $stmtRoom->close();
     echo json_encode(['success' => true]);
 } else {
     echo json_encode(['success' => false, 'message' => 'Không cập nhật được trạng thái trả phòng!']);
