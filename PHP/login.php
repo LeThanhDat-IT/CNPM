@@ -19,7 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['HTTP_X_REQUESTED_WI
                     'message' => 'Đăng nhập thành công!',
                     'user' => [
                         'username' => $user['username'],
-                        'email' => $user['email'] ?? ''
+                        'email' => $user['email'] ?? '',
+                        'role' => $user['role'] ?? 'user' // Thêm dòng này
                     ]
                 ]);
                 exit;

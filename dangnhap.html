@@ -232,8 +232,8 @@
         if (data.success) {
           alert(data.message);
           localStorage.setItem('username', username);
-          localStorage.setItem('user_email', data.user.email); // email lấy từ dữ liệu trả về khi đăng nhập
-          localStorage.setItem('role', 'user');
+          localStorage.setItem('user_email', data.user.email);
+          localStorage.setItem('role', data.user.role || 'user'); // Sửa dòng này
           window.location.href = "HomePage.html";
         } else {
           alert(data.message);
