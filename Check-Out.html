@@ -2,25 +2,94 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Trả Phòng - THE COW HOTEL</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <title>Check-Out - THE COW HOTEL</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+    :root {
+      --main-bg: #f5f5f5;
+      --main-blue: #183153;
+      --main-blue2: #2d4379;
+      --main-yellow: #e4a11b;
+      --main-green: #2e7d32;
+      --main-green2: #43a047;
+      --main-border: #b2dfdb;
+      --main-white: #fff;
+      --main-shadow: 0 6px 32px #18315318;
+      --main-radius: 18px;
+    }
     body {
       font-family: 'Montserrat', Arial, sans-serif;
-      background: linear-gradient(120deg, #e0f7fa 0%, #f8f9fa 100%);
-      min-height: 100vh;
+      background: var(--main-bg);
       margin: 0;
+      color: var(--main-blue);
+      min-height: 100vh;
+    }
+    .topbar {
+      background: var(--main-white);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 40px;
+      border-bottom: 1px solid #e0e0e0;
+      box-shadow: 0 2px 8px #1831530a;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .topbar .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--main-blue);
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px #1831530a;
+    }
+    .topbar nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+      margin: 0;
+      padding: 0;
+    }
+    .topbar nav ul li a {
+      text-decoration: none;
+      color: var(--main-blue2);
+      font-weight: 600;
+      font-size: 1.08em;
+      padding: 6px 0;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .topbar nav ul li a:hover,
+    .topbar nav ul li a.active {
+      color: var(--main-yellow);
+      border-bottom: 2.5px solid var(--main-yellow);
+    }
+    .book-btn {
+      background: var(--main-yellow);
+      color: var(--main-white);
+      border: none;
+      padding: 10px 26px;
+      font-weight: bold;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 1.08em;
+      box-shadow: 0 2px 8px #e4a11b22;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 1px;
+    }
+    .book-btn:hover {
+      background: #c98f0b;
+      transform: translateY(-2px) scale(1.03);
     }
     .container {
       max-width: 430px;
-      margin: 48px auto 0 auto;
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: 0 6px 32px #0002;
-      padding: 36px 30px 28px 30px;
+      margin: 56px auto 0 auto;
+      background: var(--main-white);
+      border-radius: var(--main-radius);
+      box-shadow: var(--main-shadow);
+      padding: 38px 32px 28px 32px;
       position: relative;
       animation: fadeIn 0.7s;
     }
@@ -29,52 +98,57 @@
       to { opacity: 1; transform: none;}
     }
     h2 {
-      color: #2e7d32;
+      color: var(--main-blue2);
       text-align: center;
       font-size: 2em;
-      margin-bottom: 18px;
+      margin-bottom: 22px;
       letter-spacing: 1px;
+      font-weight: 700;
     }
     .form-group {
       margin-bottom: 22px;
     }
     label {
       font-weight: 600;
-      color: #2d4379;
-      font-size: 1.05em;
+      color: var(--main-blue2);
+      font-size: 1.07em;
       letter-spacing: 0.5px;
+      display: block;
+      margin-bottom: 6px;
     }
     input[type="text"] {
       width: 100%;
-      padding: 10px 12px;
-      border-radius: 7px;
-      border: 1.5px solid #b2dfdb;
-      margin-top: 7px;
-      font-size: 1.08em;
-      transition: border-color 0.2s;
+      padding: 11px 13px;
+      border-radius: 8px;
+      border: 1.5px solid var(--main-border);
+      margin-top: 2px;
+      font-size: 1.09em;
+      transition: border-color 0.2s, background 0.2s;
       outline: none;
+      background: #fafdff;
+      color: var(--main-blue2);
     }
     input[type="text"]:focus {
-      border-color: #2e7d32;
+      border-color: var(--main-blue2);
       background: #f1f8e9;
     }
     button[type="submit"], #checkoutBtn {
-      background: linear-gradient(90deg, #2e7d32 60%, #43a047 100%);
+      background: linear-gradient(90deg, var(--main-blue) 60%, var(--main-blue2) 100%);
       color: #fff;
       border: none;
-      border-radius: 7px;
-      padding: 12px 0;
-      font-size: 1.08em;
+      border-radius: 8px;
+      padding: 13px 0;
+      font-size: 1.09em;
       font-weight: 700;
       width: 100%;
       cursor: pointer;
       margin-top: 10px;
-      box-shadow: 0 2px 8px #2e7d3222;
+      box-shadow: 0 2px 8px #18315322;
       transition: background 0.2s, transform 0.15s;
       letter-spacing: 1px;
     }
     button[type="submit"]:hover, #checkoutBtn:hover {
-      background: linear-gradient(90deg, #388e3c 60%, #66bb6a 100%);
+      background: linear-gradient(90deg, var(--main-blue2) 60%, var(--main-blue) 100%);
       transform: translateY(-2px) scale(1.03);
     }
     #message {
@@ -87,39 +161,51 @@
     #bookingInfo {
       margin-top: 28px;
       background: #f2f7fa;
-      border-radius: 12px;
+      border-radius: 13px;
       padding: 22px 18px 16px 18px;
       font-size: 1.09em;
-      color: #222;
-      box-shadow: 0 1px 8px #0001;
+      color: var(--main-blue2);
+      box-shadow: 0 1px 8px #1831530a;
       animation: fadeIn 0.7s;
     }
     #bookingInfo strong {
-      color: #2d4379;
+      color: var(--main-blue);
     }
     .info-row {
-      margin-bottom: 7px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
     }
     .info-row i {
-      color: #2e7d32;
+      color: var(--main-green);
       min-width: 20px;
     }
-    .paid { color: #2e7d32; font-weight: bold;}
+    .paid { color: var(--main-green); font-weight: bold;}
     .unpaid { color: #d32f2f; font-weight: bold;}
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
       .container { max-width: 98vw; padding: 18px 4vw; }
       #bookingInfo { padding: 12px 4vw; }
+      .topbar { padding: 10px 10px; }
+      .topbar nav ul { gap: 10px; }
+      .topbar .logo { font-size: 18px; }
     }
   </style>
 </head>
 <body>
-  <header style="text-align:center; margin-bottom: 18px;">
-    <img src="images/a3.jpg" alt="Logo" style="height:48px;vertical-align:middle;cursor:pointer;margin-right:14px;border-radius:8px;box-shadow:0 2px 8px #0002;" onclick="window.location.href='HomePage.html'">
-    <span style="font-size:1.7em;font-weight:800;color:#2e7d32;vertical-align:middle;letter-spacing:1px;">THE COW HOTEL</span>
-  </header>
+  <div class="topbar">
+    <div class="logo">THE COW HOTEL</div>
+    <nav>
+      <ul>
+        <li><a href="HomePage.html">Home</a></li>
+        <li><a href="Check-In.html">Check-In</a></li>
+        <li><a href="Check-Out.html" class="active">Check-Out</a></li>
+      </ul>
+    </nav>
+    <div>
+      <button class="book-btn" onclick="window.location.href='TIm_kiemphong.html'">Book Now</button>
+    </div>
+  </div>
   <div class="container">
     <h2><i class="fa-solid fa-door-open"></i> Check-Out</h2>
     <form id="checkoutForm" autocomplete="off">
@@ -182,8 +268,8 @@
           .then(result => {
             if (result.success) {
               msgDiv.textContent = 'Trả phòng thành công! Cảm ơn quý khách đã sử dụng dịch vụ.';
-              msgDiv.style.color = '#2e7d32';
-              infoDiv.innerHTML += `<div style="color:#2e7d32;font-weight:bold;margin-top:14px;text-align:center;"><i class="fa-solid fa-face-smile-beam"></i> Hẹn gặp lại quý khách!</div>`;
+              msgDiv.style.color = 'var(--main-green)';
+              infoDiv.innerHTML += `<div style="color:var(--main-green);font-weight:bold;margin-top:14px;text-align:center;"><i class="fa-solid fa-face-smile-beam"></i> Hẹn gặp lại quý khách!</div>`;
             } else {
               msgDiv.textContent = result.message || 'Trả phòng thất bại!';
               msgDiv.style.color = '#d32f2f';

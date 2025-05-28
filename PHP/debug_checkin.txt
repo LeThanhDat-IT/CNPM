@@ -1,16 +1,16 @@
 Array
 (
-    [id] => 127
-    [room] => R001
-    [roomName] => VIP
-    [fullname] => Lê Thành Đạt
-    [phone] => 0111222333
-    [email] => ltdat.it1@gmail.com
-    [checkin] => 2025-05-25
-    [total] => 4000000
-    [checkout] => 2025-05-27
-    [time] => 2025-05-25 02:00:30
-    [bookingCode] => TCH20250524127
+    [id] => 129
+    [room] => R006
+    [roomName] => Siêu cấp VIP PRO
+    [fullname] => ádasdsdsad
+    [phone] => 0147852963
+    [email] => ltdat.data@gmail.com
+    [checkin] => 2025-05-28
+    [total] => 10000000
+    [checkout] => 2025-05-30
+    [time] => 2025-05-28 23:03:31
+    [bookingCode] => TCH20250528129
     [TrangThaiThanhToan] => 1
     [TrangThaiPhong] => 1
 )

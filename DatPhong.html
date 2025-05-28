@@ -22,6 +22,7 @@
       padding: 10px 40px;
       border-bottom: 1px solid #ddd;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      border: 1px solid #ffd700;
     }
     .topbar .logo {
       font-size: 22px;
@@ -43,6 +44,64 @@
     }
     .topbar nav ul li a:hover {
       color: #e4a11b;
+    }
+    #user-action {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    #user-action > span {
+      font-weight: 600;
+      margin-right: 18px;
+      display: flex;
+      align-items: center;
+      color: #222;
+      font-size: 16px;
+    }
+    #user-action > span i {
+      margin-right: 7px;
+      font-size: 18px;
+    }
+    #user-action ul {
+      display: flex;
+      gap: 0;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    #user-action ul li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #user-action ul li a.admin-link {
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      background: none;
+      border: none;
+      padding: 0 10px;
+      border-radius: 0;
+      font-size: 16px;
+      transition: color 0.25s, background 0.25s;
+      display: inline-block;
+      outline: none;
+      height: 40px;
+      line-height: 40px;
+      min-width: 80px;
+      text-align: center;
+    }
+    #user-action ul li a.admin-link:hover,
+    #user-action ul li a.admin-link:focus {
+      color: #e4a11b;
+      background: #f7f1e1;
+      text-decoration: none;
+    }
+    #user-action ul li a.admin-link[style*="color:#888"] {
+      color: #888 !important;
+    }
+    #user-action ul li:last-child a.admin-link {
+      color: #888;
     }
     .book-btn {
       background-color: #e4a11b;
@@ -300,25 +359,27 @@
         let adminLinks = '';
         if (role === 'admin') {
           adminLinks = `
-          <button class="book-btn" onclick="window.location.href='QuanLyKhachHang.html'" style="margin-right:8px;">Quản lý KH</button>
-          <button class="book-btn" onclick="window.location.href='QuanLyPhong.html'" style="margin-right:8px;">Quản lý Phòng</button>
-          <button class="book-btn" onclick="window.location.href='quanly_tk.html'" style="margin-right:8px;">Quản lý TK</button>
-          <button class="book-btn" onclick="window.location.href='ThongKeThuNhap.html'" style="margin-right:8px;">Thống kê</button>
-        `;
+            <li><a href="QuanLyKhachHang.html" class="admin-link">Quản lý KH</a></li>
+            <li><a href="QuanLyPhong.html" class="admin-link">Quản lý Phòng</a></li>
+            <li><a href="quanly_tk.html" class="admin-link">Quản lý TK</a></li>
+            <li><a href="ThongKeThuNhap.html" class="admin-link">Thống kê</a></li>
+          `;
         }
         userAction.innerHTML = `
-        <span style="font-weight:600;margin-right:16px;"><i class="fa fa-user"></i> ${username}</span>
-        ${adminLinks}
-        <button class="book-btn" onclick="window.location.href='TIm_kiemphong.html'">Book Now</button>
-        <button class="book-btn" onclick="logout()" style="margin-left:10px;background:#888;">Logout</button>
-      `;
+          <span style="font-weight:600;margin-right:16px;display:flex;align-items:center;"><i class="fa fa-user"></i> ${username}</span>
+          <ul style="display:inline-flex;gap:20px;list-style:none;margin:0;padding:0;vertical-align:middle;">
+            ${adminLinks}
+            <li><a href="TIm_kiemphong.html" class="admin-link">Book Now</a></li>
+            <li><a href="#" class="admin-link" onclick="logout();return false;" style="color:#888;">Logout</a></li>
+          </ul>
+        `;
       } else {
         userAction.innerHTML = `
-        <button class="book-btn" onclick="window.location.href='dangnhap.html'" style="margin-right:10px;">
-          <i class="fa fa-user"></i> Login
-        </button>
-        <button class="book-btn" onclick="window.location.href='TIm_kiemphong.html'">Book Now</button>
-      `;
+          <ul style="display:inline-flex;gap:20px;list-style:none;margin:0;padding:0;vertical-align:middle;">
+            <li><a href="dangnhap.html" class="admin-link"><i class="fa fa-user"></i> Login</a></li>
+            <li><a href="TIm_kiemphong.html" class="admin-link">Book Now</a></li>
+          </ul>
+        `;
       }
     }
 
