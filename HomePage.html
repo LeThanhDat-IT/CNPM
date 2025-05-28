@@ -513,29 +513,35 @@
       const role = localStorage.getItem('role');
       if (username) {
         let adminLinks = '';
+        let bookNowLink = '';
         if (role === 'admin') {
           adminLinks = `
             <li><a href="QuanLyKhachHang.html" class="admin-link">Quản lý KH</a></li>
             <li><a href="QuanLyPhong.html" class="admin-link">Quản lý Phòng</a></li>
+            <li><a href="QuanLyDatPhong.html" class="admin-link">Quản lý ĐP</a></li>
             <li><a href="quanly_tk.html" class="admin-link">Quản lý TK</a></li>
             <li><a href="ThongKeThuNhap.html" class="admin-link">Thống kê</a></li>
-    `;
+          `;
+          // admin không có Book Now
+        } else {
+          // user thường có Book Now
+          bookNowLink = `<li><a href="TIm_kiemphong.html" class="admin-link">Book Now</a></li>`;
         }
         userAction.innerHTML = `
-             <span style="font-weight:600;margin-right:16px;"><i class="fa fa-user"></i> ${username}</span>
-             <ul style="display:inline-flex;gap:20px;list-style:none;margin:0;padding:0;vertical-align:middle;">
-      ${adminLinks}
-            <li><a href="TIm_kiemphong.html" class="admin-link">Book Now</a></li>
+          <span style="font-weight:600;margin-right:16px;"><i class="fa fa-user"></i> ${username}</span>
+          <ul style="display:inline-flex;gap:20px;list-style:none;margin:0;padding:0;vertical-align:middle;">
+            ${adminLinks}
+            ${bookNowLink}
             <li><a href="#" class="admin-link" onclick="logout();return false;" style="color:#888;">Logout</a></li>
-    </ul>
-  `;
+          </ul>
+        `;
       } else {
         userAction.innerHTML = `
-    <ul style="display:inline-flex;gap:20px;list-style:none;margin:0;padding:0;vertical-align:middle;">
-      <li><a href="dangnhap.html" class="admin-link"><i class="fa fa-user"></i> Login</a></li>
-      <li><a href="TIm_kiemphong.html" class="admin-link">Book Now</a></li>
-    </ul>
-  `;
+          <ul style="display:inline-flex;gap:20px;list-style:none;margin:0;padding:0;vertical-align:middle;">
+            <li><a href="dangnhap.html" class="admin-link"><i class="fa fa-user"></i> Login</a></li>
+            <li><a href="TIm_kiemphong.html" class="admin-link">Book Now</a></li>
+          </ul>
+        `;
       }
     }
 
