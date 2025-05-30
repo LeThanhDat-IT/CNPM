@@ -415,7 +415,10 @@
 
     async function searchKhachHang() {
       const ten = document.getElementById('ten').value.trim();
-      const res = await fetch('PHP/search_khachhang.php?ten=' + encodeURIComponent(ten));
+      const sdt = document.getElementById('sdt').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const params = new URLSearchParams({ ten, sdt, email });
+      const res = await fetch('PHP/search_khachhang.php?' + params.toString());
       const data = await res.json();
       renderKhachHangList(data);
     }
