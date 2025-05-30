@@ -257,6 +257,23 @@
         <label for="checkout"><i class="fa-solid fa-calendar-day"></i> Ngày trả phòng</label>
         <input type="date" id="checkout" required>
       </div>
+      <div class="form-group">
+        <label for="gioiTinh"><i class="fa-solid fa-venus-mars"></i> Giới tính</label>
+        <select id="gioiTinh" required>
+          <option value="">-- Chọn giới tính --</option>
+          <option value="Nam">Nam</option>
+          <option value="Nữ">Nữ</option>
+          <option value="Khác">Khác</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="ngaySinh"><i class="fa-solid fa-cake-candles"></i> Ngày sinh</label>
+        <input type="date" id="ngaySinh" required>
+      </div>
+      <div class="form-group">
+        <label for="diaChi"><i class="fa-solid fa-location-dot"></i> Địa chỉ</label>
+        <input type="text" id="diaChi" required placeholder="Nhập địa chỉ">
+      </div>
       <button type="submit"><i class="fa-solid fa-paper-plane"></i> Đặt phòng</button>
       <div id="message"></div>
     </form>
@@ -284,6 +301,9 @@
       const checkin = document.getElementById('checkin').value;
       const checkout = document.getElementById('checkout').value;
       const room = document.getElementById('room').value;
+      const gioiTinh = document.getElementById('gioiTinh').value;
+      const ngaySinh = document.getElementById('ngaySinh').value;
+      const diaChi = document.getElementById('diaChi').value;
 
       const messageDiv = document.getElementById('message');
       messageDiv.textContent = '';
@@ -302,8 +322,11 @@
 
       // Gửi đúng tên trường cho PHP
       const bookingData = {
-        room: roomCode, // Gửi mã phòng cho PHP
+        room: roomCode,
         fullname,
+        gioiTinh,
+        ngaySinh,
+        diaChi,
         phone,
         email,
         date: checkin,
