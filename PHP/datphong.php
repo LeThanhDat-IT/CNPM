@@ -19,6 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $date = trim($_POST['date'] ?? '');
     $time = trim($_POST['time'] ?? '');
     $note = trim($_POST['note'] ?? '');
+    $gioiTinh = $_POST['gioiTinh'] ?? '';
+    $ngaySinh = $_POST['ngaySinh'] ?? '';
+    $diaChi = $_POST['diaChi'] ?? '';
 
     // Ghi lại thông tin nhận được từ form vào file log.txt
     file_put_contents('log.txt', print_r($_POST, true), FILE_APPEND);
@@ -30,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Bước 1: Chèn bản ghi chưa có bookingCode
-    $stmt = $conn->prepare("INSERT INTO bookings (room, fullname, phone, email, checkin, checkout, time) VALUES (?, ?, ?, ?, ?, ?, NOW())");
-    $stmt->bind_param("ssssss", $room, $fullname, $phone, $email, $date, $time);
+    $stmt = $conn->prepare("INSERT INTO bookings (room, fullname, phone, email, gioiTinh, ngaySinh, diaChi, checkin, checkout, time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
+    $stmt->bind_param("sssssssss", $room, $fullname, $phone, $email, $gioiTinh, $ngaySinh, $diaChi, $date, $time);
 
     if ($stmt->execute()) {
         $last_id = $conn->insert_id;
