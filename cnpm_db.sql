@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 30, 2025 at 01:53 PM
+-- Generation Time: May 30, 2025 at 05:28 PM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -33,6 +33,9 @@ CREATE TABLE IF NOT EXISTS `bookings` (
   `room` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `roomName` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `fullname` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `gioiTinh` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `ngaySinh` date DEFAULT NULL,
+  `diaChi` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `phone` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
   `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `checkin` date NOT NULL,
@@ -44,7 +47,15 @@ CREATE TABLE IF NOT EXISTS `bookings` (
   `TrangThaiPhong` int DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `bookingCode` (`bookingCode`)
-) ENGINE=MyISAM AUTO_INCREMENT=132 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=152 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bookings`
+--
+
+INSERT INTO `bookings` (`id`, `room`, `roomName`, `fullname`, `gioiTinh`, `ngaySinh`, `diaChi`, `phone`, `email`, `checkin`, `total`, `checkout`, `time`, `bookingCode`, `TrangThaiThanhToan`, `TrangThaiPhong`) VALUES
+(151, 'R001', 'VIP', 'thành đạt', 'Nam', '2004-07-02', '189', '0258741963', 'lt@gmail.com', '2025-05-31', 4000000, '2025-06-02', '2025-05-31 00:02:05', 'TCH20250530151', 1, 2),
+(150, 'R003', 'Cao cấp', 'trung hiếu', 'Nữ', '2004-04-08', '180', '0147852963', 'TCH2025053014@gmail.com', '2025-05-30', 2000000, '2025-05-31', '2025-05-30 23:50:40', 'TCH20250530150', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -65,7 +76,15 @@ CREATE TABLE IF NOT EXISTS `quanlykhachhang` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `maKH` (`maKH`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `quanlykhachhang`
+--
+
+INSERT INTO `quanlykhachhang` (`id`, `maKH`, `ten`, `gioiTinh`, `sdt`, `ngaySinh`, `email`, `diaChi`) VALUES
+(26, 'A003', 'thành đạt', 'Nam', '0258741963', '2004-07-02', 'lt@gmail.com', '189'),
+(25, 'A002', 'trung hiếu', 'Nữ', '0147852963', '2004-04-08', 'TCH2025053014@gmail.com', '180');
 
 -- --------------------------------------------------------
 
@@ -95,10 +114,10 @@ CREATE TABLE IF NOT EXISTS `quanlyphong` (
 --
 
 INSERT INTO `quanlyphong` (`id`, `maPhong`, `tenPhong`, `kieuPhong`, `giaPhong`, `hinhAnh`, `loaiGiuong`, `tienNghi`, `dienTich`, `sucChua`, `tinhTrang`) VALUES
-(17, 'R003', 'Cao cấp', '3', 2000000, 'images/Messi.webp', '1 giường Queen', 'Wifi, Tv, điều hoà', '30m2', 2, '1'),
+(17, 'R003', 'Cao cấp', '3', 2000000, 'images/Messi.webp', '1 giường Queen', 'Wifi, Tv, điều hoà', '30m2', 2, '0'),
 (22, 'R005', 'Phòng Đơn', '1', 250000, 'images/narr.jpg', '1 giường đơn', 'Wifi, Smart TV, Điều Hoà', '25m2', NULL, '1'),
 (15, 'R001', 'VIP', '3', 2000000, 'images/_101770618_christianoronaldo.jpg.webp', '1 giường King', 'Wifi, Tv, điều hoà', '30m2', 2, '1'),
-(19, 'R004', 'Phòng Đôi', '2', 400000, 'images/VN.webp', '1 giường lớn', 'Wifi, Smart TV, Điều Hoà', '30m2', 2, '0'),
+(19, 'R004', 'Phòng Đôi', '2', 400000, 'images/VN.webp', '1 giường lớn', 'Wifi, Smart TV, Điều Hoà', '30m2', 2, '1'),
 (23, 'R006', 'Siêu cấp VIP PRO', '3', 5000000, 'images/STU.jpg', '2 giường King', 'Wifi, Điều hoà, Smart TV, Hồ Bơi,....', '35m2', NULL, '1');
 
 -- --------------------------------------------------------
